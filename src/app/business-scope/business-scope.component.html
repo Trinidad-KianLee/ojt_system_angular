@@ -1,0 +1,218 @@
+<div class="min-h-screen bg-gray-100 flex flex-col" data-theme="light">
+    <header class="bg-white shadow-sm">
+      <div class="container mx-auto p-4 flex items-center space-x-4">
+        <img
+          src="assets/dti_banner.png"
+          alt="DTI Banner"
+          class="max-h-16 object-contain"
+        />
+        <h1 class="text-xl md:text-2xl font-bold text-blue-700">
+          SERVICES - NEW REGISTRATION
+        </h1>
+      </div>
+    </header>
+  
+    <main class="container mx-auto p-6 flex-1 text-gray-800">
+      <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+        <nav class="bg-blue-600 text-white p-4 rounded-md font-semibold mb-4">
+          BUSINESS NAME REGISTRATION
+        </nav>
+
+        <h2 class="text-lg font-bold text-blue-700 mb-4">BUSINESS SCOPE</h2>
+        <div class="overflow-x-auto mb-6">
+          <table class="table w-full border text-gray-800">
+            <thead>
+              <tr class="bg-gray-200">
+                <th class="px-4 py-2">Scope</th>
+                <th class="px-4 py-2">National</th>
+                <th class="px-4 py-2">Regional</th>
+                <th class="px-4 py-2">City/Municipality</th>
+                <th class="px-4 py-2">Barangay</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border px-4 py-2">
+                  Total fees include PHP 200 documentary stamp tax (DST)
+                </td>
+                <td class="border px-4 py-2 text-center">
+                  <label class="inline-flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="scope"
+                      value="National"
+                      [(ngModel)]="scope"
+                      class="radio radio-primary"
+                    />
+                    <span>3,000.00</span>
+                  </label>
+                </td>
+                <td class="border px-4 py-2 text-center">
+                  <label class="inline-flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="scope"
+                      value="Regional"
+                      [(ngModel)]="scope"
+                      class="radio radio-primary"
+                    />
+                    <span>2,000.00</span>
+                  </label>
+                </td>
+                <td class="border px-4 py-2 text-center">
+                  <label class="inline-flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="scope"
+                      value="City"
+                      [(ngModel)]="scope"
+                      class="radio radio-primary"
+                    />
+                    <span>1,000.00</span>
+                  </label>
+                </td>
+                <td class="border px-4 py-2 text-center">
+                  <label class="inline-flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="scope"
+                      value="Barangay"
+                      [(ngModel)]="scope"
+                      class="radio radio-primary"
+                    />
+                    <span>500.00</span>
+                  </label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="font-semibold mb-2">DEFINITIONS:</h3>
+        <p class="mb-4">
+          The Territorial Scope refers to the extent of the geographical jurisdiction
+          within which DTI grants the business to only trade, buy, store, handle,
+          manufacture, or process goods, or other business transactions.
+          <br /><br />
+          The Disclaimer means the right to limit the use of certain words or
+          enumerations of letters as numerals attached to your Business Name.
+        </p>
+        <p class="mb-6">
+          <strong>Example:</strong><br />
+          <strong>Business Name</strong>: Sari-Sari Store Juan<br />
+          <strong>Description</strong>: Retail Store<br />
+          <strong>Sector</strong>: Retail Juan Sari-Sari Store
+        </p>
+  
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div *ngIf="scope === 'Regional' || scope === 'City' || scope === 'Barangay'">
+            <label class="font-medium text-gray-700">Region *</label>
+            <select
+              [(ngModel)]="region"
+              name="region"
+              class="select select-bordered w-full bg-white text-black mt-2"
+              required
+            >
+              <option disabled value="">--SELECT REGION--</option>
+              <option>Region I</option>
+              <option>Region II</option>
+              <option>Region III</option>
+            </select>
+          </div>
+
+          <div *ngIf="scope === 'City' || scope === 'Barangay'">
+            <label class="font-medium text-gray-700">City/Municipality, Province *</label>
+            <select
+              [(ngModel)]="city"
+              name="city"
+              class="select select-bordered w-full bg-white text-black mt-2"
+              required
+            >
+              <option disabled value="">--SELECT CITY/PROVINCE--</option>
+              <option>Manila, NCR</option>
+              <option>Quezon City, NCR</option>
+              <option>Cebu City, Cebu</option>
+              <!-- etc. -->
+            </select>
+          </div>
+  
+          <!-- Barangay -->
+          <div *ngIf="scope === 'Barangay'">
+            <label class="font-medium text-gray-700">Barangay *</label>
+            <select
+              [(ngModel)]="barangay"
+              name="barangay"
+              class="select select-bordered w-full bg-white text-black mt-2"
+              required
+            >
+              <option disabled value="">--SELECT BARANGAY--</option>
+              <option>Brgy. 1</option>
+              <option>Brgy. 2</option>
+              <option>Brgy. 3</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div>
+            <label class="font-medium text-gray-700">Dominant Name *</label>
+            <input
+              [(ngModel)]="dominantName"
+              name="dominantName"
+              type="text"
+              class="input input-bordered w-full mt-2 bg-white text-black"
+              required
+            />
+          </div>
+  
+          <div>
+            <label class="font-medium text-gray-700">Business Name Descriptor *</label>
+            <input
+              [(ngModel)]="descriptor"
+              name="descriptor"
+              type="text"
+              class="input input-bordered w-full mt-2 bg-white text-black"
+              required
+            />
+            <button class="btn btn-info mt-2">Advance Search</button>
+          </div>
+
+          <div>
+            <label class="font-medium text-gray-700">Proposed Business Name *</label>
+            <input
+              [(ngModel)]="proposedName"
+              name="proposedName"
+              type="text"
+              class="input input-bordered w-full mt-2 bg-white text-black"
+              required
+            />
+            <button class="btn btn-info mt-2">Check Name Availability</button>
+          </div>
+        </div>
+
+        <div class="bg-gray-100 border-l-4 border-blue-500 p-4 mb-6">
+          <h4 class="font-semibold text-blue-700 mb-2">Reminders:</h4>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Fields to fill up must have at least two or more words.</li>
+            <li>Not a term or word that is unlawful, immoral, or scandalous.</li>
+            <li>Not a registered trade name, trademark, or business name.</li>
+            <li>Not composed of purely generic words (e.g., Health Care Clinic).</li>
+            <li>Not misleading or deceptive.</li>
+            <li>Not the same as a government agency or international organization.</li>
+          </ul>
+        </div>
+  
+        <div class="flex justify-end space-x-4">
+          <button class="btn btn-secondary" (click)="onBack()">Back</button>
+          <button class="btn btn-primary" (click)="onNext()">Next</button>
+        </div>
+      </div>
+    </main>
+  
+    <footer class="bg-white mt-auto py-4 shadow-inner text-gray-800">
+      <div class="container mx-auto text-center text-gray-600 text-sm">
+        © 2025 Department of Trade and Industry. All rights reserved.
+      </div>
+    </footer>
+  </div>
+  
