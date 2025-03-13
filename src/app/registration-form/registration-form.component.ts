@@ -67,12 +67,6 @@ export class RegistrationFormComponent implements OnInit {
       const firstPage = pages[0];
       const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-      /*
-       * These coordinates are approximations based on your screenshot.
-       * If something is slightly off, tweak the x or y by a small amount.
-       */
-
-      // 1. Name of Business (Top Row)
       firstPage.drawText(this.formData.nameOfBusiness, {
         x: 170,
         y: 740,
@@ -81,8 +75,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 2. Warehouse Address
-      // Floor/Unit, Bldg. No/Name, Street, Barangay
       firstPage.drawText(this.formData.floorUnit, {
         x: 105,
         y: 710,
@@ -112,7 +104,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // City, Province, Region, Zip Code
       firstPage.drawText(this.formData.city, {
         x: 105,
         y: 693,
@@ -142,7 +133,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 3. Name of Business Owner
       firstPage.drawText(this.formData.nameOfBusinessOwner, {
         x: 170,
         y: 675,
@@ -151,7 +141,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 4. Sex & 5. Social Classification
       firstPage.drawText(this.formData.sexOwner, {
         x: 85,
         y: 655,
@@ -167,7 +156,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 6. Telephone & 7. E-mail
       firstPage.drawText(this.formData.telephoneOwner, {
         x: 85,
         y: 635,
@@ -183,7 +171,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 8. Mobile & 9. Website
       firstPage.drawText(this.formData.mobileOwner, {
         x: 85,
         y: 615,
@@ -199,7 +186,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 10. Name of Warehouse Owner
       firstPage.drawText(this.formData.nameOfWarehouseOwner, {
         x: 170,
         y: 595,
@@ -208,7 +194,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 11. Sex (Warehouse) & 12. Social Classification (Warehouse)
       firstPage.drawText(this.formData.sexWarehouseOwner, {
         x: 85,
         y: 575,
@@ -224,7 +209,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 13. Telephone (Warehouse) & 14. Email (Warehouse)
       firstPage.drawText(this.formData.telephoneWarehouseOwner, {
         x: 85,
         y: 555,
@@ -240,7 +224,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 15. Mobile (Warehouse) & 16. Website (Warehouse)
       firstPage.drawText(this.formData.mobileWarehouseOwner, {
         x: 85,
         y: 535,
@@ -256,7 +239,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 17. Products Stored
       firstPage.drawText(this.formData.productsStored, {
         x: 85,
         y: 510,
@@ -265,7 +247,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 18. List of brands
       firstPage.drawText(this.formData.brandList, {
         x: 85,
         y: 490,
@@ -274,7 +255,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // 19. Name of Supplier/s
       firstPage.drawText(this.formData.supplierName, {
         x: 85,
         y: 470,
@@ -283,7 +263,6 @@ export class RegistrationFormComponent implements OnInit {
         color: rgb(0, 0, 0)
       });
 
-      // Save & Download
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);

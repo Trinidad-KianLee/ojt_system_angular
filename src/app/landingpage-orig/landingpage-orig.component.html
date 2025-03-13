@@ -1,184 +1,226 @@
-<div class="min-h-screen flex flex-col bg-white text-gray-800">
-  <!-- Header -->
-  <header class="sticky top-0 z-50 overflow-hidden">
-    <div class="bg-gradient-to-r from-blue-900 to-blue-600 text-white py-8 min-h-[8rem]">
-      <div class="container mx-auto px-4 flex items-center justify-end">
-        <nav>
-          <ul class="flex space-x-6 text-lg font-semibold">
-            <li><a class="hover:underline" href="#">Home</a></li>
-            <li><a class="hover:underline" href="#">Search</a></li>
-            <li><a class="hover:underline" href="#">Feedback</a></li>
-            <li><a class="hover:underline" href="#">Contact Us</a></li>
-            <li><a class="hover:underline" href="#">Login</a></li>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    :target {
+      scroll-margin-top: 8rem; 
+    }
+  </style>
+  
+  <div class="min-h-screen flex flex-col bg-white text-gray-800">
+    <header class="sticky top-0 z-50 overflow-hidden">
+      <div class="bg-gradient-to-r from-blue-900 to-blue-600 text-white py-8 min-h-[8rem]">
+        <div class="container mx-auto px-4 flex items-center justify-end">
+          <nav>
+            <ul class="flex space-x-6 text-lg font-semibold">
+              <li><a class="hover:underline" href="#">Home</a></li>
+              <li><a class="hover:underline" href="#">Search</a></li>
+              <li><a class="hover:underline" href="#">Feedback</a></li>
+              <li><a class="hover:underline" href="#">Contact Us</a></li>
+              <li><a class="hover:underline" href="#">Login</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="absolute top-4 left-4 bg-white p-2 rounded shadow">
+        <img
+          src="assets/1-dti.png"
+          alt="DTI Logo"
+          class="h-20 w-auto"
+        />
+      </div>
+  
+      <svg
+        class="absolute bottom-0 left-0 w-full h-16 text-white"
+        preserveAspectRatio="none"
+        viewBox="0 0 1440 320"
+      >
+        <path
+          fill="currentColor"
+          fill-opacity="1"
+          d="M0,160L30,170.7C60,181,120,203,180,224C240,245,300,267,360,266.7C420,267,480,245,540,224C600,203,660,181,720,176C780,171,840,181,900,186.7C960,192,1020,192,1080,186.7C1140,181,1200,171,1260,149.3C1320,128,1380,96,1410,80L1440,64L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
+        ></path>
+      </svg>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 flex-grow text-xl">
+      <div class="carousel w-full h-56 mb-8 rounded-3xl overflow-hidden relative shadow">
+        <div id="slide1" class="carousel-item relative w-full">
+          <img
+            src="assets/dti_1.jpg"
+            alt="Slide 1"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+            <a href="#slide3" class="btn btn-circle">❮</a>
+            <a href="#slide2" class="btn btn-circle">❯</a>
+          </div>
+        </div>
+        <div id="slide2" class="carousel-item relative w-full">
+          <img
+            src="assets/dti_2.jpg"
+            alt="Slide 2"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+            <a href="#slide1" class="btn btn-circle">❮</a>
+            <a href="#slide3" class="btn btn-circle">❯</a>
+          </div>
+        </div>
+
+        <div id="slide3" class="carousel-item relative w-full">
+          <img
+            src="assets/dti_3.jpg"
+            alt="Slide 3"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+            <a href="#slide2" class="btn btn-circle">❮</a>
+            <a href="#slide1" class="btn btn-circle">❯</a>
+          </div>
+        </div>
+      </div>
+  
+      <h1 class="text-3xl font-bold mb-6">
+        OSMV - <span class="text-red-600">(IREGIS)</span>
+      </h1>
+  
+      <ol class="list-decimal list-inside space-y-6">
+        <li>
+          <strong>What is OSMV?</strong>
+          <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
+            <p>
+              The Office for the Special Mandate on Vaporized Nicotine and Non-Nicotine Products, their Devices, and Novel Tobacco Products (OSMV) is dedicated to regulating the vaporized nicotine and novel tobacco market, ensuring consumer safety and compliance with RA11900, the Vaporized Nicotine and Non-Nicotine Products Regulation Act, also known as the Vape Law.
+            </p>
+            <p class="mt-4">
+              It was established under DTI Department Order No. 24-154 (DO24-154) in 2024. Focused on implementing RA11900, its mandate includes the proper collection of taxes and the effective regulation of both online and physical advertising and sales of vaporized nicotine, non-nicotine products, their devices, and novel tobacco products, ensuring alignment with internationally accepted product standards.
+            </p>
+          </div>
+        </li>
+        <li>
+          <strong>PS License</strong>
+          <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fermentum nunc at sapien aliquam, eget venenatis turpis ullamcorper. Pellentesque fringilla ex non nisl gravida, vel elementum libero aliquam.
+            </p>
+            <p class="mt-4">
+              Quisque aliquam sem odio, non ultrices orci hendrerit sit amet. Duis tempus orci nulla, ac egestas justo vulputate quis. Nulla facilisi. Fusce iaculis cursus quam, quis gravida diam volutpat non.
+            </p>
+          </div>
+        </li>
+        <li>
+          <strong>CCR and SOC Application</strong>
+          <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sodales consequat nunc, at aliquam libero faucibus non. In hac habitasse platea dictumst. Vestibulum suscipit sapien ut sapien aliquam, et lobortis ex lobortis.
+            </p>
+            <p class="mt-4">
+              Curabitur elementum justo ut augue porta, sit amet tempus magna finibus. Morbi id arcu sit amet neque cursus semper. Nullam ac lectus viverra, vulputate eros non, porta nibh.
+            </p>
+          </div>
+        </li>
+        <li>
+          <strong>Age-gating</strong>
+          <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum, magna at pretium faucibus, lorem eros fringilla ante, a aliquam nisl velit a nisl. Nunc sodales risus vitae viverra cursus.
+            </p>
+            <p class="mt-4">
+              Proin scelerisque elit eget justo fermentum, in luctus nunc tincidunt. Nulla dapibus orci nec bibendum auctor. Aliquam vehicula maximus ultricies. Fusce quis ex in magna eleifend semper.
+            </p>
+          </div>
+        </li>
+        <li>
+          <strong>Designated Vaping Area</strong>
+          <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam commodo, nulla a faucibus blandit, erat nulla eleifend justo, et pretium lacus enim id nunc. Donec ac semper orci, vitae congue libero.
+            </p>
+            <p class="mt-4">
+              Suspendisse nec tellus dignissim, bibendum erat at, aliquet diam. Phasellus a semper nulla, a gravida orci. Pellentesque pulvinar odio eget justo feugiat ultricies. Vivamus quis nisl auctor, pharetra lacus sit amet, mollis velit.
+            </p>
+          </div>
+        </li>
+        <li>
+          <strong>Retailers/Distributor Registration</strong>
+          <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula dolor quis lorem varius, quis fringilla orci tempus. Pellentesque quis quam eget orci pulvinar semper eget quis felis.
+            </p>
+            <p class="mt-4">
+              In dapibus accumsan purus, in congue turpis interdum at. Maecenas semper, lacus a dapibus facilisis, erat turpis pellentesque nisl, vitae commodo nisl ante nec dui.
+            </p>
+          </div>
+        </li>
+        <li>
+          <a routerLink="/warehouse-reg"><strong>Warehouse Registration</strong></a>
+          <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget tortor a arcu pretium varius. Aliquam semper sodales orci, at rhoncus nibh feugiat sed. Fusce tristique aliquam ipsum, sed varius nibh blandit nec.
+            </p>
+            <p class="mt-4">
+              Praesent tincidunt auctor tellus, et facilisis risus molestie quis. Nulla ultricies metus quis orci consectetur, et sollicitudin urna ullamcorper. Duis nec volutpat augue. Donec at turpis eros.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </main>
+  
+    <footer class="bg-blue-900 text-white py-8">
+      <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h2 class="font-bold mb-2">OFFICE HOURS</h2>
+          <p>
+            Monday - Friday<br />
+            8:00 am - 5:00 pm<br />
+            (except holidays)
+          </p>
+          <h2 class="font-bold mt-4 mb-2">CUSTOMER CONTACT CENTER</h2>
+          <p>
+            Monday - Sunday<br />
+            8:00 am - 5:00 pm<br />
+            (except holidays)
+          </p>
+          <p class="mt-4">
+            Telephone: 1-DTI (384)<br />
+            Mobile: (917) 831-3330<br />
+          </p>
+          <p class="mt-4">Trunkline: (632) 7791-3100</p>
+        </div>
+    
+        <div>
+          <h2 class="font-bold mb-2">MAIN OFFICE ADDRESS</h2>
+          <p>
+            Finest Bldg.,<br />
+            387 Sen. Gil J. Puyat Ave.,<br />
+            1200 Makati City, Philippines
+          </p>
+        </div>
+    
+        <div>
+          <h2 class="font-bold mb-2">QUICK LINKS</h2>
+          <ul class="space-y-1">
+            <li><a href="#" class="underline hover:text-gray-200">Terms and Conditions</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">Website Privacy Policy</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">Downloads</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">Career Opportunities</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">Freedom of Information</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">Data Privacy (DTI)</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">Archives</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">Links</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">Serbisyo</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">E-Services</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">List of DTI Online Services</a></li>
+            <li><a href="#" class="underline hover:text-gray-200">Philippine National Trade Repository</a></li>
           </ul>
-        </nav>
-      </div>
-    </div>
-    <div class="absolute top-4 left-4 bg-white p-2 rounded shadow">
-      <img
-        src="assets/1-dti.png"
-        alt="DTI Logo"
-        class="h-20 w-auto"
-      />
-    </div>
-  
-  
-
-    <svg
-      class="absolute bottom-0 left-0 w-full h-16 text-white"
-      preserveAspectRatio="none"
-      viewBox="0 0 1440 320"
-    >
-      <path
-        fill="currentColor"
-        fill-opacity="1"
-        d="M0,160L30,170.7C60,181,120,203,180,224C240,245,300,267,360,266.7C420,267,480,245,540,224C600,203,660,181,720,176C780,171,840,181,900,186.7C960,192,1020,192,1080,186.7C1140,181,1200,171,1260,149.3C1320,128,1380,96,1410,80L1440,64L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
-      ></path>
-    </svg>
-  </header>
-
-  <div class="min-h-screen bg-gray-100 flex flex-col" data-theme="light">
-    <div class="carousel w-full max-w-screen-xl mx-auto mt-6 rounded-lg shadow">
-      <div id="slide1" class="carousel-item relative w-full">
-        <img 
-          src="assets/dti_1.jpg" 
-          alt="DTI Slide 1" 
-          class="w-full object-cover"
-        />
-        <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-          <a href="#slide3" class="btn btn-circle">❮</a> 
-          <a href="#slide2" class="btn btn-circle">❯</a>
+          <p class="font-bold mt-4 mb-2">FOLLOW US</p>
+          <div class="flex space-x-2">
+            <a href="#" class="hover:text-gray-200">FB Icon</a>
+            <a href="#" class="hover:text-gray-200">Twitter Icon</a>
+            <a href="#" class="hover:text-gray-200">IG Icon</a>
+          </div>
         </div>
       </div>
-      <div id="slide2" class="carousel-item relative w-full">
-        <img 
-          src="assets/dti_2.jpg" 
-          alt="DTI Slide 2" 
-          class="w-full object-cover"
-        />
-        <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-          <a href="#slide1" class="btn btn-circle">❮</a> 
-          <a href="#slide3" class="btn btn-circle">❯</a>
-        </div>
-      </div>
-      <div id="slide3" class="carousel-item relative w-full">
-        <img 
-          src="assets/dti_3.jpg" 
-          alt="DTI Slide 3" 
-          class="w-full object-cover"
-        />
-        <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-          <a href="#slide2" class="btn btn-circle">❮</a> 
-          <a href="#slide1" class="btn btn-circle">❯</a>
-        </div>
-      </div>
-    </div>
-
-  
-
-  <!-- Main Content: Larger Text -->
-  <main class="container mx-auto px-4 py-8 flex-grow text-xl">
-    <h1 class="text-3xl font-bold mb-6">
-      OSMV - <span class="text-red-600">(IREGIS)</span>
-    </h1>
-  
-    <ol class="list-decimal list-inside space-y-6">
-      <!-- 1. What is OSMV? -->
-      <li>
-        <strong>What is OSMV?</strong>
-        <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
-          <p>
-            The Office for the Special Mandate on Vaporized Nicotine and Non-Nicotine Products, their Devices, and Novel Tobacco Products (OSMV) is dedicated to regulating the vaporized nicotine and novel tobacco market, ensuring consumer safety and compliance with RA11900, the Vaporized Nicotine and Non-Nicotine Products Regulation Act, also known as the Vape Law.
-          </p>
-          <p class="mt-4">
-            It was established under DTI Department Order No. 24-154 (DO24-154) in 2024. Focused on implementing RA11900, its mandate includes the proper collection of taxes and the effective regulation of both online and physical advertising and sales of vaporized nicotine, non-nicotine products, their devices, and novel tobacco products, ensuring alignment with internationally accepted product standards.
-          </p>
-        </div>
-      </li>
-  
-      <!-- 2. PS License -->
-      <li>
-        <strong>PS License</strong>
-        <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fermentum nunc at sapien aliquam, eget venenatis turpis ullamcorper. Pellentesque fringilla ex non nisl gravida, vel elementum libero aliquam.
-          </p>
-          <p class="mt-4">
-            Quisque aliquam sem odio, non ultrices orci hendrerit sit amet. Duis tempus orci nulla, ac egestas justo vulputate quis. Nulla facilisi. Fusce iaculis cursus quam, quis gravida diam volutpat non.
-          </p>
-        </div>
-      </li>
-  
-      <!-- 3. CCR and SOC Application -->
-      <li>
-        <strong>CCR and SOC Application</strong>
-        <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sodales consequat nunc, at aliquam libero faucibus non. In hac habitasse platea dictumst. Vestibulum suscipit sapien ut sapien aliquam, et lobortis ex lobortis.
-          </p>
-          <p class="mt-4">
-            Curabitur elementum justo ut augue porta, sit amet tempus magna finibus. Morbi id arcu sit amet neque cursus semper. Nullam ac lectus viverra, vulputate eros non, porta nibh.
-          </p>
-        </div>
-      </li>
-  
-      <!-- 4. Age-gating -->
-      <li>
-        <strong>Age-gating</strong>
-        <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum, magna at pretium faucibus, lorem eros fringilla ante, a aliquam nisl velit a nisl. Nunc sodales risus vitae viverra cursus.
-          </p>
-          <p class="mt-4">
-            Proin scelerisque elit eget justo fermentum, in luctus nunc tincidunt. Nulla dapibus orci nec bibendum auctor. Aliquam vehicula maximus ultricies. Fusce quis ex in magna eleifend semper.
-          </p>
-        </div>
-      </li>
-  
-      <!-- 5. Designated Vaping Area -->
-      <li>
-        <strong>Designated Vaping Area</strong>
-        <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam commodo, nulla a faucibus blandit, erat nulla eleifend justo, et pretium lacus enim id nunc. Donec ac semper orci, vitae congue libero.
-          </p>
-          <p class="mt-4">
-            Suspendisse nec tellus dignissim, bibendum erat at, aliquet diam. Phasellus a semper nulla, a gravida orci. Pellentesque pulvinar odio eget justo feugiat ultricies. Vivamus quis nisl auctor, pharetra lacus sit amet, mollis velit.
-          </p>
-        </div>
-      </li>
-  
-      <!-- 6. Retailers/Distributor Registration -->
-      <li>
-        <strong>Retailers/Distributor Registration</strong>
-        <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula dolor quis lorem varius, quis fringilla orci tempus. Pellentesque quis quam eget orci pulvinar semper eget quis felis.
-          </p>
-          <p class="mt-4">
-            In dapibus accumsan purus, in congue turpis interdum at. Maecenas semper, lacus a dapibus facilisis, erat turpis pellentesque nisl, vitae commodo nisl ante nec dui.
-          </p>
-        </div>
-      </li>
-  
-      <!-- 7. Warehouse Registration -->
-      <li>
-        <a routerLink="/warehouse-reg"><strong>Warehouse Registration</strong></a>
-        <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-lg">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget tortor a arcu pretium varius. Aliquam semper sodales orci, at rhoncus nibh feugiat sed. Fusce tristique aliquam ipsum, sed varius nibh blandit nec.
-          </p>
-          <p class="mt-4">
-            Praesent tincidunt auctor tellus, et facilisis risus molestie quis. Nulla ultricies metus quis orci consectetur, et sollicitudin urna ullamcorper. Duis nec volutpat augue. Donec at turpis eros.
-          </p>
-        </div>
-      </li>
-    </ol>
-  </main>
-  
-
-  <!-- Bottom row -->
-  <div class="border-t border-blue-700 pt-2 text-center text-sm">
-    © 2025 Philippines - All rights reserved
-  </div>
-</div>
+    </footer>
+    
