@@ -1,14 +1,17 @@
 import { Routes } from '@angular/router';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
+import {  WarehouseRegComponent } from './warehouse-reg/warehouse-reg.component';
 import { BusinessScopeComponent } from './business-scope/business-scope.component';
+import { LandingpageOrigComponent } from './landingpage-orig/landingpage-orig.component';
 
 export const routes: Routes = [
   { path: 'terms-conditions', component: TermsConditionsComponent },
   { path: 'registration-form', component: RegistrationFormComponent },
-  { path: '', component: LandingPageComponent },
+  { path: '', component: LandingpageOrigComponent },
+  { path: 'warehouse-reg', component: WarehouseRegComponent },
   { path: 'business-scope', component: BusinessScopeComponent },
-  { path: '**', redirectTo: '/landing-page' }
+  { path: 'landingpage-orig', component: LandingpageOrigComponent },
+  { path: '**', redirectTo: '/landingpage-orig' }
 ];
 
