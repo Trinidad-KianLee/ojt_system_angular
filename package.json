@@ -26,6 +26,7 @@
     "jspdf-autotable": "^5.0.2",
     "pdf-lib": "^1.17.1",
     "pizzip": "^3.1.8",
+    "pocketbase": "^0.25.2",
     "postcss": "^8.5.3",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.0.12",
