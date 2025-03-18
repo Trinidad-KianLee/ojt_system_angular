@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PocketBaseService } from '../services/pocketbase.service'; // or your AuthService
+import { PocketBaseService } from '../services/pocketbase.service';
 
 @Component({
   selector: 'app-warehouse-reg',
@@ -27,9 +27,6 @@ export class WarehouseRegComponent {
       this.router.navigate(['/login']);
       return;
     }
-    this.router.navigate(['/registration-form']);
+    this.router.navigate(['/terms-conditions']);
   }
-  
-  
-  
 }
