@@ -5,6 +5,7 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { WarehouseRegComponent } from './warehouse-reg/warehouse-reg.component';
 import { LandingRegistrationComponent } from './landing-registration/landing-registration.component';
+import { LandingPageRetailerComponent } from './landing-page-retailer/landing-page-retailer.component';
 import { AuthGuard } from './guards/auth.guard';
 import { loginRedirectGuard } from './guards/login-redirect.guard';
 import { AgeGatingComponent } from './age-gating/age-gating.component';
@@ -18,6 +19,7 @@ export const routes: Routes = [
   { path: 'terms-conditions', component: TermsConditionsComponent },
   { path: 'landing-registration', component: LandingRegistrationComponent},
   { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard]},
+  { path: 'landing-page-retailer', component: LandingPageRetailerComponent},
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard]},
   { path: 'warehouse-reg', component: WarehouseRegComponent },
