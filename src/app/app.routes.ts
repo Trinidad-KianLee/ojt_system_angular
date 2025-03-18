@@ -4,6 +4,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 import {  WarehouseRegComponent } from './warehouse-reg/warehouse-reg.component';
 import { BusinessScopeComponent } from './business-scope/business-scope.component';
 import { LandingpageOrigComponent } from './landingpage-orig/landingpage-orig.component';
+import { RetailerComponent } from './retailer/retailer.component';
 
 export const routes: Routes = [
   { path: 'terms-conditions', component: TermsConditionsComponent },
@@ -12,6 +13,7 @@ export const routes: Routes = [
   { path: 'warehouse-reg', component: WarehouseRegComponent },
   { path: 'business-scope', component: BusinessScopeComponent },
   { path: 'landingpage-orig', component: LandingpageOrigComponent },
+  { path: 'retailer', component: RetailerComponent},
   { path: '**', redirectTo: '/landingpage-orig' }
 ];
 
