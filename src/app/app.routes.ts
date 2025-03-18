@@ -14,7 +14,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard]},
   { path: 'terms-conditions', component: TermsConditionsComponent },
   { path: 'landing-registration', component: LandingRegistrationComponent},
-  { path: 'registration-form', component: RegistrationFormComponent },
+  { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-reg', component: WarehouseRegComponent },
   { path: 'user-registration', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-reg', component: WarehouseRegComponent, canActivate: [AuthGuard] },
