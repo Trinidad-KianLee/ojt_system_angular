@@ -28,7 +28,7 @@
               >
             </li>
             <li>
-              <a href="#" class="hover:text-blue-200 transition-colors"
+              <a href="assets/a_oia.gif" class="hover:text-blue-200 transition-colors"
                 >Search</a
               >
             </li>
@@ -43,18 +43,19 @@
               >
             </li>
             <li>
-              @if(pb.isLoggedIn()){
-                <a (click)="logout()" class="hover:text-blue-200 transition-colors">
+              <ng-container *ngIf="pb.isLoggedIn(); else notLoggedIn">
+                <a (click)="openLogoutModal()" class="hover:text-blue-200 transition-colors">
                   Logout
                 </a>
-              } @else{
+              </ng-container>
+              <ng-template #notLoggedIn>
                 <a routerLink="/login" class="hover:text-blue-200 transition-colors">
                   Login
                 </a>
-              } 
+              </ng-template>
             </li>
-            <div class="">
-              {{firstName}}
+            <div>
+              {{ firstName }}
             </div>
           </ul>
         </nav>
@@ -198,9 +199,11 @@
         </div>
       </li>
       <li>
-        <strong class="cursor-pointer text-blue-700 hover:underline">
-          Age-gating
-        </strong>
+        <a
+          routerLink="/age-gating"
+          class="cursor-pointer text-blue-700 hover:underline font-bold"
+          >Age-gating</a
+        >
         <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-xl">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
@@ -217,9 +220,11 @@
         </div>
       </li>
       <li>
-        <strong class="cursor-pointer text-blue-700 hover:underline">
-          Retailers/Distributor Registration
-        </strong>
+        <a
+          routerLink="/retailer-regis"
+          class="cursor-pointer text-blue-700 hover:underline font-bold"
+          >Retailer Registration</a
+        >
         <div class="mt-3 bg-gray-50 p-6 rounded shadow-sm text-gray-700 leading-relaxed text-xl">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
@@ -312,3 +317,28 @@
   </footer>
 </div>
 
+<div
+  *ngIf="showLogoutModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75"
+>
+  <div class="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full mx-4 text-gray-800">
+    <h2 class="text-xl font-bold mb-4">Confirm Logout</h2>
+    <p class="mb-6 text-gray-700">
+      Are you sure you want to log out?
+    </p>
+    <div class="flex justify-end space-x-4">
+      <button
+        (click)="cancelLogout()"
+        class="px-4 py-2 rounded bg-gray-300 text-gray-700 hover:bg-gray-400"
+      >
+        No
+      </button>
+      <button
+        (click)="confirmLogout()"
+        class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+      >
+        Yes
+      </button>
+    </div>
+  </div>
+</div>
