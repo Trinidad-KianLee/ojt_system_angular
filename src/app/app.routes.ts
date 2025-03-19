@@ -10,6 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { loginRedirectGuard } from './guards/login-redirect.guard';
 import { AgeGatingComponent } from './age-gating/age-gating.component';
 import { RetailerRegisComponent } from './retailer-regis/retailer-regis.component';
+import { UpdatedLandingpageComponent } from './updated-landingpage/updated-landingpage.component';
 
 
 export const routes: Routes = [
@@ -25,5 +26,6 @@ export const routes: Routes = [
   { path: 'warehouse-reg', component: WarehouseRegComponent },
   { path: 'user-registration', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-reg', component: WarehouseRegComponent, canActivate: [AuthGuard] },
+  { path: 'updated-landingpage', component: UpdatedLandingpageComponent},
   { path: '**', redirectTo: 'landingpage-orig' }
 ];
