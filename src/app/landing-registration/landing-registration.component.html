@@ -2,9 +2,15 @@
     html {
       scroll-behavior: smooth;
     }
+    .error-text {
+      color: #e53e3e; /* Tailwind red-600 */
+      font-size: 0.875rem; /* text-sm */
+      margin-top: 0.25rem;
+    }
   </style>
   
   <div class="min-h-screen flex flex-col bg-white text-gray-800">
+    <!-- Header -->
     <header class="sticky top-0 z-50">
       <div class="bg-gradient-to-r from-blue-900 to-blue-600 text-white relative">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -22,7 +28,7 @@
           </div>
           <nav>
             <ul class="flex space-x-6 text-lg md:text-xl font-semibold">
-              <li><a href="landingpage-orig" class="hover:text-blue-200 transition-colors">Home</a></li>
+              <li><a routerLink="/landingpage-orig" class="hover:text-blue-200 transition-colors">Home</a></li>
               <li><a href="#" class="hover:text-blue-200 transition-colors">Search</a></li>
               <li><a href="#" class="hover:text-blue-200 transition-colors">Feedback</a></li>
               <li><a href="#" class="hover:text-blue-200 transition-colors">Contact Us</a></li>
@@ -44,92 +50,304 @@
       </div>
     </header>
   
+    <!-- Main Content -->
     <main class="container mx-auto px-4 py-8 flex-grow text-xl">
       <h2 class="text-3xl font-bold mb-6">User Registration</h2>
-      <form class="bg-gray-50 p-6 rounded shadow space-y-6" [formGroup]="form" (ngSubmit)="onRegister()">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block font-semibold mb-1">First Name</label>
-            <input 
-              formControlName="firstName" 
-              type="text"
-              placeholder="e.g. Juan"
-              class="input input-bordered w-full text-base bg-white text-black"
-              required
-            />
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Middle Name</label>
+  
+      <!-- Reactive Form -->
+      <form
+        [formGroup]="form"
+        (ngSubmit)="onRegister()"
+        class="bg-gray-50 p-6 rounded shadow space-y-6"
+      >
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  
+          <!-- FIRST NAME -->
+          <div class="relative">
             <input
-              formControlName="middleName" 
+              id="firstName"
+              formControlName="firstName"
               type="text"
-              placeholder="e.g. Santos"
-              class="input input-bordered w-full text-base bg-white text-black"
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
             />
+            <!-- Link label to input's id for click-anywhere focus -->
+            <label 
+              for="firstName"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              First Name
+            </label>
+            <div
+              class="error-text"
+              *ngIf="form.get('firstName')?.touched && form.get('firstName')?.hasError('required')"
+            >
+              First Name is required
+            </div>
           </div>
-          <div>
-            <label class="block font-semibold mb-1">Last Name</label>
+  
+          <!-- MIDDLE NAME (optional) -->
+          <div class="relative">
             <input
-            formControlName="lastName" 
+              id="middleName"
+              formControlName="middleName"
               type="text"
-              placeholder="e.g. Dela Cruz"
-              class="input input-bordered w-full text-base bg-white text-black"
-              required
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
             />
+            <label 
+              for="middleName"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Middle Name
+            </label>
           </div>
-          <div>
-            <label class="block font-semibold mb-1">Email Address</label>
+  
+          <!-- LAST NAME -->
+          <div class="relative">
             <input
-            formControlName="email" 
+              id="lastName"
+              formControlName="lastName"
+              type="text"
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
+            />
+            <label
+              for="lastName"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Last Name
+            </label>
+            <div
+              class="error-text"
+              *ngIf="form.get('lastName')?.touched && form.get('lastName')?.hasError('required')"
+            >
+              Last Name is required
+            </div>
+          </div>
+  
+          <!-- EMAIL -->
+          <div class="relative">
+            <input
+              id="email"
+              formControlName="email"
               type="email"
-              placeholder="e.g. juan.santos@example.com"
-              class="input input-bordered w-full text-base bg-white text-black"
-              required
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
             />
+            <label
+              for="email"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Email Address
+            </label>
+            <div class="error-text" *ngIf="form.get('email')?.touched">
+              <ng-container *ngIf="form.get('email')?.hasError('required')">
+                Email is required
+              </ng-container>
+              <ng-container *ngIf="form.get('email')?.hasError('email')">
+                Please enter a valid email
+              </ng-container>
+            </div>
           </div>
-          <div>
-            <label class="block font-semibold mb-1">Password</label>
+  
+          <!-- PASSWORD -->
+          <div class="relative">
             <input
-            formControlName="password" 
+              id="password"
+              formControlName="password"
               type="password"
-              placeholder="Enter your password"
-              class="input input-bordered w-full text-base bg-white text-black"
-              required
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
             />
+            <label
+              for="password"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Password
+            </label>
+            <div class="error-text" *ngIf="form.get('password')?.touched">
+              <ng-container *ngIf="form.get('password')?.hasError('required')">
+                Password is required
+              </ng-container>
+              <ng-container *ngIf="form.get('password')?.hasError('minlength')">
+                Password must be at least 8 characters
+              </ng-container>
+            </div>
           </div>
-          <div>
-            <label class="block font-semibold mb-1">Confirm Password</label>
+  
+          <!-- CONFIRM PASSWORD -->
+          <div class="relative">
             <input
-            formControlName="passwordConfirm" 
+              id="passwordConfirm"
+              formControlName="passwordConfirm"
               type="password"
-              placeholder="Re-enter your password"
-              class="input input-bordered w-full text-base bg-white text-black"
-              required
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
             />
+            <label
+              for="passwordConfirm"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Confirm Password
+            </label>
+            <div class="error-text" *ngIf="form.get('passwordConfirm')?.touched">
+              <ng-container *ngIf="form.get('passwordConfirm')?.hasError('required')">
+                Confirm Password is required
+              </ng-container>
+              <ng-container *ngIf="form.get('passwordConfirm')?.hasError('passwordMismatch')">
+                Password does not match
+              </ng-container>
+            </div>
           </div>
-          <div>
-            <label class="block font-semibold mb-1">Date of Birth</label>
+  
+          <!-- DATE OF BIRTH -->
+          <div class="relative">
             <input
-            formControlName="dob" 
+              id="dob"
+              formControlName="dob"
               type="date"
-              class="input input-bordered w-full text-base bg-white text-black"
-              required
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
             />
+            <label
+              for="dob"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Date of Birth
+            </label>
+            <div class="error-text" *ngIf="form.get('dob')?.touched">
+              <ng-container *ngIf="form.get('dob')?.hasError('required')">
+                Date of Birth is required
+              </ng-container>
+              <ng-container *ngIf="form.get('dob')?.hasError('dobOutOfRange')">
+                Enter a valid year between 1940 and 2007
+              </ng-container>
+            </div>
           </div>
+  
+          <!-- GENDER (radio) - not floating label -->
           <div>
             <label class="block font-semibold mb-1">Gender</label>
             <div class="flex items-center space-x-4 mt-2">
               <label class="flex items-center">
-                <input formControlName="gender"  type="radio" name="gender" value="Male" required />
+                <input
+                  formControlName="gender"
+                  type="radio"
+                  value="Male"
+                />
                 <span class="ml-2">Male</span>
               </label>
               <label class="flex items-center">
-                <input formControlName="gender" type="radio" name="gender" value="Female" required />
+                <input
+                  formControlName="gender"
+                  type="radio"
+                  value="Female"
+                />
                 <span class="ml-2">Female</span>
               </label>
             </div>
+            <div
+              class="error-text"
+              *ngIf="form.get('gender')?.touched && form.get('gender')?.hasError('required')"
+            >
+              Gender is required
+            </div>
+          </div>
+  
+          <!-- OFFICE ADDRESS -->
+          <div class="relative">
+            <input
+              id="officeAddress"
+              formControlName="officeAddress"
+              type="text"
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
+            />
+            <label
+              for="officeAddress"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Office Address
+            </label>
+          </div>
+  
+          <!-- COMPANY NAME -->
+          <div class="relative">
+            <input
+              id="companyName"
+              formControlName="companyName"
+              type="text"
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
+            />
+            <label
+              for="companyName"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Company Name
+            </label>
+          </div>
+  
+          <!-- CLIENT DESIGNATION -->
+          <div class="relative">
+            <input
+              id="clientDesignation"
+              formControlName="clientDesignation"
+              type="text"
+              placeholder=" "
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
+            />
+            <label
+              for="clientDesignation"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Client Designation
+            </label>
           </div>
         </div>
+  
+        <!-- Submit Button -->
         <div class="flex justify-end">
           <button
             type="submit"
@@ -140,5 +358,26 @@
         </div>
       </form>
     </main>
+  
+    <!-- Success Modal -->
+    <div
+      *ngIf="showSuccessModal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
+    >
+      <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm text-gray-800">
+        <h2 class="text-xl font-bold mb-4">Successful Registration!</h2>
+        <p class="mb-6">
+          You have been successfully registered.
+        </p>
+        <div class="flex justify-end">
+          <button
+            class="btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            (click)="closeSuccessModal()"
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   

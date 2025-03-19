@@ -1,4 +1,26 @@
-<div class="min-h-screen flex flex-col bg-white text-gray-800">
+<style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .fade-in {
+      animation: fadeIn 0.4s ease-in forwards;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .error-text {
+      color: #e53e3e; 
+      font-size: 0.875rem; 
+      margin-top: 0.25rem;
+    }
+  </style>
+  
+  <div class="min-h-screen flex flex-col bg-white text-gray-800">
     <header class="sticky top-0 z-50">
       <div class="bg-gradient-to-r from-blue-900 to-blue-600 text-white relative">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -64,44 +86,59 @@
     </header>
   
     <main class="container mx-auto px-4 py-8 flex-grow text-2xl">
-      <div class="max-w-md mx-auto bg-gray-50 p-6 rounded shadow">
+      <div class="max-w-lg mx-auto bg-gray-50 p-6 rounded shadow">
         <h2 class="text-3xl font-bold mb-6">Login</h2>
-        <!-- Updated form with IDs for inputs and error message -->
-        <form class="space-y-4" (ngSubmit)="onLogin()" id="loginForm">
-          <div>
-            <label class="block font-semibold mb-1">Email</label>
+  
+        <form class="space-y-6" (ngSubmit)="onLogin()" id="loginForm">
+          <div class="relative">
             <input
-              type="email"
               id="email"
               name="email"
+              type="email"
               [(ngModel)]="formData.email"
-              placeholder="Enter your email"
-              class="input input-bordered w-full text-base bg-white text-black border-gray-300"
+              placeholder=" "
               required
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
             />
+            <label
+              for="email"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
+                     peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Email
+            </label>
           </div>
-          <div>
-            <label class="block font-semibold mb-1">Password</label>
+  
+          <div class="relative">
             <input
-              type="password"
               id="password"
               name="password"
+              type="password"
               [(ngModel)]="formData.password"
-              placeholder="Enter your password"
-              class="input input-bordered w-full text-base bg-white text-black border-gray-300"
+              placeholder=" "
               required
+              class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
             />
+            <label
+              for="password"
+              class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
+                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2
+                     peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
+            >
+              Password
+            </label>
           </div>
   
-          <!-- Error message (hidden by default) -->
-          <p
-            id="errorMessage"
-            class="hidden text-red-500 fade-in mt-2"
-          >
+          <p id="errorMessage" class="hidden text-red-500 fade-in mt-2">
             Invalid email or password. Please try again.
           </p>
-  
-          <!-- Success message (hidden by default) -->
           <p
             id="successMessage"
             class="hidden text-green-700 bg-green-100 border border-green-300 rounded p-3 mt-2 fade-in"
@@ -111,7 +148,7 @@
   
           <button
             type="submit"
-            class="btn btn-primary w-full mt-4"
+            class="btn btn-primary w-full mt-4 text-base font-semibold"
           >
             Login
           </button>
