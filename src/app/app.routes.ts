@@ -11,6 +11,8 @@ import { loginRedirectGuard } from './guards/login-redirect.guard';
 import { AgeGatingComponent } from './age-gating/age-gating.component';
 import { RetailerRegisComponent } from './retailer-regis/retailer-regis.component';
 import { UpdatedLandingpageComponent } from './updated-landingpage/updated-landingpage.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 
 export const routes: Routes = [
@@ -24,6 +26,8 @@ export const routes: Routes = [
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard]},
   { path: 'warehouse-reg', component: WarehouseRegComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'password-reset', component: PasswordResetComponent },
   { path: 'user-registration', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-reg', component: WarehouseRegComponent, canActivate: [AuthGuard] },
   { path: 'updated-landingpage', component: UpdatedLandingpageComponent},
