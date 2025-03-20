@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { PocketBaseService } from '../services/pocketbase.service';
+import { PocketBaseService } from '../../../services/pocketbase.service';
 
 @Component({
   selector: 'app-landingpage-orig',
@@ -15,8 +15,8 @@ export class LandingpageOrigComponent {
   showLogoutModal: boolean = false;
 
   constructor(public pb: PocketBaseService, private router: Router) {
-    const userData = this.pb.getUserData(); 
-    this.firstName = userData ? userData["firstName"] : ''; 
+    const userData = this.pb.getUserData();
+    this.firstName = userData ? userData["firstName"] : '';
   }
 
   openLogoutModal() {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PocketBaseService } from '../services/pocketbase.service';
+import { PocketBaseService } from '../../services/pocketbase.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -28,8 +28,7 @@ export class LoginComponent {
     const passwordInput = document.getElementById('password');
     const errorMessage = document.getElementById('errorMessage');
     const successMessage = document.getElementById('successMessage');
-
-    // Hide messages and reset classes each time user tries to login
+    
     if (errorMessage) {
       errorMessage.classList.add('hidden');
     }

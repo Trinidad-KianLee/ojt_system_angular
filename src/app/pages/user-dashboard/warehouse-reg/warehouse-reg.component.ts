@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PocketBaseService } from '../services/pocketbase.service';
+import { PocketBaseService } from '../../../services/pocketbase.service';
 
 @Component({
   selector: 'app-warehouse-reg',

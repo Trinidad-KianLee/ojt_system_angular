@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PocketBaseService } from '../services/pocketbase.service';
+import { PocketBaseService } from '../../services/pocketbase.service';
 import { ActivatedRoute } from '@angular/router';
 import PocketBase from 'pocketbase';
 

@@ -12,7 +12,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { PocketBaseService } from '../services/pocketbase.service';
+import { PocketBaseService } from '../../../services/pocketbase.service';
 
 @Component({
   selector: 'app-landing-registration',

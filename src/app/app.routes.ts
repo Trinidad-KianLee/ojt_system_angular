@@ -1,18 +1,18 @@
 import { Routes } from '@angular/router';
-import { LandingpageOrigComponent } from './landingpage-orig/landingpage-orig.component';
-import { LoginComponent } from './login/login.component';
-import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
-import { RegistrationFormComponent } from './registration-form/registration-form.component';
-import { WarehouseRegComponent } from './warehouse-reg/warehouse-reg.component';
-import { LandingRegistrationComponent } from './landing-registration/landing-registration.component';
-import { LandingPageRetailerComponent } from './landing-page-retailer/landing-page-retailer.component';
+import { LandingpageOrigComponent } from './pages/user-dashboard/landingpage-orig/landingpage-orig.component';
+import { LoginComponent } from './pages/login/login.component';
+import { TermsConditionsComponent } from './pages/user-dashboard/terms-conditions/terms-conditions.component';
+import { RegistrationFormComponent } from './pages/registration-form/registration-form.component';
+import { WarehouseRegComponent } from './pages/user-dashboard/warehouse-reg/warehouse-reg.component';
+import { LandingRegistrationComponent } from './pages/user-dashboard/landing-registration/landing-registration.component';
+import { LandingPageRetailerComponent } from './pages/user-dashboard/landing-page-retailer/landing-page-retailer.component';
 import { AuthGuard } from './guards/auth.guard';
 import { loginRedirectGuard } from './guards/login-redirect.guard';
-import { AgeGatingComponent } from './age-gating/age-gating.component';
-import { RetailerRegisComponent } from './retailer-regis/retailer-regis.component';
-import { UpdatedLandingpageComponent } from './updated-landingpage/updated-landingpage.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { AgeGatingComponent } from './pages/user-dashboard/age-gating/age-gating.component';
+import { RetailerRegisComponent } from './pages/user-dashboard/retailer-regis/retailer-regis.component';
+import { UpdatedLandingpageComponent } from './pages/user-dashboard/updated-landingpage/updated-landingpage.component';
+import { ForgotPasswordComponent } from './pages/user-dashboard/forgot-password/forgot-password.component';
+import { PasswordResetComponent } from './pages/password-reset/password-reset.component';
 
 
 export const routes: Routes = [

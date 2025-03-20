@@ -1,4 +1,4 @@
-<reference path="../pb_data/types.d.ts" />
+{/* <reference path="../pb_data/types.d.ts" />
 migrate((app) => {
   const collection = app.findCollectionByNameOrId("_pb_users_auth_")
 
@@ -24,4 +24,4 @@ migrate((app) => {
   collection.fields.removeById("select1466534506")
 
   return app.save(collection)
-})
+}) */}
