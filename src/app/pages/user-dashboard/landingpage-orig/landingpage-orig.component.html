@@ -338,28 +338,29 @@
 </div>
 
 <div
-  *ngIf="showLogoutModal"
-  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75"
+*ngIf="showLogoutModal"
+class="fixed inset-0 z-50 flex items-center justify-center"
+style="background-color: rgba(0, 0, 0, 0.2);"
 >
-  <div class="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full mx-4 text-gray-800">
-    <h2 class="text-xl font-bold mb-4">Confirm Logout</h2>
-    <p class="mb-6 text-gray-700">
-      Are you sure you want to log out?
-    </p>
-    <div class="flex justify-end space-x-4">
-      <button
-        (click)="cancelLogout()"
-        class="px-4 py-2 rounded bg-gray-300 text-gray-700 hover:bg-gray-400"
-      >
-        No
-      </button>
-      <button
-        (click)="confirmLogout()"
-        class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
-      >
-        Yes
-      </button>
-    </div>
+<div class="bg-white border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center text-gray-700">
+  <h2 class="text-xl font-bold mb-4">Confirm Logout</h2>
+  <p class="mb-6 text-gray-700">
+    Are you sure you want to log out?
+  </p>
+  <div class="flex justify-end space-x-4">
+    <button
+      (click)="cancelLogout()"
+      class="btn bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded"
+    >
+      No
+    </button>
+    <button
+      (click)="confirmLogout()"
+      class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded"
+    >
+      Yes
+    </button>
   </div>
+</div>
 </div>
 

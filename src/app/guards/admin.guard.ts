@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { PocketBaseService } from '../services/pocketbase.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class AdminGuard implements CanActivate {
   constructor(
     private pbService: PocketBaseService,
     private router: Router
   ) {}
 
-  canActivate(): boolean {
-    const currentUser = this.pbService.getUserData();
-    if (currentUser?.role === 'admin') {
-      return true;
-    } else {
-      this.router.navigate(['/dashboard']);
-      return false;
+  canActivate(): boolean | UrlTree {
+    if (!this.pbService.isLoggedIn()) {
+      return this.router.parseUrl('/login');
     }
+
+    if (!this.pbService.isAdmin()) {
+      return this.router.parseUrl('/landingpage-orig');
+    }
+    return true;
   }
 }

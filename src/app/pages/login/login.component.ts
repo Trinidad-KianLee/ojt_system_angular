@@ -26,26 +26,26 @@ export class LoginComponent {
   ) {}
 
   async onLogin() {
-    // Reset booleans on each new attempt
     this.loginError = false;
     this.loginSuccess = false;
 
     try {
-      // Attempt login with your PocketBase service
       await this.pbService.loginUser(this.formData.email, this.formData.password);
 
-      // If successful:
-      this.loginSuccess = true; // show green toast
 
-      // Optionally redirect after a delay
+      this.loginSuccess = true; 
       setTimeout(() => {
-        this.router.navigate(['/landingpage-orig']);
+        if (this.pbService.isAdmin()) {
+          this.router.navigate(['/admin-dashboard']);
+        } else {
+          this.router.navigate(['/landingpage-orig']);
+        }
       }, 1500);
+
     } catch (error) {
       console.error('Login error:', error);
 
-      // If fail:
-      this.loginError = true; // show red toast
+      this.loginError = true;
     }
   }
 }

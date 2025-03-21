@@ -14,24 +14,36 @@ import { UpdatedLandingpageComponent } from './pages/user-dashboard/updated-land
 import { ForgotPasswordComponent } from './pages/user-dashboard/forgot-password/forgot-password.component';
 import { PasswordResetComponent } from './pages/password-reset/password-reset.component';
 import { VapeRegisComponent } from './pages/user-dashboard/vape-regis/vape-regis.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 
+import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landingpage-orig', pathMatch: 'full' },
   { path: 'landingpage-orig', component: LandingpageOrigComponent },
-  { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard]},
+  { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard] },
   { path: 'terms-conditions', component: TermsConditionsComponent },
+  { path: 'terms-conditions', component: AdminDashboardComponent, canActivate: [AuthGuard] },
   { path: 'landing-registration', component: LandingRegistrationComponent},
-  { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard]},
-  { path: 'landing-page-retailer', component: LandingPageRetailerComponent},
+  { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard] },
+  { path: 'landing-page-retailer', component: LandingPageRetailerComponent },
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
-  { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard]},
-  { path: 'vape-regis', component: VapeRegisComponent, canActivate: [AuthGuard]},
+  { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard] },
+  { path: 'vape-regis', component: VapeRegisComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-reg', component: WarehouseRegComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'password-reset', component: PasswordResetComponent },
   { path: 'user-registration', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-reg', component: WarehouseRegComponent, canActivate: [AuthGuard] },
-  { path: 'updated-landingpage', component: UpdatedLandingpageComponent},
+  { path: 'updated-landingpage', component: UpdatedLandingpageComponent },
+
+  {
+    path: 'admin-dashboard',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, AdminGuard]
+  },
+
+  
+
   { path: '**', redirectTo: 'landingpage-orig' }
 ];
