@@ -8,7 +8,7 @@ import {
   Validators
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PocketBaseService } from '../../../services/pocketbase.service';
 
@@ -30,7 +30,8 @@ export class VapeRegisComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private pbService: PocketBaseService
+    private pbService: PocketBaseService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -87,7 +88,6 @@ export class VapeRegisComponent implements OnInit {
       return;
     }
     try {
-      // Destructure the promoSchemes
       const {
         discount,
         contest,
@@ -98,7 +98,6 @@ export class VapeRegisComponent implements OnInit {
         coverage
       } = this.form.value.promoSchemes;
 
-      // Build a comma-separated string from checked schemes
       const selectedSchemes: string[] = [];
       if (discount) selectedSchemes.push('discount');
       if (contest) selectedSchemes.push('contest');
@@ -109,7 +108,6 @@ export class VapeRegisComponent implements OnInit {
 
       const promoSchemesString = selectedSchemes.join(', ');
 
-      // Prepare FormData
       const formData = new FormData();
       formData.append('applicationToken', this.form.value.applicantToken);
       formData.append('typeOfApplication', this.form.value.typeOfApplication);
@@ -133,9 +131,15 @@ export class VapeRegisComponent implements OnInit {
       formData.append('agencyContactNo', this.form.value.agencyContactNo || '');
       formData.append('amendmentReason', this.form.value.amendmentReason || '');
 
+      const currentUser = this.pbService.getUserData();
+      if (currentUser && currentUser.id) {
+        formData.append('owner', currentUser.id);
+      }
+
       if (this.uploadedFiles.length > 0) {
         formData.append('attachments', this.uploadedFiles[0]);
       }
+
       await this.pbService.createRecord('vape_regis', formData);
 
       this.showSuccessModal = true;
