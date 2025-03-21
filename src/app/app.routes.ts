@@ -20,30 +20,28 @@ import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landingpage-orig', pathMatch: 'full' },
+
   { path: 'landingpage-orig', component: LandingpageOrigComponent },
   { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard] },
   { path: 'terms-conditions', component: TermsConditionsComponent },
-  { path: 'terms-conditions', component: AdminDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'landing-registration', component: LandingRegistrationComponent},
-  { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard] },
+  { path: 'landing-registration', component: LandingRegistrationComponent },
   { path: 'landing-page-retailer', component: LandingPageRetailerComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'password-reset', component: PasswordResetComponent },
+  { path: 'updated-landingpage', component: UpdatedLandingpageComponent },
+
+  { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard] },
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard] },
   { path: 'vape-regis', component: VapeRegisComponent, canActivate: [AuthGuard] },
-  { path: 'warehouse-reg', component: WarehouseRegComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'password-reset', component: PasswordResetComponent },
-  { path: 'user-registration', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-reg', component: WarehouseRegComponent, canActivate: [AuthGuard] },
-  { path: 'updated-landingpage', component: UpdatedLandingpageComponent },
+  { path: 'user-registration', component: RegistrationFormComponent, canActivate: [AuthGuard] },
 
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, AdminGuard]
   },
-
-  
 
   { path: '**', redirectTo: 'landingpage-orig' }
 ];
