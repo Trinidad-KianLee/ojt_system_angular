@@ -29,6 +29,13 @@ export class PocketBaseService {
   getUserData() {
     return this.pb.authStore.record; 
   }
+
+  async createRecord(collectionName: string, formData: FormData) {
+    return this.pb.collection(collectionName).create(formData);
+  }
+  
+  
+  
   
 
   logout() {

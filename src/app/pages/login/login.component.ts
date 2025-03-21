@@ -17,54 +17,35 @@ export class LoginComponent {
     password: ''
   };
 
+  loginError = false;
+  loginSuccess = false;
+
   constructor(
     private pbService: PocketBaseService,
     private router: Router
   ) {}
 
   async onLogin() {
-    // Grab the DOM elements just once at the start
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const errorMessage = document.getElementById('errorMessage');
-    const successMessage = document.getElementById('successMessage');
-    
-    if (errorMessage) {
-      errorMessage.classList.add('hidden');
-    }
-    if (successMessage) {
-      successMessage.classList.add('hidden');
-    }
-    if (emailInput && passwordInput) {
-      emailInput.classList.remove('shake', 'border-red-500');
-      passwordInput.classList.remove('shake', 'border-red-500');
-    }
+    // Reset booleans on each new attempt
+    this.loginError = false;
+    this.loginSuccess = false;
 
     try {
+      // Attempt login with your PocketBase service
       await this.pbService.loginUser(this.formData.email, this.formData.password);
-      if (successMessage) {
-        successMessage.classList.remove('hidden');
-      }
 
+      // If successful:
+      this.loginSuccess = true; // show green toast
+
+      // Optionally redirect after a delay
       setTimeout(() => {
         this.router.navigate(['/landingpage-orig']);
-      }, 1500); 
+      }, 1500);
     } catch (error) {
       console.error('Login error:', error);
 
-      if (errorMessage) {
-        errorMessage.classList.remove('hidden');
-      }
-
-      if (emailInput && passwordInput) {
-        emailInput.classList.add('shake', 'border-red-500');
-        passwordInput.classList.add('shake', 'border-red-500');
-
-        setTimeout(() => {
-          emailInput.classList.remove('shake');
-          passwordInput.classList.remove('shake');
-        }, 300);
-      }
+      // If fail:
+      this.loginError = true; // show red toast
     }
   }
 }

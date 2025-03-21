@@ -3,14 +3,13 @@
       scroll-behavior: smooth;
     }
     .error-text {
-      color: #e53e3e; /* Tailwind red-600 */
-      font-size: 0.875rem; /* text-sm */
+      color: #e53e3e;
+      font-size: 0.875rem; 
       margin-top: 0.25rem;
     }
   </style>
   
   <div class="min-h-screen flex flex-col bg-white text-gray-800">
-    <!-- Header -->
     <header class="sticky top-0 z-50">
       <div class="bg-gradient-to-r from-blue-900 to-blue-600 text-white relative">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -19,8 +18,7 @@
               <img
                 src="assets/1-dti.png"
                 alt="DTI Logo"
-                class="h-12 w-auto"
-              />
+                class="h-12 w-auto"/>
             </div>
             <h1 class="text-2xl md:text-3xl font-bold">
               Department of Trade and Industry - OSMV
@@ -39,8 +37,7 @@
         <svg
           class="w-full h-12 text-white -mt-1"
           preserveAspectRatio="none"
-          viewBox="0 0 1440 320"
-        >
+          viewBox="0 0 1440 320">
           <path
             fill="currentColor"
             fill-opacity="1"
@@ -49,12 +46,10 @@
         </svg>
       </div>
     </header>
-  
-    <!-- Main Content -->
+
     <main class="container mx-auto px-4 py-8 flex-grow text-xl">
       <h2 class="text-3xl font-bold mb-6">User Registration</h2>
   
-      <!-- Reactive Form -->
       <form
         [formGroup]="form"
         (ngSubmit)="onRegister()"
@@ -62,7 +57,6 @@
       >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
   
-          <!-- FIRST NAME -->
           <div class="relative">
             <input
               id="firstName"
@@ -71,7 +65,7 @@
               placeholder=" "
               class="peer input input-bordered w-full text-base bg-white text-black placeholder-transparent"
             />
-            <!-- Link label to input's id for click-anywhere focus -->
+
             <label 
               for="firstName"
               class="absolute left-2 top-2 text-gray-500 transition-all duration-200
@@ -89,8 +83,7 @@
               First Name is required
             </div>
           </div>
-  
-          <!-- MIDDLE NAME (optional) -->
+
           <div class="relative">
             <input
               id="middleName"
@@ -110,8 +103,7 @@
               Middle Name
             </label>
           </div>
-  
-          <!-- LAST NAME -->
+
           <div class="relative">
             <input
               id="lastName"
@@ -138,7 +130,6 @@
             </div>
           </div>
   
-          <!-- EMAIL -->
           <div class="relative">
             <input
               id="email"
@@ -167,7 +158,6 @@
             </div>
           </div>
   
-          <!-- PASSWORD -->
           <div class="relative">
             <input
               id="password"
@@ -195,8 +185,7 @@
               </ng-container>
             </div>
           </div>
-  
-          <!-- CONFIRM PASSWORD -->
+
           <div class="relative">
             <input
               id="passwordConfirm"
@@ -224,8 +213,7 @@
               </ng-container>
             </div>
           </div>
-  
-          <!-- DATE OF BIRTH -->
+
           <div class="relative">
             <input
               id="dob"
@@ -254,7 +242,6 @@
             </div>
           </div>
   
-          <!-- GENDER (radio) - not floating label -->
           <div>
             <label class="block font-semibold mb-1">Gender</label>
             <div class="flex items-center space-x-4 mt-2">
@@ -283,7 +270,6 @@
             </div>
           </div>
   
-          <!-- OFFICE ADDRESS -->
           <div class="relative">
             <input
               id="officeAddress"
@@ -304,7 +290,6 @@
             </label>
           </div>
   
-          <!-- COMPANY NAME -->
           <div class="relative">
             <input
               id="companyName"
@@ -325,7 +310,6 @@
             </label>
           </div>
   
-          <!-- CLIENT DESIGNATION -->
           <div class="relative">
             <input
               id="clientDesignation"
@@ -347,7 +331,6 @@
           </div>
         </div>
   
-        <!-- Submit Button -->
         <div class="flex justify-end">
           <button
             type="submit"
@@ -359,7 +342,6 @@
       </form>
     </main>
   
-    <!-- Success Modal -->
     <div
       *ngIf="showSuccessModal"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"

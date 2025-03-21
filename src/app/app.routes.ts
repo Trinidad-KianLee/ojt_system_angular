@@ -13,6 +13,7 @@ import { RetailerRegisComponent } from './pages/user-dashboard/retailer-regis/re
 import { UpdatedLandingpageComponent } from './pages/user-dashboard/updated-landingpage/updated-landingpage.component';
 import { ForgotPasswordComponent } from './pages/user-dashboard/forgot-password/forgot-password.component';
 import { PasswordResetComponent } from './pages/password-reset/password-reset.component';
+import { VapeRegisComponent } from './pages/user-dashboard/vape-regis/vape-regis.component';
 
 
 export const routes: Routes = [
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'landing-page-retailer', component: LandingPageRetailerComponent},
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard]},
+  { path: 'vape-regis', component: VapeRegisComponent, canActivate: [AuthGuard]},
   { path: 'warehouse-reg', component: WarehouseRegComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'password-reset', component: PasswordResetComponent },
