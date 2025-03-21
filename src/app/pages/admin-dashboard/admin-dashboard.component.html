@@ -10,11 +10,7 @@
       <div class="navbar bg-gradient-to-r from-blue-900 to-blue-600 text-white shadow-lg">
         <div class="flex-1 px-2 lg:flex-none">
           <div class="flex items-center space-x-2">
-            <img
-              src="assets/1-dti.png"
-              alt="DTI Logo"
-              class="h-10 w-auto"
-            />
+            <img src="assets/1-dti.png" alt="DTI Logo" class="h-10 w-auto" />
             <span class="text-lg md:text-xl font-bold">
               Department of Trade and Industry - OSMV
             </span>
@@ -55,57 +51,148 @@
           This is your admin dashboard content area.
         </p>
       </div>
+  
+      <!-- Box for "View Vape Registrations" -->
+      <div class="bg-gray-50 p-4 rounded shadow mt-8">
+        <h3 class="text-lg font-bold mb-2 text-blue-800">
+          Vape Registrations
+        </h3>
+        <p class="text-gray-600">
+          Click the button to load the user-submitted vape_regis records.
+        </p>
+        <button
+          (click)="toggleVapeRegis()"
+          class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded mt-4"
+        >
+          View Vape registrations
+        </button>
+  
+        <!-- Table of vape_regis records -->
+        <div *ngIf="showVapeRegis" class="mt-4">
+          <!-- Loading & Error states -->
+          <div *ngIf="loadingVape" class="text-blue-600 font-semibold">
+            Loading...
+          </div>
+          <div *ngIf="errorMsg" class="text-red-600 font-semibold">
+            {{ errorMsg }}
+          </div>
+  
+          <!-- Responsive wrapper -->
+          <div class="overflow-x-auto shadow rounded mt-4">
+            <!-- Only show table if we have records and not currently loading -->
+            <table
+              *ngIf="vapeRegisRecords.length && !loadingVape"
+              class="w-full border-collapse text-left text-sm"
+            >
+              <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+                <tr>
+                  <th class="p-3 border-b">Coverage</th>
+                  <th class="p-3 border-b">Promo Period</th>
+                  <th class="p-3 border-b">Promo Schemes</th>
+                  <th class="p-3 border-b">Sponsor Name</th>
+                  <th class="p-3 border-b">Sponsor Contact No.</th>
+                  <th class="p-3 border-b">Sponsor Designation</th>
+                  <th class="p-3 border-b">Agency Ref No</th>
+                  <th class="p-3 border-b">Agency Designation</th>
+                  <th class="p-3 border-b">Agency Authorized Rep</th>
+                  <th class="p-3 border-b">Agency Contact No</th>
+                  <th class="p-3 border-b">Amendment Reason</th>
+                  <th class="p-3 border-b">Attachments</th>
+                  
+
+                  <th class="p-3 border-b">Owner Email</th>
+                </tr>
+              </thead>
+              <tbody class="text-gray-700">
+                <tr
+                  *ngFor="let record of vapeRegisRecords; let i = index"
+                  class="border-b hover:bg-gray-50"
+                  [class.bg-gray-50]="i % 2 === 0"
+                >
+                  <!-- Existing fields -->
+                  <td class="p-3">{{ record.coverage }}</td>
+                  <td class="p-3">{{ record.promoPeriod }}</td>
+                  <td class="p-3">{{ record.promoSchemes }}</td>
+                  <td class="p-3">{{ record.sponsorName }}</td>
+                  <td class="p-3">{{ record.sponsorContactNo }}</td>
+                  <td class="p-3">{{ record.sponsorDesignation }}</td>
+                  <td class="p-3">{{ record.agencyRefNo }}</td>
+                  <td class="p-3">{{ record.agencyDesignation }}</td>
+                  <td class="p-3">{{ record.agencyAuthorizedRep }}</td>
+                  <td class="p-3">{{ record.agencyContactNo }}</td>
+                  <td class="p-3">{{ record.amendmentReason }}</td>
+  
+                  <td class="p-3">
+                    <a
+                      *ngIf="record.attachments"
+                      [href]="pb.getAttachmentUrl(record, 'attachments')"
+                      target="_blank"
+                      class="text-blue-600 hover:underline"
+                    >
+                      View File
+                    </a>
+                    <span *ngIf="!record.attachments" class="text-gray-500">
+                      N/A
+                    </span>
+                  </td>
+
+                  <td class="p-3">
+                    {{ record.expand?.owner?.email || 'No owner data' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </main>
-   <!-- Welcome Overlay -->
-<div
-*ngIf="showWelcomeOverlay"
-class="fixed inset-0 z-50 flex items-center justify-center"
-style="background-color: rgba(0, 0, 0, 0.2);"
->
-<div class="bg-white border border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center">
-  <h2 class="text-2xl font-bold mb-4">Welcome, Admin {{ firstName }}!</h2>
-  <p class="text-gray-600 mb-6">
-    You have successfully logged in.
-  </p>
-  <button
-    (click)="closeWelcomeOverlay()"
-    class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded"
-  >
-    Continue
-  </button>
-</div>
-</div>
 
-<!-- Logout Confirmation Modal -->
-<div
-*ngIf="showLogoutModal"
-class="fixed inset-0 z-50 flex items-center justify-center"
-style="background-color: rgba(0, 0, 0, 0.2);"
->
-<div class="bg-white border border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center">
-  <h2 class="text-xl font-bold mb-4">Confirm Logout</h2>
-  <p class="mb-6 text-gray-700">
-    Are you sure you want to log out?
-  </p>
-  <div class="flex justify-end space-x-4">
-    <button
-      (click)="cancelLogout()"
-      class="btn bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded"
+    <div
+      *ngIf="showWelcomeOverlay"
+      class="fixed inset-0 z-50 flex items-center justify-center"
+      style="background-color: rgba(0, 0, 0, 0.2);"
     >
-      No
-    </button>
-    <button
-      (click)="confirmLogout()"
-      class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded"
+      <div class="bg-white border border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center">
+        <h2 class="text-2xl font-bold mb-4">
+          Welcome, Admin {{ firstName }}!
+        </h2>
+        <p class="text-gray-600 mb-6">
+          You have successfully logged in.
+        </p>
+        <button
+          (click)="closeWelcomeOverlay()"
+          class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showLogoutModal"
+      class="fixed inset-0 z-50 flex items-center justify-center"
+      style="background-color: rgba(0, 0, 0, 0.2);"
     >
-      Yes
-    </button>
-  </div>
-</div>
-</div>
-
-   
- 
-
+      <div class="bg-white border border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center">
+        <h2 class="text-xl font-bold mb-4">Confirm Logout</h2>
+        <p class="mb-6 text-gray-700">
+          Are you sure you want to log out?
+        </p>
+        <div class="flex justify-end space-x-4">
+          <button
+            (click)="cancelLogout()"
+            class="btn bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded"
+          >
+            No
+          </button>
+          <button
+            (click)="confirmLogout()"
+            class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   

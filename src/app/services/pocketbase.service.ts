@@ -38,13 +38,11 @@ export class PocketBaseService {
     return this.pb.authStore.record as PBUser | null;
   }
 
-
   getUserRole(): string {
     const user = this.getUserData();
     return user?.role || '';
   }
 
-  
   isAdmin(): boolean {
     return this.getUserRole() === 'admin';
   }
@@ -81,5 +79,51 @@ export class PocketBaseService {
       console.error('Error updating password:', error);
       throw error;
     }
+  }
+
+  /**
+   * ────────────────────────────────────────────────────────────────────────────────
+   * ADMIN-ONLY METHODS
+   * ────────────────────────────────────────────────────────────────────────────────
+   */
+
+  /**
+   * Retrieve all vape_regis records, including the expanded "owner" relation.
+   * Only admin can call this. If not admin, throw an error.
+   */
+  async getAllVapeRegisRecords(): Promise<any[]> {
+    if (!this.isAdmin()) {
+      throw new Error('Access denied. Admin only method.');
+    }
+    // Fetch with expand: 'owner'
+    return this.pb.collection('vape_regis').getFullList({
+      expand: 'owner'
+    });
+  }
+
+  /**
+   * Generate a public URL for an attachment file
+   * stored in the 'vape_regis' collection.
+   *
+   * @param record  - The vape_regis record object
+   * @param fileKey - The field name for the attachment (e.g. 'attachments')
+   */
+  getAttachmentUrl(record: any, fileKey: string): string {
+    if (!record?.id || !record[fileKey]) {
+      // Return empty string if there's no record ID or file name
+      return '';
+    }
+    return `${this.pb.baseUrl}/api/files/vape_regis/${record.id}/${record[fileKey]}`;
+  }
+
+  /**
+   * Example: a placeholder admin-only method
+   */
+  async adminOnlyMethod(): Promise<string> {
+    if (!this.isAdmin()) {
+      throw new Error('Access denied. Admin only method.');
+    }
+    // Do something admin-specific here, e.g. retrieving user lists, stats, etc.
+    return 'Admin-specific data retrieved!';
   }
 }
