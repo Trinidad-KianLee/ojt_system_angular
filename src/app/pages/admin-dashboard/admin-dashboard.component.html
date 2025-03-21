@@ -86,9 +86,9 @@
             >
               <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
                 <tr>
-                  <!-- Existing columns -->
                   <th class="p-3 border-b">Coverage</th>
                   <th class="p-3 border-b">Promo Period</th>
+                  <th class="p-3 border-b">Promo Schemes</th>
                   <th class="p-3 border-b">Sponsor Name</th>
                   <th class="p-3 border-b">Sponsor Contact No.</th>
                   <th class="p-3 border-b">Sponsor Designation</th>
@@ -97,9 +97,9 @@
                   <th class="p-3 border-b">Agency Authorized Rep</th>
                   <th class="p-3 border-b">Agency Contact No</th>
                   <th class="p-3 border-b">Amendment Reason</th>
-                  <!-- Attachments column -->
                   <th class="p-3 border-b">Attachments</th>
-                  <!-- Owner (expanded) column -->
+                  
+
                   <th class="p-3 border-b">Owner Email</th>
                 </tr>
               </thead>
@@ -112,6 +112,7 @@
                   <!-- Existing fields -->
                   <td class="p-3">{{ record.coverage }}</td>
                   <td class="p-3">{{ record.promoPeriod }}</td>
+                  <td class="p-3">{{ record.promoSchemes }}</td>
                   <td class="p-3">{{ record.sponsorName }}</td>
                   <td class="p-3">{{ record.sponsorContactNo }}</td>
                   <td class="p-3">{{ record.sponsorDesignation }}</td>
@@ -121,9 +122,7 @@
                   <td class="p-3">{{ record.agencyContactNo }}</td>
                   <td class="p-3">{{ record.amendmentReason }}</td>
   
-                  <!-- Attachments (single file example) -->
                   <td class="p-3">
-                    <!-- If 'attachments' is a single string filename: -->
                     <a
                       *ngIf="record.attachments"
                       [href]="pb.getAttachmentUrl(record, 'attachments')"
@@ -132,15 +131,12 @@
                     >
                       View File
                     </a>
-                    <!-- If there's no attachment, show a placeholder -->
                     <span *ngIf="!record.attachments" class="text-gray-500">
                       N/A
                     </span>
                   </td>
-  
-                  <!-- Owner Email (expanded) -->
+
                   <td class="p-3">
-                    <!-- If you're expanding the owner relation: -->
                     {{ record.expand?.owner?.email || 'No owner data' }}
                   </td>
                 </tr>
@@ -150,8 +146,7 @@
         </div>
       </div>
     </main>
-  
-    <!-- Welcome Overlay -->
+
     <div
       *ngIf="showWelcomeOverlay"
       class="fixed inset-0 z-50 flex items-center justify-center"
@@ -172,8 +167,7 @@
         </button>
       </div>
     </div>
-  
-    <!-- Logout Confirmation Modal -->
+
     <div
       *ngIf="showLogoutModal"
       class="fixed inset-0 z-50 flex items-center justify-center"
