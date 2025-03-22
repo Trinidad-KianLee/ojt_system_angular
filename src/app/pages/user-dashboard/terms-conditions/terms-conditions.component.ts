@@ -14,6 +14,7 @@ export class TermsConditionsComponent {
   }
 
   declineTerms() {
-    console.log('User declined the terms and conditions');
+    this.router.navigate(['/updated-landing-page']);
+    
   }
 }

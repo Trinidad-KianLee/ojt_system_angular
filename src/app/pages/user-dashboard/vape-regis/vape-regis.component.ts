@@ -87,6 +87,7 @@ export class VapeRegisComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+
     try {
       const {
         discount,
@@ -151,5 +152,8 @@ export class VapeRegisComponent implements OnInit {
 
   closeSuccessModal(): void {
     this.showSuccessModal = false;
+
+    this.form.reset();
+    this.uploadedFiles = [];
   }
 }

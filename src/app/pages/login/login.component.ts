@@ -38,7 +38,7 @@ export class LoginComponent {
         if (this.pbService.isAdmin()) {
           this.router.navigate(['/admin-dashboard']);
         } else {
-          this.router.navigate(['/landingpage-orig']);
+          this.router.navigate(['/updated-landing-page']);
         }
       }, 1500);
 

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { LandingpageOrigComponent } from './pages/user-dashboard/landingpage-orig/landingpage-orig.component';
 import { LoginComponent } from './pages/login/login.component';
 import { TermsConditionsComponent } from './pages/user-dashboard/terms-conditions/terms-conditions.component';
 import { RegistrationFormComponent } from './pages/registration-form/registration-form.component';
@@ -19,9 +18,8 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'landingpage-orig', pathMatch: 'full' },
+  { path: '', redirectTo: 'updated-landing-page', pathMatch: 'full' },
 
-  { path: 'landingpage-orig', component: LandingpageOrigComponent },
   { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard] },
   { path: 'terms-conditions', component: TermsConditionsComponent },
   { path: 'landing-registration', component: LandingRegistrationComponent },
@@ -43,5 +41,5 @@ export const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard]
   },
 
-  { path: '**', redirectTo: 'landingpage-orig' }
+  { path: '**', redirectTo: 'updated-landingpage' }
 ];

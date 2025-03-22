@@ -4,7 +4,7 @@
     }
   </style>
   
-  <div class="min-h-screen flex flex-col bg-white text-gray-800">
+  <div class="min-h-screen flex flex-col bg-gray-100 text-gray-800">
     <!-- Navbar -->
     <header class="sticky top-0 z-50">
       <div class="navbar bg-gradient-to-r from-blue-900 to-blue-600 text-white shadow-lg">
@@ -18,20 +18,17 @@
         </div>
         <div class="flex-none hidden lg:block">
           <ul class="menu menu-horizontal px-1 space-x-4 text-base md:text-lg font-semibold">
-            <li><a href="#" class="hover:bg-blue-700">Home</a></li>
-            <li><a href="assets/a_oia.gif" class="hover:bg-blue-700">Search</a></li>
-            <li><a href="#" class="hover:bg-blue-700">Feedback</a></li>
-            <li><a href="#" class="hover:bg-blue-700">Contact Us</a></li>
+            <li><a href="#" class="hover:bg-blue-700 transition-colors">Home</a></li>
             <ng-container *ngIf="pb.isLoggedIn(); else notLoggedIn">
               <li>
-                <a (click)="openLogoutModal()" class="hover:bg-blue-700">
+                <a (click)="openLogoutModal()" class="hover:bg-blue-700 transition-colors">
                   Logout
                 </a>
               </li>
             </ng-container>
             <ng-template #notLoggedIn>
               <li>
-                <a routerLink="/login" class="hover:bg-blue-700">
+                <a routerLink="/login" class="hover:bg-blue-700 transition-colors">
                   Login
                 </a>
               </li>
@@ -41,88 +38,115 @@
       </div>
     </header>
   
-    <!-- Main Content -->
+
     <main class="flex-grow container mx-auto px-4 py-8">
-      <div class="mb-4">
-        <h2 class="text-2xl font-bold text-blue-700">
-          Hello, Admin {{ firstName }}!
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-3xl font-bold text-blue-700 flex items-center space-x-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8 text-blue-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 7h18M3 12h18m-9 5h9"
+            />
+          </svg>
+          <span>Hello, Admin {{ firstName }}!</span>
         </h2>
-        <p class="text-gray-600">
-          This is your admin dashboard content area.
+        <p class="text-gray-600 mt-2 text-base">
+          Welcome to your admin dashboard. Manage and view records below.
         </p>
       </div>
   
-      <!-- Box for "View Vape Registrations" -->
-      <div class="bg-gray-50 p-4 rounded shadow mt-8">
-        <h3 class="text-lg font-bold mb-2 text-blue-800">
-          Vape Registrations
-        </h3>
-        <p class="text-gray-600">
-          Click the button to load the user-submitted vape_regis records.
-        </p>
-        <button
-          (click)="toggleVapeRegis()"
-          class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded mt-4"
-        >
-          View Vape registrations
-        </button>
+      <!-- Box for "Vape Registrations" -->
+      <div class="bg-white mt-8 p-6 rounded-lg shadow">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-xl font-bold text-blue-800">
+              Vape Registrations
+            </h3>
+            <p class="text-gray-600 text-sm">
+              Click the button to load user-submitted <code>vape_regis</code> records.
+            </p>
+          </div>
+          <button
+            (click)="toggleVapeRegis()"
+            class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
+          >
+            View Vape Registrations
+          </button>
+        </div>
   
-        <!-- Table of vape_regis records -->
         <div *ngIf="showVapeRegis" class="mt-4">
-          <!-- Loading & Error states -->
-          <div *ngIf="loadingVape" class="text-blue-600 font-semibold">
+          <div *ngIf="loadingVape" class="text-blue-600 font-semibold mb-2">
             Loading...
           </div>
-          <div *ngIf="errorMsg" class="text-red-600 font-semibold">
+          <div *ngIf="errorMsg" class="text-red-600 font-semibold mb-2">
             {{ errorMsg }}
           </div>
-  
-          <!-- Responsive wrapper -->
-          <div class="overflow-x-auto shadow rounded mt-4">
-            <!-- Only show table if we have records and not currently loading -->
-            <table
-              *ngIf="vapeRegisRecords.length && !loadingVape"
-              class="w-full border-collapse text-left text-sm"
-            >
-              <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
-                <tr>
-                  <th class="p-3 border-b">Coverage</th>
-                  <th class="p-3 border-b">Promo Period</th>
-                  <th class="p-3 border-b">Promo Schemes</th>
-                  <th class="p-3 border-b">Sponsor Name</th>
-                  <th class="p-3 border-b">Sponsor Contact No.</th>
-                  <th class="p-3 border-b">Sponsor Designation</th>
-                  <th class="p-3 border-b">Agency Ref No</th>
-                  <th class="p-3 border-b">Agency Designation</th>
-                  <th class="p-3 border-b">Agency Authorized Rep</th>
-                  <th class="p-3 border-b">Agency Contact No</th>
-                  <th class="p-3 border-b">Amendment Reason</th>
-                  <th class="p-3 border-b">Attachments</th>
-                  
 
-                  <th class="p-3 border-b">Owner Email</th>
+          <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
+            <input
+              [(ngModel)]="searchTerm"
+              (input)="applyFilters()"
+              type="text"
+              placeholder="Search by Sponsor Name..."
+              class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+            <select
+              [(ngModel)]="sortOrder"
+              (change)="applyFilters()"
+              class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+            </select>
+          </div>
+
+          <div class="overflow-x-auto rounded shadow">
+            <table
+              *ngIf="filteredVapeRegis.length && !loadingVape"
+              class="table-auto w-full text-sm text-gray-700"
+            >
+              <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+                <tr>
+                  <th class="py-3 px-4 border-b">Coverage</th>
+                  <th class="py-3 px-4 border-b">Promo Period</th>
+                  <th class="py-3 px-4 border-b">Promo Schemes</th>
+                  <th class="py-3 px-4 border-b">Sponsor Name</th>
+                  <th class="py-3 px-4 border-b">Sponsor Contact No.</th>
+                  <th class="py-3 px-4 border-b">Sponsor Designation</th>
+                  <th class="py-3 px-4 border-b">Agency Ref No</th>
+                  <th class="py-3 px-4 border-b">Agency Designation</th>
+                  <th class="py-3 px-4 border-b">Agency Authorized Rep</th>
+                  <th class="py-3 px-4 border-b">Agency Contact No</th>
+                  <th class="py-3 px-4 border-b">Amendment Reason</th>
+                  <th class="py-3 px-4 border-b">Attachments</th>
+                  <th class="py-3 px-4 border-b">Owner Email</th>
                 </tr>
               </thead>
-              <tbody class="text-gray-700">
+              <tbody>
                 <tr
-                  *ngFor="let record of vapeRegisRecords; let i = index"
-                  class="border-b hover:bg-gray-50"
-                  [class.bg-gray-50]="i % 2 === 0"
+                  *ngFor="let record of filteredVapeRegis; let i = index"
+                  class="border-b hover:bg-gray-100"
                 >
-                  <!-- Existing fields -->
-                  <td class="p-3">{{ record.coverage }}</td>
-                  <td class="p-3">{{ record.promoPeriod }}</td>
-                  <td class="p-3">{{ record.promoSchemes }}</td>
-                  <td class="p-3">{{ record.sponsorName }}</td>
-                  <td class="p-3">{{ record.sponsorContactNo }}</td>
-                  <td class="p-3">{{ record.sponsorDesignation }}</td>
-                  <td class="p-3">{{ record.agencyRefNo }}</td>
-                  <td class="p-3">{{ record.agencyDesignation }}</td>
-                  <td class="p-3">{{ record.agencyAuthorizedRep }}</td>
-                  <td class="p-3">{{ record.agencyContactNo }}</td>
-                  <td class="p-3">{{ record.amendmentReason }}</td>
-  
-                  <td class="p-3">
+                  <td class="py-2 px-4">{{ record.coverage }}</td>
+                  <td class="py-2 px-4">{{ record.promoPeriod }}</td>
+                  <td class="py-2 px-4">{{ record.promoSchemes }}</td>
+                  <td class="py-2 px-4">{{ record.sponsorName }}</td>
+                  <td class="py-2 px-4">{{ record.sponsorContactNo }}</td>
+                  <td class="py-2 px-4">{{ record.sponsorDesignation }}</td>
+                  <td class="py-2 px-4">{{ record.agencyRefNo }}</td>
+                  <td class="py-2 px-4">{{ record.agencyDesignation }}</td>
+                  <td class="py-2 px-4">{{ record.agencyAuthorizedRep }}</td>
+                  <td class="py-2 px-4">{{ record.agencyContactNo }}</td>
+                  <td class="py-2 px-4">{{ record.amendmentReason }}</td>
+                  <td class="py-2 px-4">
                     <a
                       *ngIf="record.attachments"
                       [href]="pb.getAttachmentUrl(record, 'attachments')"
@@ -135,18 +159,23 @@
                       N/A
                     </span>
                   </td>
-
-                  <td class="p-3">
+                  <td class="py-2 px-4">
                     {{ record.expand?.owner?.email || 'No owner data' }}
                   </td>
                 </tr>
               </tbody>
             </table>
+            <div
+              *ngIf="!filteredVapeRegis.length && !loadingVape"
+              class="p-4 text-center text-gray-500"
+            >
+              No matching records found.
+            </div>
           </div>
         </div>
       </div>
     </main>
-
+ 
     <div
       *ngIf="showWelcomeOverlay"
       class="fixed inset-0 z-50 flex items-center justify-center"
@@ -161,13 +190,13 @@
         </p>
         <button
           (click)="closeWelcomeOverlay()"
-          class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded"
+          class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow"
         >
           Continue
         </button>
       </div>
     </div>
-
+ 
     <div
       *ngIf="showLogoutModal"
       class="fixed inset-0 z-50 flex items-center justify-center"
