@@ -5,7 +5,6 @@
   </style>
   
   <div class="min-h-screen flex flex-col bg-gray-100 text-gray-800">
-    <!-- Navbar -->
     <header class="sticky top-0 z-50">
       <div class="navbar bg-gradient-to-r from-blue-900 to-blue-600 text-white shadow-lg">
         <div class="flex-1 px-2 lg:flex-none">
@@ -40,10 +39,8 @@
         </div>
       </div>
     </header>
-  
-    <!-- Main Content -->
+
     <main class="flex-grow container mx-auto px-4 py-8">
-      <!-- Greeting Card -->
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-3xl font-bold text-blue-700 flex items-center space-x-2">
           <svg
@@ -66,8 +63,7 @@
           Welcome to your admin dashboard. Manage and view records below.
         </p>
       </div>
-  
-      <!-- VAPE Registrations Card -->
+
       <div class="bg-white mt-8 p-6 rounded-lg shadow">
         <div class="flex items-center justify-between mb-4">
           <div>
@@ -75,7 +71,7 @@
               Vape Registrations
             </h3>
             <p class="text-gray-600 text-sm">
-              Click the button to load user-submitted <code>vape_regis</code> records.
+              Click the button to load user-submitted <code>vape promo registration</code> records.
             </p>
           </div>
   
@@ -102,8 +98,7 @@
           <div *ngIf="errorMsg" class="text-red-600 font-semibold mb-2">
             {{ errorMsg }}
           </div>
-  
-          <!-- Filters -->
+
           <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
             <input
               [(ngModel)]="searchTerm"
@@ -188,8 +183,7 @@
           </div>
         </div>
       </div>
-  
-      <!-- RETAILER Registrations Card -->
+
       <div class="bg-white mt-8 p-6 rounded-lg shadow">
         <div class="flex items-center justify-between mb-4">
           <div>
@@ -197,7 +191,7 @@
               Retailer Registrations
             </h3>
             <p class="text-gray-600 text-sm">
-              Click the button to load user-submitted <code>retailer_regis</code> records.
+              Click the button to load user-submitted <code>retailer registration</code> records.
             </p>
           </div>
   
@@ -224,8 +218,7 @@
           <div *ngIf="retailerErrorMsg" class="text-red-600 font-semibold mb-2">
             {{ retailerErrorMsg }}
           </div>
-  
-          <!-- Filters -->
+
           <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
             <input
               [(ngModel)]="searchTermRetailer"
@@ -271,11 +264,9 @@
                   <td class="py-2 px-4">{{ record.region }}</td>
                   <td class="py-2 px-4">{{ record.email_address }}</td>
                   <td class="py-2 px-4">
-                    <!-- If you store checkboxes in a single text field, e.g. products_offered -->
                     {{ record.products_offered || 'N/A' }}
                   </td>
                   <td class="py-2 px-4">
-                    <!-- Show created date if you want, e.g. -->
                     {{ record.created | date:'short' }}
                   </td>
                 </tr>
@@ -291,8 +282,7 @@
         </div>
       </div>
     </main>
-  
-    <!-- Welcome Overlay -->
+
     <div
       *ngIf="showWelcomeOverlay"
       class="fixed inset-0 z-50 flex items-center justify-center"
@@ -313,8 +303,7 @@
         </button>
       </div>
     </div>
-  
-    <!-- Logout Confirmation Modal -->
+ 
     <div
       *ngIf="showLogoutModal"
       class="fixed inset-0 z-50 flex items-center justify-center"

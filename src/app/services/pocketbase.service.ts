@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import PocketBase from 'pocketbase';
 
-/**
- * Define an interface for your PocketBase user record.
- * Adjust fields as needed to match your actual schema.
- */
 interface PBUser {
   id: string;
   email: string;
-  role?: string; // or isAdmin?: boolean, etc.
-  [key: string]: any; // allows extra fields
+  role?: string;
+  [key: string]: any; 
 }
 
 @Injectable({
@@ -47,18 +43,10 @@ export class PocketBaseService {
     return this.getUserRole() === 'admin';
   }
 
-  /**
-   * Creates a record in the specified collection using FormData
-   * (useful if you have file uploads).
-   */
   async createRecord(collectionName: string, formData: FormData) {
     return this.pb.collection(collectionName).create(formData);
   }
 
-  /**
-   * Creates a record in 'retailer_regis' using a simple JSON object
-   * (no file uploads needed).
-   */
   async createRetailerRegisRecord(data: any): Promise<any> {
     return this.pb.collection('retailer_regis').create(data);
   }
@@ -93,15 +81,6 @@ export class PocketBaseService {
     }
   }
 
-  /**
-   * ────────────────────────────────────────────────────────────────────────────────
-   * ADMIN-ONLY METHODS
-   * ────────────────────────────────────────────────────────────────────────────────
-   */
-
-  /**
-   * Retrieves all vape_regis records (admin only).
-   */
   async getAllVapeRegisRecords(): Promise<any[]> {
     if (!this.isAdmin()) {
       throw new Error('Access denied. Admin only method.');
@@ -111,9 +90,6 @@ export class PocketBaseService {
     });
   }
 
-  /**
-   * NEW: Retrieves all retailer_regis records (admin only).
-   */
   async getAllRetailerRegisRecords(): Promise<any[]> {
     if (!this.isAdmin()) {
       throw new Error('Access denied. Admin only method.');
@@ -123,9 +99,6 @@ export class PocketBaseService {
     });
   }
 
-  /**
-   * Generate a public URL for an attachment file in 'vape_regis' (or adjust if needed).
-   */
   getAttachmentUrl(record: any, fileKey: string): string {
     if (!record?.id || !record[fileKey]) {
       return '';
