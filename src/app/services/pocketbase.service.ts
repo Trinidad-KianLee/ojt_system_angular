@@ -47,8 +47,20 @@ export class PocketBaseService {
     return this.getUserRole() === 'admin';
   }
 
+  /**
+   * Creates a record in the specified collection using FormData
+   * (useful if you have file uploads).
+   */
   async createRecord(collectionName: string, formData: FormData) {
     return this.pb.collection(collectionName).create(formData);
+  }
+
+  /**
+   * Creates a record in 'retailer_regis' using a simple JSON object
+   * (no file uploads needed).
+   */
+  async createRetailerRegisRecord(data: any): Promise<any> {
+    return this.pb.collection('retailer_regis').create(data);
   }
 
   logout() {
@@ -88,42 +100,43 @@ export class PocketBaseService {
    */
 
   /**
-   * Retrieve all vape_regis records, including the expanded "owner" relation.
-   * Only admin can call this. If not admin, throw an error.
+   * Retrieves all vape_regis records (admin only).
    */
   async getAllVapeRegisRecords(): Promise<any[]> {
     if (!this.isAdmin()) {
       throw new Error('Access denied. Admin only method.');
     }
-    // Fetch with expand: 'owner'
     return this.pb.collection('vape_regis').getFullList({
       expand: 'owner'
     });
   }
 
   /**
-   * Generate a public URL for an attachment file
-   * stored in the 'vape_regis' collection.
-   *
-   * @param record  - The vape_regis record object
-   * @param fileKey - The field name for the attachment (e.g. 'attachments')
+   * NEW: Retrieves all retailer_regis records (admin only).
+   */
+  async getAllRetailerRegisRecords(): Promise<any[]> {
+    if (!this.isAdmin()) {
+      throw new Error('Access denied. Admin only method.');
+    }
+    return this.pb.collection('retailer_regis').getFullList({
+      expand: 'owner'
+    });
+  }
+
+  /**
+   * Generate a public URL for an attachment file in 'vape_regis' (or adjust if needed).
    */
   getAttachmentUrl(record: any, fileKey: string): string {
     if (!record?.id || !record[fileKey]) {
-      // Return empty string if there's no record ID or file name
       return '';
     }
     return `${this.pb.baseUrl}/api/files/vape_regis/${record.id}/${record[fileKey]}`;
   }
 
-  /**
-   * Example: a placeholder admin-only method
-   */
   async adminOnlyMethod(): Promise<string> {
     if (!this.isAdmin()) {
       throw new Error('Access denied. Admin only method.');
     }
-    // Do something admin-specific here, e.g. retrieving user lists, stats, etc.
     return 'Admin-specific data retrieved!';
   }
 }

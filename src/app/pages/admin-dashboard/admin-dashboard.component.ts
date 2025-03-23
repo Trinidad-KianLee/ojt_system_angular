@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PocketBaseService } from '../../services/pocketbase.service';
 import { FormsModule } from '@angular/forms';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -22,9 +23,16 @@ export class AdminDashboardComponent {
   loadingVape: boolean = false;
   errorMsg: string = '';
 
-  // For search & sort
   searchTerm: string = '';
   sortOrder: 'newest' | 'oldest' = 'newest';
+
+  retailerRegisRecords: any[] = [];
+  filteredRetailerRegis: any[] = [];
+  showRetailerRegis: boolean = false;
+  loadingRetailer: boolean = false;
+  retailerErrorMsg: string = '';
+  searchTermRetailer: string = '';
+  sortOrderRetailer: 'newest' | 'oldest' = 'newest';
 
   constructor(
     public pb: PocketBaseService,
@@ -65,7 +73,6 @@ export class AdminDashboardComponent {
       this.errorMsg = '';
 
       const data = await this.pb.getAllVapeRegisRecords();
-
       this.vapeRegisRecords = data;
       this.applyFilters();
 
@@ -80,11 +87,9 @@ export class AdminDashboardComponent {
     }
   }
 
-  // Filters & sorting
   applyFilters() {
     let filtered = [...this.vapeRegisRecords];
 
-    // 1) Search by sponsorName
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
       filtered = filtered.filter((r) =>
@@ -92,7 +97,6 @@ export class AdminDashboardComponent {
       );
     }
 
-    // 2) Sort by newest or oldest (using "created" field)
     if (this.sortOrder === 'newest') {
       filtered.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
     } else {
@@ -100,5 +104,74 @@ export class AdminDashboardComponent {
     }
 
     this.filteredVapeRegis = filtered;
+  }
+
+  downloadExcel() {
+    const dataToExport = this.filteredVapeRegis.length
+      ? this.filteredVapeRegis
+      : this.vapeRegisRecords;
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'VapeRegis');
+    XLSX.writeFile(workbook, 'vape_regis.xlsx');
+  }
+
+  toggleRetailerRegis() {
+    if (!this.showRetailerRegis) {
+      this.loadRetailerRegisRecords();
+    }
+    this.showRetailerRegis = !this.showRetailerRegis;
+  }
+
+  async loadRetailerRegisRecords() {
+    try {
+      this.loadingRetailer = true;
+      this.retailerErrorMsg = '';
+
+      const data = await this.pb.getAllRetailerRegisRecords();
+
+      this.retailerRegisRecords = data;
+      this.applyRetailerFilters();
+
+      if (!data.length) {
+        this.retailerErrorMsg = 'No records found in retailer_regis.';
+      }
+    } catch (error) {
+      this.retailerErrorMsg = 'Failed to load retailer_regis records.';
+      console.error('Error fetching retailer_regis records:', error);
+    } finally {
+      this.loadingRetailer = false;
+    }
+  }
+
+  applyRetailerFilters() {
+    let filtered = [...this.retailerRegisRecords];
+
+    if (this.searchTermRetailer.trim()) {
+      const term = this.searchTermRetailer.toLowerCase();
+      filtered = filtered.filter((r) =>
+        r.business_name?.toLowerCase().includes(term)
+      );
+    }
+
+    if (this.sortOrderRetailer === 'newest') {
+      filtered.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+    } else {
+      filtered.sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime());
+    }
+
+    this.filteredRetailerRegis = filtered;
+  }
+
+  downloadRetailerExcel() {
+    const dataToExport = this.filteredRetailerRegis.length
+      ? this.filteredRetailerRegis
+      : this.retailerRegisRecords;
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'RetailerRegis');
+    XLSX.writeFile(workbook, 'retailer_regis.xlsx');
   }
 }

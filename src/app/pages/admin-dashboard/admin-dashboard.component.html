@@ -19,6 +19,9 @@
         <div class="flex-none hidden lg:block">
           <ul class="menu menu-horizontal px-1 space-x-4 text-base md:text-lg font-semibold">
             <li><a href="#" class="hover:bg-blue-700 transition-colors">Home</a></li>
+            <li><a href="assets/a_oia.gif" class="hover:bg-blue-700 transition-colors">Search</a></li>
+            <li><a href="#" class="hover:bg-blue-700 transition-colors">Feedback</a></li>
+            <li><a href="#" class="hover:bg-blue-700 transition-colors">Contact Us</a></li>
             <ng-container *ngIf="pb.isLoggedIn(); else notLoggedIn">
               <li>
                 <a (click)="openLogoutModal()" class="hover:bg-blue-700 transition-colors">
@@ -38,8 +41,9 @@
       </div>
     </header>
   
-
+    <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 py-8">
+      <!-- Greeting Card -->
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-3xl font-bold text-blue-700 flex items-center space-x-2">
           <svg
@@ -63,7 +67,7 @@
         </p>
       </div>
   
-      <!-- Box for "Vape Registrations" -->
+      <!-- VAPE Registrations Card -->
       <div class="bg-white mt-8 p-6 rounded-lg shadow">
         <div class="flex items-center justify-between mb-4">
           <div>
@@ -74,12 +78,21 @@
               Click the button to load user-submitted <code>vape_regis</code> records.
             </p>
           </div>
-          <button
-            (click)="toggleVapeRegis()"
-            class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
-          >
-            View Vape Registrations
-          </button>
+  
+          <div class="space-x-2">
+            <button
+              (click)="toggleVapeRegis()"
+              class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
+            >
+              View Vape Registrations
+            </button>
+            <button
+              (click)="downloadExcel()"
+              class="btn bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded shadow transition-colors"
+            >
+              Export to Excel
+            </button>
+          </div>
         </div>
   
         <div *ngIf="showVapeRegis" class="mt-4">
@@ -89,7 +102,8 @@
           <div *ngIf="errorMsg" class="text-red-600 font-semibold mb-2">
             {{ errorMsg }}
           </div>
-
+  
+          <!-- Filters -->
           <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
             <input
               [(ngModel)]="searchTerm"
@@ -107,7 +121,7 @@
               <option value="oldest">Oldest</option>
             </select>
           </div>
-
+  
           <div class="overflow-x-auto rounded shadow">
             <table
               *ngIf="filteredVapeRegis.length && !loadingVape"
@@ -174,8 +188,111 @@
           </div>
         </div>
       </div>
+  
+      <!-- RETAILER Registrations Card -->
+      <div class="bg-white mt-8 p-6 rounded-lg shadow">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-xl font-bold text-blue-800">
+              Retailer Registrations
+            </h3>
+            <p class="text-gray-600 text-sm">
+              Click the button to load user-submitted <code>retailer_regis</code> records.
+            </p>
+          </div>
+  
+          <div class="space-x-2">
+            <button
+              (click)="toggleRetailerRegis()"
+              class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
+            >
+              View Retailer Registrations
+            </button>
+            <button
+              (click)="downloadRetailerExcel()"
+              class="btn bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded shadow transition-colors"
+            >
+              Export to Excel
+            </button>
+          </div>
+        </div>
+  
+        <div *ngIf="showRetailerRegis" class="mt-4">
+          <div *ngIf="loadingRetailer" class="text-blue-600 font-semibold mb-2">
+            Loading...
+          </div>
+          <div *ngIf="retailerErrorMsg" class="text-red-600 font-semibold mb-2">
+            {{ retailerErrorMsg }}
+          </div>
+  
+          <!-- Filters -->
+          <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
+            <input
+              [(ngModel)]="searchTermRetailer"
+              (input)="applyRetailerFilters()"
+              type="text"
+              placeholder="Search by Business Name..."
+              class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+            <select
+              [(ngModel)]="sortOrderRetailer"
+              (change)="applyRetailerFilters()"
+              class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+            </select>
+          </div>
+  
+          <div class="overflow-x-auto rounded shadow">
+            <table
+              *ngIf="filteredRetailerRegis.length && !loadingRetailer"
+              class="table-auto w-full text-sm text-gray-700"
+            >
+              <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+                <tr>
+                  <th class="py-3 px-4 border-b">Business Name</th>
+                  <th class="py-3 px-4 border-b">Store Name</th>
+                  <th class="py-3 px-4 border-b">Business Owner</th>
+                  <th class="py-3 px-4 border-b">Region</th>
+                  <th class="py-3 px-4 border-b">Email</th>
+                  <th class="py-3 px-4 border-b">Products Offered</th>
+                  <th class="py-3 px-4 border-b">Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let record of filteredRetailerRegis; let i = index"
+                  class="border-b hover:bg-gray-100"
+                >
+                  <td class="py-2 px-4">{{ record.business_name }}</td>
+                  <td class="py-2 px-4">{{ record.store_name }}</td>
+                  <td class="py-2 px-4">{{ record.business_owner }}</td>
+                  <td class="py-2 px-4">{{ record.region }}</td>
+                  <td class="py-2 px-4">{{ record.email_address }}</td>
+                  <td class="py-2 px-4">
+                    <!-- If you store checkboxes in a single text field, e.g. products_offered -->
+                    {{ record.products_offered || 'N/A' }}
+                  </td>
+                  <td class="py-2 px-4">
+                    <!-- Show created date if you want, e.g. -->
+                    {{ record.created | date:'short' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+              *ngIf="!filteredRetailerRegis.length && !loadingRetailer"
+              class="p-4 text-center text-gray-500"
+            >
+              No matching records found.
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
- 
+  
+    <!-- Welcome Overlay -->
     <div
       *ngIf="showWelcomeOverlay"
       class="fixed inset-0 z-50 flex items-center justify-center"
@@ -196,7 +313,8 @@
         </button>
       </div>
     </div>
- 
+  
+    <!-- Logout Confirmation Modal -->
     <div
       *ngIf="showLogoutModal"
       class="fixed inset-0 z-50 flex items-center justify-center"

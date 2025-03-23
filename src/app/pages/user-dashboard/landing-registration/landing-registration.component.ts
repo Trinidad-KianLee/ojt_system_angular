@@ -48,7 +48,8 @@ export class LandingRegistrationComponent implements OnInit {
         gender: ['', Validators.required],
         officeAddress: ['', Validators.required],
         companyName: ['', Validators.required],
-        clientDesignation: ['', Validators.required]
+        clientDesignation: ['', Validators.required],
+        emailVisibility: true
       },
       {
         validators: [this.passwordMatchValidator('password', 'passwordConfirm')]
@@ -109,3 +110,5 @@ export class LandingRegistrationComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 }
+
+
