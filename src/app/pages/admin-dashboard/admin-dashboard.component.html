@@ -18,9 +18,6 @@
         <div class="flex-none hidden lg:block">
           <ul class="menu menu-horizontal px-1 space-x-4 text-base md:text-lg font-semibold">
             <li><a href="#" class="hover:bg-blue-700 transition-colors">Home</a></li>
-            <li><a href="assets/a_oia.gif" class="hover:bg-blue-700 transition-colors">Search</a></li>
-            <li><a href="#" class="hover:bg-blue-700 transition-colors">Feedback</a></li>
-            <li><a href="#" class="hover:bg-blue-700 transition-colors">Contact Us</a></li>
             <ng-container *ngIf="pb.isLoggedIn(); else notLoggedIn">
               <li>
                 <a (click)="openLogoutModal()" class="hover:bg-blue-700 transition-colors">
@@ -332,3 +329,4 @@
     </div>
   </div>
   
+ 

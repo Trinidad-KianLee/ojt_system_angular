@@ -12,6 +12,7 @@ import { PocketBaseService } from '../../../services/pocketbase.service';
   styleUrls: ['./retailer.component.css']
 })
 export class RetailerRegisComponent implements OnInit {
+  // Existing fields + booleans
   formData: any = {
     business_name: '',
     store_name: '',
@@ -32,6 +33,7 @@ export class RetailerRegisComponent implements OnInit {
     store_type: '',
     digital_platforms: '',
     store_url: '',
+    // All booleans for the checkboxes
     vapor_product_system: false,
     vapor_product_device: false,
     refills_e_liquids: false,
@@ -39,12 +41,14 @@ export class RetailerRegisComponent implements OnInit {
     htp_device: false,
     htp_consumables: false,
     nicotine_pouch: false,
+    // Other text fields
     brands_list: '',
     supplier_names: '',
     asset_size: '',
     warehouse_address: ''
   };
 
+  // Controls visibility of the "Successful Registration" modal
   showSuccessModal = false;
 
   constructor(
@@ -61,7 +65,7 @@ export class RetailerRegisComponent implements OnInit {
     }
 
     try {
-
+      // 1) Build a single string from the checkboxes
       const selectedProducts: string[] = [];
 
       if (this.formData.vapor_product_system) {
@@ -88,11 +92,15 @@ export class RetailerRegisComponent implements OnInit {
 
       const productsOfferedString = selectedProducts.join(', ');
 
+      // 2) Copy formData and add products_offered as a single text field
       const finalData = { ...this.formData };
       finalData.products_offered = productsOfferedString;
 
+      // 3) Store data in 'retailer_regis' collection
+      //    Make sure your PocketBase collection has a text field 'products_offered'
       await this.pbService.createRetailerRegisRecord(finalData);
 
+      // 4) Show success modal
       this.showSuccessModal = true;
 
     } catch (error) {
@@ -103,6 +111,9 @@ export class RetailerRegisComponent implements OnInit {
 
   closeSuccessModal() {
     this.showSuccessModal = false;
-    this.formData = {};
+    // Optionally reset the form
+    // this.formData = {};
+    // Or navigate away
+    // this.router.navigate(['/somewhere']);
   }
 }
