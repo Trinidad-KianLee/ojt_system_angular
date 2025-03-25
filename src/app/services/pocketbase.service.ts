@@ -5,7 +5,7 @@ interface PBUser {
   id: string;
   email: string;
   role?: string;
-  [key: string]: any; 
+  [key: string]: any;
 }
 
 @Injectable({
@@ -18,9 +18,44 @@ export class PocketBaseService {
     this.pb = new PocketBase('http://127.0.0.1:8090');
   }
 
+  // ==================================
+  // UPDATED registerUser method
+  // ==================================
   async registerUser(data: any) {
-    return await this.pb.collection('users').create(data);
+    // Construct the object to match your PocketBase "users" fields
+    const userData = {
+      email: data.email,
+      password: data.password,
+      passwordConfirm: data.passwordConfirm,  // needed for PB user creation
+      emailVisibility: data.emailVisibility,   // if you have a bool field for that
+
+      // Personal
+      firstName: data.firstName,
+      middleName: data.middleName,
+      lastName: data.lastName,
+      dob: data.dob,
+      gender: data.gender,
+      socialClassification: data.socialClassification,
+
+      // Organization
+      companyName: data.companyName,
+      companyAddress: data.companyAddress,
+      companyContactNum: data.contactNumber,  // map contactNumber => companyContactNum
+      clientDesignation: data.clientDesignation,
+
+      // File upload (if you want to store it in users.proofFile)
+      proofFile: data.proofFile,
+
+      // Optional role
+      role: data.role,
+    };
+
+    // Create the user record in PocketBase
+    return await this.pb.collection('users').create(userData);
   }
+  // ==================================
+  // (Rest of your service code below remains unchanged)
+  // ==================================
 
   async loginUser(email: string, password: string) {
     return await this.pb.collection('users').authWithPassword(email, password);

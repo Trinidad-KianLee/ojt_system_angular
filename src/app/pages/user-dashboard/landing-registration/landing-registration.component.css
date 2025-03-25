@@ -1,0 +1,57 @@
+
+  html {
+    scroll-behavior: smooth;
+  }
+  .error-text {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0%);
+  }
+
+  
+  .steps.steps-vertical .step-primary:before,
+  .steps.steps-vertical .step-primary:after {
+    background-color: #0d2e9e !important;
+  }
+  .steps.steps-vertical .step-primary .step-icon {
+    background-color: #0d2e9e !important;
+    border-color: #0d2e9e !important;
+  }
+  .steps.steps-vertical .step-primary .step-title {
+    color: #0d2e9e !important;
+  }
+
+  
+  .radio.radio-primary:checked {
+    border-color: #0d2e9e !important;
+    background-color: #0d2e9e !important;
+  }
+  .checkbox.checkbox-primary:checked {
+    border-color: #0d2e9e !important;
+    background-color: #0d2e9e !important;
+  }
+
+
+  .file-input.file-input-bordered.custom-file-input::file-selector-button {
+    background-color: #0d2e9e !important;
+    border: none !important;
+    color: #fff !important;
+    padding: 0.5rem 1rem !important;
+    cursor: pointer;
+  }
+  .file-input.file-input-bordered.custom-file-input:hover::file-selector-button {
+    background-color: #0c278b !important;
+  }
+  .file-input.file-input-bordered.custom-file-input {
+    border-color: #0d2e9e !important;
+  }
+
+
+  .registration-container {
+    max-width: 1200px; 
+    margin: 0 auto;
+  }

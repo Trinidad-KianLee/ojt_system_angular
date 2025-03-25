@@ -27,7 +27,13 @@ import { PocketBaseService } from '../../../services/pocketbase.service';
 })
 export class LandingRegistrationComponent implements OnInit {
   form!: FormGroup;
-  showSuccessModal = false; 
+  showSuccessModal = false;
+
+  currentStep = 1;
+  totalSteps = 3;
+
+  emailErrorMsg: string | null = null;
+  passwordMismatchMsg: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -38,18 +44,25 @@ export class LandingRegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group(
       {
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        passwordConfirm: ['', Validators.required],
+        emailVisibility: [true],
+
         firstName: ['', Validators.required],
         middleName: [''],
         lastName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        dob: ['', [Validators.required, this.dobRangeValidator]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        passwordConfirm: ['', Validators.required],
         gender: ['', Validators.required],
-        officeAddress: ['', Validators.required],
+        socialClassification: [''],
+        dob: ['', Validators.required],
+
         companyName: ['', Validators.required],
-        clientDesignation: ['', Validators.required],
-        emailVisibility: true
+        companyAddress: ['', Validators.required],
+        companyEmail: [''], // optional
+        contactNumber: ['', Validators.required],
+        proofFile: [null],
+
+        agreeToTerms: [false, Validators.requiredTrue],
       },
       {
         validators: [this.passwordMatchValidator('password', 'passwordConfirm')]
@@ -61,6 +74,7 @@ export class LandingRegistrationComponent implements OnInit {
     return (group: AbstractControl): ValidationErrors | null => {
       const passwordControl = group.get(passwordKey);
       const confirmControl = group.get(confirmKey);
+
       if (!passwordControl || !confirmControl) return null;
 
       if (confirmControl.errors && !confirmControl.errors['passwordMismatch']) {
@@ -76,32 +90,71 @@ export class LandingRegistrationComponent implements OnInit {
     };
   }
 
-  private dobRangeValidator(control: AbstractControl): ValidationErrors | null {
-    if (!control.value) return null; 
-
-    const inputDate = new Date(control.value);
-    const minDate = new Date('1940-01-01');
-    const maxDate = new Date('2007-12-31');
-
-    if (inputDate < minDate || inputDate > maxDate) {
-      return { dobOutOfRange: true };
+  nextStep(): void {
+    if (!this.isStepValid(this.currentStep)) return;
+    if (this.currentStep < this.totalSteps) {
+      this.currentStep++;
     }
-    return null;
+  }
+
+  previousStep(): void {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
+  }
+
+  isStepValid(step: number): boolean {
+    const stepFields = this.getStepFields(step);
+    stepFields.forEach(field => this.form.get(field)?.markAsTouched());
+    return stepFields.every(field => !this.form.get(field)?.invalid);
+  }
+
+  getStepFields(step: number): string[] {
+    switch (step) {
+      case 1:
+        return [
+          'email', 'password', 'passwordConfirm', 'emailVisibility',
+          'firstName', 'middleName', 'lastName', 'gender', 'socialClassification', 'dob'
+        ];
+      case 2:
+        return ['companyName','companyAddress','companyEmail','contactNumber','proofFile'];
+      case 3:
+        return ['agreeToTerms'];
+      default:
+        return [];
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.form.patchValue({ proofFile: file });
+    }
   }
 
   onRegister(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+    if (!this.isStepValid(this.currentStep)) return;
+    if (this.form.invalid) return;
+
+    this.emailErrorMsg = null;
+    this.passwordMismatchMsg = null;
+
+    const confirmCtrl = this.form.get('passwordConfirm');
+    if (confirmCtrl?.errors?.['passwordMismatch']) {
+      this.passwordMismatchMsg = 'Passwords do not match';
       return;
     }
 
     this.pocketbase.registerUser(this.form.value)
       .then(() => {
         console.log('Registration success!');
-        this.showSuccessModal = true; 
+        this.showSuccessModal = true;
       })
       .catch(err => {
         console.error('Registration error:', err);
+        if (err?.data?.data?.email?.message?.includes('already used')) {
+          this.emailErrorMsg = 'This email has been registered already';
+        }
       });
   }
 
@@ -110,5 +163,3 @@ export class LandingRegistrationComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 }
-
-
