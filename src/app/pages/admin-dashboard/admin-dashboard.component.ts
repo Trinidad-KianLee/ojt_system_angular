@@ -200,8 +200,10 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   approveUser(userId: string): void {
+    //modal/pop up while processing approval
     this.pb.approveUser(userId)
       .then(() => {
+        //remove pop up
         const user = this.pendingUsers.find(u => u.id === userId);
         if (user) {
           user.status = 'approved';

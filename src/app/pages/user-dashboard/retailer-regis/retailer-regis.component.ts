@@ -92,12 +92,9 @@ export class RetailerRegisComponent implements OnInit {
 
       const productsOfferedString = selectedProducts.join(', ');
 
-      // 2) Copy formData and add products_offered as a single text field
       const finalData = { ...this.formData };
       finalData.products_offered = productsOfferedString;
 
-      // 3) Store data in 'retailer_regis' collection
-      //    Make sure your PocketBase collection has a text field 'products_offered'
       await this.pbService.createRetailerRegisRecord(finalData);
 
       // 4) Show success modal
@@ -111,9 +108,6 @@ export class RetailerRegisComponent implements OnInit {
 
   closeSuccessModal() {
     this.showSuccessModal = false;
-    // Optionally reset the form
-    // this.formData = {};
-    // Or navigate away
-    // this.router.navigate(['/somewhere']);
+
   }
 }

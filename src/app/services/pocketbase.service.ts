@@ -9,7 +9,7 @@ interface PBUser {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PocketBaseService {
   private pb: PocketBase;
@@ -42,7 +42,7 @@ export class PocketBaseService {
   }
 
   async approveUser(userId: string): Promise<void> {
-    await this.pb.collection('users').update(userId, { status: 'approved' });
+    await this.pb.collection('users').update(userId, { status: 'approved'});
   }
 
   async denyUser(userId: string): Promise<void> {
@@ -81,7 +81,12 @@ export class PocketBaseService {
   }
 
   async createRetailerRegisRecord(data: any): Promise<any> {
-    return this.pb.collection('retailer_regis').create(data);
+    await this.pb
+      .collection('retailer_regis')
+      .create(data)
+      .then(async () => {
+        await this.pb.collection('users').requestVerification(data.email);
+      });
   }
 
   logout() {
@@ -92,20 +97,32 @@ export class PocketBaseService {
     await this.pb.collection('users').requestPasswordReset(email);
   }
 
-  async confirmPasswordReset(token: string, password: string, passwordConfirm: string): Promise<void> {
-    await this.pb.collection('users').confirmPasswordReset(token, password, passwordConfirm);
+  async confirmPasswordReset(
+    token: string,
+    password: string,
+    passwordConfirm: string
+  ): Promise<void> {
+    await this.pb
+      .collection('users')
+      .confirmPasswordReset(token, password, passwordConfirm);
   }
 
-  async updatePasswordManually(email: string, newPassword: string, newPasswordConfirm: string): Promise<void> {
+  async updatePasswordManually(
+    email: string,
+    newPassword: string,
+    newPasswordConfirm: string
+  ): Promise<void> {
     try {
-      const users = await this.pb.collection('users').getFullList({ filter: `email="${email}"` });
+      const users = await this.pb
+        .collection('users')
+        .getFullList({ filter: `email="${email}"` });
       if (users.length === 0) {
         throw new Error('User not found');
       }
       const user = users[0];
       await this.pb.collection('users').update(user.id, {
         password: newPassword,
-        passwordConfirm: newPasswordConfirm
+        passwordConfirm: newPasswordConfirm,
       });
       console.log('Password updated successfully!');
     } catch (error) {
@@ -119,7 +136,7 @@ export class PocketBaseService {
       throw new Error('Access denied. Admin only method.');
     }
     return this.pb.collection('vape_regis').getFullList({
-      expand: 'owner'
+      expand: 'owner',
     });
   }
 
@@ -128,7 +145,7 @@ export class PocketBaseService {
       throw new Error('Access denied. Admin only method.');
     }
     return this.pb.collection('retailer_regis').getFullList({
-      expand: 'owner'
+      expand: 'owner',
     });
   }
 
@@ -151,7 +168,6 @@ export class PocketBaseService {
       filter: `status="approved"`,
     });
   }
-  
 
   async adminOnlyMethod(): Promise<string> {
     if (!this.isAdmin()) {
