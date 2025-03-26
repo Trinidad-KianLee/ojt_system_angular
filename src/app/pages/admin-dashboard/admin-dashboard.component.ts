@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PocketBaseService } from '../../services/pocketbase.service';
@@ -12,7 +12,7 @@ import * as XLSX from 'xlsx';
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss']
 })
-export class AdminDashboardComponent {
+export class AdminDashboardComponent implements OnInit {
   firstName: string = '';
   showLogoutModal: boolean = false;
   showWelcomeOverlay: boolean = true;
@@ -22,7 +22,6 @@ export class AdminDashboardComponent {
   showVapeRegis: boolean = false;
   loadingVape: boolean = false;
   errorMsg: string = '';
-
   searchTerm: string = '';
   sortOrder: 'newest' | 'oldest' = 'newest';
 
@@ -34,6 +33,17 @@ export class AdminDashboardComponent {
   searchTermRetailer: string = '';
   sortOrderRetailer: 'newest' | 'oldest' = 'newest';
 
+  pendingUsers: any[] = [];
+  showPendingUsers: boolean = false;
+  loadingPending: boolean = false;
+  pendingErrorMsg: string = '';
+
+  // NEW: APPROVED USERS
+  approvedUsers: any[] = [];
+  showApprovedUsers: boolean = false;
+  loadingApproved: boolean = false;
+  approvedErrorMsg: string = '';
+
   constructor(
     public pb: PocketBaseService,
     private router: Router
@@ -42,40 +52,42 @@ export class AdminDashboardComponent {
     this.firstName = userData ? userData['firstName'] : '';
   }
 
+  ngOnInit(): void {
+    this.loadPendingUsers();
+  }
+
   closeWelcomeOverlay(): void {
     this.showWelcomeOverlay = false;
   }
 
-  openLogoutModal() {
+  openLogoutModal(): void {
     this.showLogoutModal = true;
   }
 
-  cancelLogout() {
+  cancelLogout(): void {
     this.showLogoutModal = false;
   }
 
-  confirmLogout() {
+  confirmLogout(): void {
     this.showLogoutModal = false;
     this.pb.logout();
     this.router.navigate(['login']);
   }
 
-  toggleVapeRegis() {
+  toggleVapeRegis(): void {
     if (!this.showVapeRegis) {
       this.loadVapeRegisRecords();
     }
     this.showVapeRegis = !this.showVapeRegis;
   }
 
-  async loadVapeRegisRecords() {
+  async loadVapeRegisRecords(): Promise<void> {
     try {
       this.loadingVape = true;
       this.errorMsg = '';
-
       const data = await this.pb.getAllVapeRegisRecords();
       this.vapeRegisRecords = data;
       this.applyFilters();
-
       if (!data.length) {
         this.errorMsg = 'No records found in vape_regis.';
       }
@@ -87,53 +99,46 @@ export class AdminDashboardComponent {
     }
   }
 
-  applyFilters() {
+  applyFilters(): void {
     let filtered = [...this.vapeRegisRecords];
-
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
       filtered = filtered.filter((r) =>
         r.sponsorName?.toLowerCase().includes(term)
       );
     }
-
     if (this.sortOrder === 'newest') {
       filtered.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
     } else {
       filtered.sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime());
     }
-
     this.filteredVapeRegis = filtered;
   }
 
-  downloadExcel() {
+  downloadExcel(): void {
     const dataToExport = this.filteredVapeRegis.length
       ? this.filteredVapeRegis
       : this.vapeRegisRecords;
-
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'VapeRegis');
     XLSX.writeFile(workbook, 'vape_regis.xlsx');
   }
 
-  toggleRetailerRegis() {
+  toggleRetailerRegis(): void {
     if (!this.showRetailerRegis) {
       this.loadRetailerRegisRecords();
     }
     this.showRetailerRegis = !this.showRetailerRegis;
   }
 
-  async loadRetailerRegisRecords() {
+  async loadRetailerRegisRecords(): Promise<void> {
     try {
       this.loadingRetailer = true;
       this.retailerErrorMsg = '';
-
       const data = await this.pb.getAllRetailerRegisRecords();
-
       this.retailerRegisRecords = data;
       this.applyRetailerFilters();
-
       if (!data.length) {
         this.retailerErrorMsg = 'No records found in retailer_regis.';
       }
@@ -145,33 +150,105 @@ export class AdminDashboardComponent {
     }
   }
 
-  applyRetailerFilters() {
+  applyRetailerFilters(): void {
     let filtered = [...this.retailerRegisRecords];
-
     if (this.searchTermRetailer.trim()) {
       const term = this.searchTermRetailer.toLowerCase();
       filtered = filtered.filter((r) =>
         r.business_name?.toLowerCase().includes(term)
       );
     }
-
     if (this.sortOrderRetailer === 'newest') {
       filtered.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
     } else {
       filtered.sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime());
     }
-
     this.filteredRetailerRegis = filtered;
   }
 
-  downloadRetailerExcel() {
+  downloadRetailerExcel(): void {
     const dataToExport = this.filteredRetailerRegis.length
       ? this.filteredRetailerRegis
       : this.retailerRegisRecords;
-
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'RetailerRegis');
     XLSX.writeFile(workbook, 'retailer_regis.xlsx');
+  }
+
+  togglePendingUsers(): void {
+    if (!this.showPendingUsers) {
+      this.loadPendingUsers();
+    }
+    this.showPendingUsers = !this.showPendingUsers;
+  }
+
+  async loadPendingUsers(): Promise<void> {
+    try {
+      this.loadingPending = true;
+      this.pendingErrorMsg = '';
+      this.pendingUsers = await this.pb.getPendingUsers();
+      if (!this.pendingUsers.length) {
+        this.pendingErrorMsg = 'No pending users found.';
+      }
+    } catch (error) {
+      this.pendingErrorMsg = 'Failed to load pending users.';
+      console.error('Error fetching pending users:', error);
+    } finally {
+      this.loadingPending = false;
+    }
+  }
+
+  approveUser(userId: string): void {
+    this.pb.approveUser(userId)
+      .then(() => {
+        const user = this.pendingUsers.find(u => u.id === userId);
+        if (user) {
+          user.status = 'approved';
+        }
+      })
+      .catch(err => {
+        console.error('Error approving user:', err);
+      });
+  }
+
+  denyUser(userId: string): void {
+    this.pb.denyUser(userId)
+      .then(() => {
+        const user = this.pendingUsers.find(u => u.id === userId);
+        if (user) {
+          user.status = 'denied';
+        }
+      })
+      .catch(err => {
+        console.error('Error denying user:', err);
+      });
+  }
+
+  getUserFileUrl(users: any, fileKey: string): string {
+    return this.pb.getUserAttachmentUrl(users, fileKey);
+  }
+
+  toggleApprovedUsers(): void {
+    if (!this.showApprovedUsers) {
+      this.loadApprovedUsers();
+    }
+    this.showApprovedUsers = !this.showApprovedUsers;
+  }
+
+  async loadApprovedUsers(): Promise<void> {
+    try {
+      this.loadingApproved = true;
+      this.approvedErrorMsg = '';
+      this.approvedUsers = await this.pb.getApprovedUsers();
+      if (!this.approvedUsers.length) {
+        this.approvedErrorMsg = 'No approved users found.';
+      }
+    } catch (error) {
+      this.approvedErrorMsg = 'Failed to load approved users.';
+      console.error('Error fetching approved users:', error);
+    } finally {
+      this.loadingApproved = false;
+    }
   }
 }

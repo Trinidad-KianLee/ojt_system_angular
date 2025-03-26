@@ -1,332 +1,514 @@
 <style>
-    html {
-      scroll-behavior: smooth;
-    }
-  </style>
-  
-  <div class="min-h-screen flex flex-col bg-gray-100 text-gray-800">
-    <header class="sticky top-0 z-50">
-      <div class="navbar bg-gradient-to-r from-blue-900 to-blue-600 text-white shadow-lg">
-        <div class="flex-1 px-2 lg:flex-none">
-          <div class="flex items-center space-x-2">
-            <img src="assets/1-dti.png" alt="DTI Logo" class="h-10 w-auto" />
-            <span class="text-lg md:text-xl font-bold">
-              Department of Trade and Industry - OSMV
-            </span>
-          </div>
-        </div>
-        <div class="flex-none hidden lg:block">
-          <ul class="menu menu-horizontal px-1 space-x-4 text-base md:text-lg font-semibold">
-            <li><a href="#" class="hover:bg-blue-700 transition-colors">Home</a></li>
-            <ng-container *ngIf="pb.isLoggedIn(); else notLoggedIn">
-              <li>
-                <a (click)="openLogoutModal()" class="hover:bg-blue-700 transition-colors">
-                  Logout
-                </a>
-              </li>
-            </ng-container>
-            <ng-template #notLoggedIn>
-              <li>
-                <a routerLink="/login" class="hover:bg-blue-700 transition-colors">
-                  Login
-                </a>
-              </li>
-            </ng-template>
-          </ul>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+
+<div class="min-h-screen flex flex-col bg-gray-100 text-gray-800">
+  <header class="sticky top-0 z-50">
+    <div class="navbar bg-gradient-to-r from-blue-900 to-blue-600 text-white shadow-lg">
+      <div class="flex-1 px-2 lg:flex-none">
+        <div class="flex items-center space-x-2">
+          <img src="assets/1-dti.png" alt="DTI Logo" class="h-10 w-auto" />
+          <span class="text-lg md:text-xl font-bold">
+            Department of Trade and Industry - OSMV
+          </span>
         </div>
       </div>
-    </header>
-
-    <main class="flex-grow container mx-auto px-4 py-8">
-      <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-3xl font-bold text-blue-700 flex items-center space-x-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-blue-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 7h18M3 12h18m-9 5h9"
-            />
-          </svg>
-          <span>Hello, Admin {{ firstName }}!</span>
-        </h2>
-        <p class="text-gray-600 mt-2 text-base">
-          Welcome to your admin dashboard. Manage and view records below.
-        </p>
+      <div class="flex-none hidden lg:block">
+        <ul class="menu menu-horizontal px-1 space-x-4 text-base md:text-lg font-semibold">
+          <li><a href="#" class="hover:bg-blue-700 transition-colors">Home</a></li>
+          <ng-container *ngIf="pb.isLoggedIn(); else notLoggedIn">
+            <li>
+              <a (click)="openLogoutModal()" class="hover:bg-blue-700 transition-colors">
+                Logout
+              </a>
+            </li>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <li>
+              <a routerLink="/login" class="hover:bg-blue-700 transition-colors">
+                Login
+              </a>
+            </li>
+          </ng-template>
+        </ul>
       </div>
+    </div>
+  </header>
 
-      <div class="bg-white mt-8 p-6 rounded-lg shadow">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <h3 class="text-xl font-bold text-blue-800">
-              Vape Registrations
-            </h3>
-            <p class="text-gray-600 text-sm">
-              Click the button to load user-submitted <code>vape promo registration</code> records.
-            </p>
-          </div>
-  
-          <div class="space-x-2">
-            <button
-              (click)="toggleVapeRegis()"
-              class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
-            >
-              View Vape Registrations
-            </button>
-            <button
-              (click)="downloadExcel()"
-              class="btn bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded shadow transition-colors"
-            >
-              Export to Excel
-            </button>
-          </div>
-        </div>
-  
-        <div *ngIf="showVapeRegis" class="mt-4">
-          <div *ngIf="loadingVape" class="text-blue-600 font-semibold mb-2">
-            Loading...
-          </div>
-          <div *ngIf="errorMsg" class="text-red-600 font-semibold mb-2">
-            {{ errorMsg }}
-          </div>
-
-          <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
-            <input
-              [(ngModel)]="searchTerm"
-              (input)="applyFilters()"
-              type="text"
-              placeholder="Search by Sponsor Name..."
-              class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <select
-              [(ngModel)]="sortOrder"
-              (change)="applyFilters()"
-              class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-            </select>
-          </div>
-  
-          <div class="overflow-x-auto rounded shadow">
-            <table
-              *ngIf="filteredVapeRegis.length && !loadingVape"
-              class="table-auto w-full text-sm text-gray-700"
-            >
-              <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
-                <tr>
-                  <th class="py-3 px-4 border-b">Coverage</th>
-                  <th class="py-3 px-4 border-b">Promo Period</th>
-                  <th class="py-3 px-4 border-b">Promo Schemes</th>
-                  <th class="py-3 px-4 border-b">Sponsor Name</th>
-                  <th class="py-3 px-4 border-b">Sponsor Contact No.</th>
-                  <th class="py-3 px-4 border-b">Sponsor Designation</th>
-                  <th class="py-3 px-4 border-b">Agency Ref No</th>
-                  <th class="py-3 px-4 border-b">Agency Designation</th>
-                  <th class="py-3 px-4 border-b">Agency Authorized Rep</th>
-                  <th class="py-3 px-4 border-b">Agency Contact No</th>
-                  <th class="py-3 px-4 border-b">Amendment Reason</th>
-                  <th class="py-3 px-4 border-b">Attachments</th>
-                  <th class="py-3 px-4 border-b">Owner Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="let record of filteredVapeRegis; let i = index"
-                  class="border-b hover:bg-gray-100"
-                >
-                  <td class="py-2 px-4">{{ record.coverage }}</td>
-                  <td class="py-2 px-4">{{ record.promoPeriod }}</td>
-                  <td class="py-2 px-4">{{ record.promoSchemes }}</td>
-                  <td class="py-2 px-4">{{ record.sponsorName }}</td>
-                  <td class="py-2 px-4">{{ record.sponsorContactNo }}</td>
-                  <td class="py-2 px-4">{{ record.sponsorDesignation }}</td>
-                  <td class="py-2 px-4">{{ record.agencyRefNo }}</td>
-                  <td class="py-2 px-4">{{ record.agencyDesignation }}</td>
-                  <td class="py-2 px-4">{{ record.agencyAuthorizedRep }}</td>
-                  <td class="py-2 px-4">{{ record.agencyContactNo }}</td>
-                  <td class="py-2 px-4">{{ record.amendmentReason }}</td>
-                  <td class="py-2 px-4">
-                    <a
-                      *ngIf="record.attachments"
-                      [href]="pb.getAttachmentUrl(record, 'attachments')"
-                      target="_blank"
-                      class="text-blue-600 hover:underline"
-                    >
-                      View File
-                    </a>
-                    <span *ngIf="!record.attachments" class="text-gray-500">
-                      N/A
-                    </span>
-                  </td>
-                  <td class="py-2 px-4">
-                    {{ record.expand?.owner?.email || 'No owner data' }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div
-              *ngIf="!filteredVapeRegis.length && !loadingVape"
-              class="p-4 text-center text-gray-500"
-            >
-              No matching records found.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white mt-8 p-6 rounded-lg shadow">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <h3 class="text-xl font-bold text-blue-800">
-              Retailer Registrations
-            </h3>
-            <p class="text-gray-600 text-sm">
-              Click the button to load user-submitted <code>retailer registration</code> records.
-            </p>
-          </div>
-  
-          <div class="space-x-2">
-            <button
-              (click)="toggleRetailerRegis()"
-              class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
-            >
-              View Retailer Registrations
-            </button>
-            <button
-              (click)="downloadRetailerExcel()"
-              class="btn bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded shadow transition-colors"
-            >
-              Export to Excel
-            </button>
-          </div>
-        </div>
-  
-        <div *ngIf="showRetailerRegis" class="mt-4">
-          <div *ngIf="loadingRetailer" class="text-blue-600 font-semibold mb-2">
-            Loading...
-          </div>
-          <div *ngIf="retailerErrorMsg" class="text-red-600 font-semibold mb-2">
-            {{ retailerErrorMsg }}
-          </div>
-
-          <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
-            <input
-              [(ngModel)]="searchTermRetailer"
-              (input)="applyRetailerFilters()"
-              type="text"
-              placeholder="Search by Business Name..."
-              class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-            <select
-              [(ngModel)]="sortOrderRetailer"
-              (change)="applyRetailerFilters()"
-              class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-            </select>
-          </div>
-  
-          <div class="overflow-x-auto rounded shadow">
-            <table
-              *ngIf="filteredRetailerRegis.length && !loadingRetailer"
-              class="table-auto w-full text-sm text-gray-700"
-            >
-              <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
-                <tr>
-                  <th class="py-3 px-4 border-b">Business Name</th>
-                  <th class="py-3 px-4 border-b">Store Name</th>
-                  <th class="py-3 px-4 border-b">Business Owner</th>
-                  <th class="py-3 px-4 border-b">Region</th>
-                  <th class="py-3 px-4 border-b">Email</th>
-                  <th class="py-3 px-4 border-b">Products Offered</th>
-                  <th class="py-3 px-4 border-b">Created</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="let record of filteredRetailerRegis; let i = index"
-                  class="border-b hover:bg-gray-100"
-                >
-                  <td class="py-2 px-4">{{ record.business_name }}</td>
-                  <td class="py-2 px-4">{{ record.store_name }}</td>
-                  <td class="py-2 px-4">{{ record.business_owner }}</td>
-                  <td class="py-2 px-4">{{ record.region }}</td>
-                  <td class="py-2 px-4">{{ record.email_address }}</td>
-                  <td class="py-2 px-4">
-                    {{ record.products_offered || 'N/A' }}
-                  </td>
-                  <td class="py-2 px-4">
-                    {{ record.created | date:'short' }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div
-              *ngIf="!filteredRetailerRegis.length && !loadingRetailer"
-              class="p-4 text-center text-gray-500"
-            >
-              No matching records found.
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <div
-      *ngIf="showWelcomeOverlay"
-      class="fixed inset-0 z-50 flex items-center justify-center"
-      style="background-color: rgba(0, 0, 0, 0.2);"
-    >
-      <div class="bg-white border border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center">
-        <h2 class="text-2xl font-bold mb-4">
-          Welcome, Admin {{ firstName }}!
-        </h2>
-        <p class="text-gray-600 mb-6">
-          You have successfully logged in.
-        </p>
-        <button
-          (click)="closeWelcomeOverlay()"
-          class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow"
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-3xl font-bold text-blue-700 flex items-center space-x-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8 text-blue-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          Continue
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 7h18M3 12h18m-9 5h9"
+          />
+        </svg>
+        <span>Hello, Admin {{ firstName }}!</span>
+      </h2>
+      <p class="text-gray-600 mt-2 text-base">
+        Welcome to your admin dashboard. Manage and view records below.
+      </p>
+    </div>
+
+    <!-- VAPE REGISTRATIONS -->
+    <div class="bg-white mt-8 p-6 rounded-lg shadow">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-xl font-bold text-blue-800">
+            Vape Registrations
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Click the button to load user-submitted <code>vape promo registration</code> records.
+          </p>
+        </div>
+        <div class="space-x-2">
+          <button
+            (click)="toggleVapeRegis()"
+            class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
+          >
+            View Vape Registrations
+          </button>
+          <button
+            (click)="downloadExcel()"
+            class="btn bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded shadow transition-colors"
+          >
+            Export to Excel
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showVapeRegis" class="mt-4">
+        <div *ngIf="loadingVape" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="errorMsg" class="text-red-600 font-semibold mb-2">
+          {{ errorMsg }}
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
+          <input
+            [(ngModel)]="searchTerm"
+            (input)="applyFilters()"
+            type="text"
+            placeholder="Search by Sponsor Name..."
+            class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <select
+            [(ngModel)]="sortOrder"
+            (change)="applyFilters()"
+            class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table
+            *ngIf="filteredVapeRegis.length && !loadingVape"
+            class="table-auto w-full text-sm text-gray-700"
+          >
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Coverage</th>
+                <th class="py-3 px-4 border-b">Promo Period</th>
+                <th class="py-3 px-4 border-b">Promo Schemes</th>
+                <th class="py-3 px-4 border-b">Sponsor Name</th>
+                <th class="py-3 px-4 border-b">Sponsor Contact No.</th>
+                <th class="py-3 px-4 border-b">Sponsor Designation</th>
+                <th class="py-3 px-4 border-b">Agency Ref No</th>
+                <th class="py-3 px-4 border-b">Agency Designation</th>
+                <th class="py-3 px-4 border-b">Agency Authorized Rep</th>
+                <th class="py-3 px-4 border-b">Agency Contact No</th>
+                <th class="py-3 px-4 border-b">Amendment Reason</th>
+                <th class="py-3 px-4 border-b">Attachments</th>
+                <th class="py-3 px-4 border-b">Owner Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let record of filteredVapeRegis; let i = index"
+                class="border-b hover:bg-gray-100"
+              >
+                <td class="py-2 px-4">{{ record.coverage }}</td>
+                <td class="py-2 px-4">{{ record.promoPeriod }}</td>
+                <td class="py-2 px-4">{{ record.promoSchemes }}</td>
+                <td class="py-2 px-4">{{ record.sponsorName }}</td>
+                <td class="py-2 px-4">{{ record.sponsorContactNo }}</td>
+                <td class="py-2 px-4">{{ record.sponsorDesignation }}</td>
+                <td class="py-2 px-4">{{ record.agencyRefNo }}</td>
+                <td class="py-2 px-4">{{ record.agencyDesignation }}</td>
+                <td class="py-2 px-4">{{ record.agencyAuthorizedRep }}</td>
+                <td class="py-2 px-4">{{ record.agencyContactNo }}</td>
+                <td class="py-2 px-4">{{ record.amendmentReason }}</td>
+                <td class="py-2 px-4">
+                  <a
+                    *ngIf="record.attachments"
+                    [href]="pb.getAttachmentUrl(record, 'attachments')"
+                    target="_blank"
+                    class="text-blue-600 hover:underline"
+                  >
+                    View File
+                  </a>
+                  <span *ngIf="!record.attachments" class="text-gray-500">
+                    N/A
+                  </span>
+                </td>
+                <td class="py-2 px-4">
+                  {{ record.expand?.owner?.email || 'No owner data' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            *ngIf="!filteredVapeRegis.length && !loadingVape"
+            class="p-4 text-center text-gray-500"
+          >
+            No matching records found.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white mt-8 p-6 rounded-lg shadow">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-xl font-bold text-blue-800">
+            Retailer Registrations
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Click the button to load user-submitted <code>retailer registration</code> records.
+          </p>
+        </div>
+        <div class="space-x-2">
+          <button
+            (click)="toggleRetailerRegis()"
+            class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
+          >
+            View Retailer Registrations
+          </button>
+          <button
+            (click)="downloadRetailerExcel()"
+            class="btn bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded shadow transition-colors"
+          >
+            Export to Excel
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showRetailerRegis" class="mt-4">
+        <div *ngIf="loadingRetailer" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="retailerErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ retailerErrorMsg }}
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
+          <input
+            [(ngModel)]="searchTermRetailer"
+            (input)="applyRetailerFilters()"
+            type="text"
+            placeholder="Search by Business Name..."
+            class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <select
+            [(ngModel)]="sortOrderRetailer"
+            (change)="applyRetailerFilters()"
+            class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table
+            *ngIf="filteredRetailerRegis.length && !loadingRetailer"
+            class="table-auto w-full text-sm text-gray-700"
+          >
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Business Name</th>
+                <th class="py-3 px-4 border-b">Store Name</th>
+                <th class="py-3 px-4 border-b">Business Owner</th>
+                <th class="py-3 px-4 border-b">Region</th>
+                <th class="py-3 px-4 border-b">Email</th>
+                <th class="py-3 px-4 border-b">Products Offered</th>
+                <th class="py-3 px-4 border-b">Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let record of filteredRetailerRegis; let i = index"
+                class="border-b hover:bg-gray-100"
+              >
+                <td class="py-2 px-4">{{ record.business_name }}</td>
+                <td class="py-2 px-4">{{ record.store_name }}</td>
+                <td class="py-2 px-4">{{ record.business_owner }}</td>
+                <td class="py-2 px-4">{{ record.region }}</td>
+                <td class="py-2 px-4">{{ record.email_address }}</td>
+                <td class="py-2 px-4">
+                  {{ record.products_offered || 'N/A' }}
+                </td>
+                <td class="py-2 px-4">
+                  {{ record.created | date:'short' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            *ngIf="!filteredRetailerRegis.length && !loadingRetailer"
+            class="p-4 text-center text-gray-500"
+          >
+            No matching records found.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white mt-8 p-6 rounded-lg shadow">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-xl font-bold text-blue-800">
+            Pending Users
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Manage newly registered users who are currently in pending status.
+          </p>
+        </div>
+        <div>
+          <button
+            (click)="togglePendingUsers()"
+            class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
+          >
+            View Pending Users
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showPendingUsers" class="mt-4">
+        <div *ngIf="loadingPending" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="pendingErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ pendingErrorMsg }}
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table
+            *ngIf="pendingUsers.length && !loadingPending"
+            class="table-auto w-full text-sm text-gray-700"
+          >
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Email</th>
+                <th class="py-3 px-4 border-b">First Name</th>
+                <th class="py-3 px-4 border-b">Middle Name</th>
+                <th class="py-3 px-4 border-b">Last Name</th>
+                <th class="py-3 px-4 border-b">DOB</th>
+                <th class="py-3 px-4 border-b">Gender</th>
+                <th class="py-3 px-4 border-b">Social Classification</th>
+                <th class="py-3 px-4 border-b">Company Name</th>
+                <th class="py-3 px-4 border-b">Company Address</th>
+                <th class="py-3 px-4 border-b">Contact Number</th>
+                <th class="py-3 px-4 border-b">Proof File</th>
+                <th class="py-3 px-4 border-b">Status</th>
+                <th class="py-3 px-4 border-b">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of pendingUsers" class="border-b hover:bg-gray-100">
+                <td class="py-2 px-4">{{ user.email }}</td>
+                <td class="py-2 px-4">{{ user.firstName }}</td>
+                <td class="py-2 px-4">{{ user.middleName }}</td>
+                <td class="py-2 px-4">{{ user.lastName }}</td>
+                <td class="py-2 px-4">{{ user.dob }}</td>
+                <td class="py-2 px-4">{{ user.gender }}</td>
+                <td class="py-2 px-4">{{ user.socialClassification }}</td>
+                <td class="py-2 px-4">{{ user.companyName }}</td>
+                <td class="py-2 px-4">{{ user.companyAddress }}</td>
+                <td class="py-2 px-4">{{ user.companyContactNum }}</td>
+                <td class="py-2 px-4">
+                  <a
+                    *ngIf="user.proofFile"
+                    [href]="pb.getUserAttachmentUrl(user, 'proofFile')"
+                    target="_blank"
+                    class="text-blue-600 hover:underline"
+                  >
+                    View File
+                  </a>
+                  <span *ngIf="!user.proofFile" class="text-gray-500">
+                    N/A
+                  </span>
+                </td>
+                <td class="py-2 px-4">{{ user.status }}</td>
+                <td class="py-2 px-4">
+                  <ng-container *ngIf="user.status === 'pending'">
+                    <button
+                      class="btn bg-green-600 text-white hover:bg-green-700 px-2 py-1 rounded"
+                      (click)="approveUser(user.id)"
+                    >
+                      Approve
+                    </button>
+                    <button
+                      class="btn bg-red-600 text-white hover:bg-red-700 px-2 py-1 rounded ml-2"
+                      (click)="denyUser(user.id)"
+                    >
+                      Deny
+                    </button>
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            *ngIf="!pendingUsers.length && !loadingPending"
+            class="p-4 text-center text-gray-500"
+          >
+            No pending users found.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPROVED USERS (NEW) -->
+    <div class="bg-white mt-8 p-6 rounded-lg shadow">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-xl font-bold text-blue-800">
+            Approved Users
+          </h3>
+          <p class="text-gray-600 text-sm">
+            List of users who have already been approved.
+          </p>
+        </div>
+        <div>
+          <button
+            (click)="toggleApprovedUsers()"
+            class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
+          >
+            View Approved Users
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showApprovedUsers" class="mt-4">
+        <div *ngIf="loadingApproved" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="approvedErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ approvedErrorMsg }}
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table
+            *ngIf="approvedUsers.length && !loadingApproved"
+            class="table-auto w-full text-sm text-gray-700"
+          >
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Email</th>
+                <th class="py-3 px-4 border-b">First Name</th>
+                <th class="py-3 px-4 border-b">Last Name</th>
+                <th class="py-3 px-4 border-b">Company Name</th>
+                <th class="py-3 px-4 border-b">Proof File</th>
+                <th class="py-3 px-4 border-b">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let user of approvedUsers"
+                class="border-b hover:bg-gray-100"
+              >
+                <td class="py-2 px-4">{{ user.email }}</td>
+                <td class="py-2 px-4">{{ user.firstName }}</td>
+                <td class="py-2 px-4">{{ user.lastName }}</td>
+                <td class="py-2 px-4">{{ user.companyName }}</td>
+                <td class="py-2 px-4">
+                  <a
+                    *ngIf="user.proofFile"
+                    [href]="pb.getUserAttachmentUrl(user, 'proofFile')"
+                    target="_blank"
+                    class="text-blue-600 hover:underline"
+                  >
+                    View File
+                  </a>
+                  <span *ngIf="!user.proofFile" class="text-gray-500">
+                    N/A
+                  </span>
+                </td>
+                <td class="py-2 px-4">{{ user.status }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            *ngIf="!approvedUsers.length && !loadingApproved"
+            class="p-4 text-center text-gray-500"
+          >
+            No approved users found.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div
+    *ngIf="showWelcomeOverlay"
+    class="fixed inset-0 z-50 flex items-center justify-center"
+    style="background-color: rgba(0, 0, 0, 0.2);"
+  >
+    <div class="bg-white border border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center">
+      <h2 class="text-2xl font-bold mb-4">
+        Welcome, Admin {{ firstName }}!
+      </h2>
+      <p class="text-gray-600 mb-6">
+        You have successfully logged in.
+      </p>
+      <button
+        (click)="closeWelcomeOverlay()"
+        class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow"
+      >
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="showLogoutModal"
+    class="fixed inset-0 z-50 flex items-center justify-center"
+    style="background-color: rgba(0, 0, 0, 0.2);"
+  >
+    <div class="bg-white border border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center">
+      <h2 class="text-xl font-bold mb-4">Confirm Logout</h2>
+      <p class="mb-6 text-gray-700">
+        Are you sure you want to log out?
+      </p>
+      <div class="flex justify-end space-x-4">
+        <button
+          (click)="cancelLogout()"
+          class="btn bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded"
+        >
+          No
+        </button>
+        <button
+          (click)="confirmLogout()"
+          class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded"
+        >
+          Yes
         </button>
       </div>
     </div>
- 
-    <div
-      *ngIf="showLogoutModal"
-      class="fixed inset-0 z-50 flex items-center justify-center"
-      style="background-color: rgba(0, 0, 0, 0.2);"
-    >
-      <div class="bg-white border border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center">
-        <h2 class="text-xl font-bold mb-4">Confirm Logout</h2>
-        <p class="mb-6 text-gray-700">
-          Are you sure you want to log out?
-        </p>
-        <div class="flex justify-end space-x-4">
-          <button
-            (click)="cancelLogout()"
-            class="btn bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded"
-          >
-            No
-          </button>
-          <button
-            (click)="confirmLogout()"
-            class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded"
-          >
-            Yes
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
-  
- 
+</div>
