@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PocketBaseService } from '../../services/pocketbase.service';
 import { FormsModule } from '@angular/forms';
+import {Dialog, DialogRef, DIALOG_DATA, DialogModule} from '@angular/cdk/dialog';
 import * as XLSX from 'xlsx';
+import { LoadingModalComponent } from '../../loading-modal/loading-modal.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -46,7 +48,8 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(
     public pb: PocketBaseService,
-    private router: Router
+    private router: Router,
+    private dialog: Dialog
   ) {
     const userData = this.pb.getUserData();
     this.firstName = userData ? userData['firstName'] : '';
@@ -201,9 +204,12 @@ export class AdminDashboardComponent implements OnInit {
 
   approveUser(userId: string): void {
     //modal/pop up while processing approval
+    this.dialog.open(LoadingModalComponent);
+
     this.pb.approveUser(userId)
       .then(() => {
         //remove pop up
+        this.dialog.closeAll();
         const user = this.pendingUsers.find(u => u.id === userId);
         if (user) {
           user.status = 'approved';
