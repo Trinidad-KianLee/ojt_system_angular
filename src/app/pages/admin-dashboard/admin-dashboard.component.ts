@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PocketBaseService } from '../../services/pocketbase.service';
 import { FormsModule } from '@angular/forms';
-import {Dialog, DialogRef, DIALOG_DATA, DialogModule} from '@angular/cdk/dialog';
+import { Dialog, DialogRef, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
 import * as XLSX from 'xlsx';
 import { LoadingModalComponent } from '../../loading-modal/loading-modal.component';
 
@@ -40,7 +40,6 @@ export class AdminDashboardComponent implements OnInit {
   loadingPending: boolean = false;
   pendingErrorMsg: string = '';
 
-  // NEW: APPROVED USERS
   approvedUsers: any[] = [];
   showApprovedUsers: boolean = false;
   loadingApproved: boolean = false;
@@ -203,12 +202,9 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   approveUser(userId: string): void {
-    //modal/pop up while processing approval
     this.dialog.open(LoadingModalComponent);
-
     this.pb.approveUser(userId)
       .then(() => {
-        //remove pop up
         this.dialog.closeAll();
         const user = this.pendingUsers.find(u => u.id === userId);
         if (user) {
@@ -257,6 +253,45 @@ export class AdminDashboardComponent implements OnInit {
       console.error('Error fetching approved users:', error);
     } finally {
       this.loadingApproved = false;
+    }
+  }
+
+updateVapeStatus(record: any, newStatus: string): void {
+  record.applicationStatus = newStatus; 
+  this.pb.updateVapeRecordStatus(record.id, newStatus)
+    .then(updated => {
+      console.log('Vape record updated:', updated);
+    })
+    .catch(err => {
+      console.error('Error updating vape status:', err);
+    });
+}
+
+updateRetailerStatus(record: any, newStatus: string): void {
+  record.applicationStatus = newStatus; 
+  this.pb.updateRetailerRecordStatus(record.id, newStatus)
+    .then(updated => {
+      console.log('Retailer record updated:', updated);
+    })
+    .catch(err => {
+      console.error('Error updating retailer status:', err);
+    });
+}
+
+  getStatusButtonClass(status: string): string {
+    switch (status) {
+      case 'Application received':
+        return 'btn-info';
+      case 'Pending':
+        return 'btn-warning';
+      case 'Ongoing evaluation':
+        return 'bg-orange-500 text-white';
+      case 'For approval':
+        return 'bg-orange-600 text-white';
+      case 'Approved':
+        return 'btn-success';
+      default:
+        return 'btn-ghost';
     }
   }
 }

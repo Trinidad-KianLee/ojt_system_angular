@@ -42,7 +42,7 @@ export class PocketBaseService {
   }
 
   async approveUser(userId: string): Promise<void> {
-    await this.pb.collection('users').update(userId, { status: 'approved'});
+    await this.pb.collection('users').update(userId, { status: 'approved' });
   }
 
   async denyUser(userId: string): Promise<void> {
@@ -166,6 +166,18 @@ export class PocketBaseService {
   async getApprovedUsers(): Promise<any[]> {
     return this.pb.collection('users').getFullList({
       filter: `status="approved"`,
+    });
+  }
+
+  async updateVapeRecordStatus(recordId: string, newStatus: string): Promise<any> {
+    return this.pb.collection('vape_regis').update(recordId, {
+      applicationStatus: newStatus
+    });
+  }
+
+  async updateRetailerRecordStatus(recordId: string, newStatus: string): Promise<any> {
+    return this.pb.collection('retailer_regis').update(recordId, {
+      applicationStatus: newStatus
     });
   }
 
