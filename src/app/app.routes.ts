@@ -16,6 +16,7 @@ import { VapeRegisComponent } from './pages/user-dashboard/vape-regis/vape-regis
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 
 import { AdminGuard } from './guards/admin.guard';
+import { NewLandingpageComponent } from './new-landingpage/new-landingpage.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'updated-landing-page', pathMatch: 'full' },
@@ -40,6 +41,6 @@ export const routes: Routes = [
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, AdminGuard]
   },
-
+  {path: 'new-landing page', component: NewLandingpageComponent},
   { path: '**', redirectTo: 'updated-landingpage' }
 ];
