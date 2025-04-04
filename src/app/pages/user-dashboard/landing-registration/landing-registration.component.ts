@@ -32,7 +32,6 @@ export class LandingRegistrationComponent implements OnInit {
   currentStep = 1;
   totalSteps = 3;
 
-  // For error messages
   emailErrorMsg: string | null = null;
   passwordMismatchMsg: string | null = null;
 
@@ -45,7 +44,6 @@ export class LandingRegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group(
       {
-        // Auth fields for PocketBase "users"
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(8)]],
         passwordConfirm: ['', Validators.required],
@@ -75,10 +73,6 @@ export class LandingRegistrationComponent implements OnInit {
     );
   }
 
-  /**
-   * Custom validator to ensure password == passwordConfirm
-   * Attaches "passwordMismatch" to the Confirm Password control if they differ.
-   */
   private passwordMatchValidator(passwordKey: string, confirmKey: string) {
     return (group: AbstractControl): ValidationErrors | null => {
       const passwordControl = group.get(passwordKey);
@@ -86,12 +80,10 @@ export class LandingRegistrationComponent implements OnInit {
 
       if (!passwordControl || !confirmControl) return null;
 
-      // If Confirm Password has other errors, don't overwrite them
       if (confirmControl.errors && !confirmControl.errors['passwordMismatch']) {
         return null;
       }
 
-      // Compare the two
       if (passwordControl.value !== confirmControl.value) {
         confirmControl.setErrors({ passwordMismatch: true });
       } else {
@@ -144,22 +136,18 @@ export class LandingRegistrationComponent implements OnInit {
   }
 
   onRegister(): void {
-    // Validate final step
     if (!this.isStepValid(this.currentStep)) return;
     if (this.form.invalid) return;
 
-    // Clear old error messages
     this.emailErrorMsg = null;
     this.passwordMismatchMsg = null;
 
-    // If Confirm Password has 'passwordMismatch'
     const confirmCtrl = this.form.get('passwordConfirm');
     if (confirmCtrl?.errors?.['passwordMismatch']) {
       this.passwordMismatchMsg = 'Passwords do not match';
       return;
     }
 
-    // Submit to PocketBase
     this.pocketbase.registerUser(this.form.value)
       .then(() => {
         console.log('Registration success!');
@@ -168,7 +156,6 @@ export class LandingRegistrationComponent implements OnInit {
       .catch(err => {
         console.error('Registration error:', err);
 
-        // If the email is already used
         if (err?.data?.data?.email?.message?.includes('already used')) {
           this.emailErrorMsg = 'This email has been registered already';
         }

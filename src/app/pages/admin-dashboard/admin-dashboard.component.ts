@@ -208,11 +208,30 @@ export class AdminDashboardComponent implements OnInit {
         this.dialog.closeAll();
         const user = this.pendingUsers.find(u => u.id === userId);
         if (user) {
+          const oldStatus = user.status || 'pending';
           user.status = 'approved';
+          const adminData = this.pb.getUserData();
+          const logData = {
+            adminId: adminData?.id,
+            adminName: adminData?.['firstName'],
+            colName: 'users',
+            recordId: userId,
+            oldStatus: oldStatus,
+            newStatus: 'approved',
+            timestamp: new Date().toISOString()
+          };
+          return this.pb.createAdminLog(logData);
+        } else {
+          return Promise.resolve(null);
+        }
+      })
+      .then(log => {
+        if (log) {
+          console.log('Admin log for user approval created:', log);
         }
       })
       .catch(err => {
-        console.error('Error approving user:', err);
+        console.error('Error approving user or logging action:', err);
       });
   }
 
@@ -221,11 +240,30 @@ export class AdminDashboardComponent implements OnInit {
       .then(() => {
         const user = this.pendingUsers.find(u => u.id === userId);
         if (user) {
+          const oldStatus = user.status || 'pending';
           user.status = 'denied';
+          const adminData = this.pb.getUserData();
+          const logData = {
+            adminId: adminData?.id,
+            adminName: adminData?.['firstName'],
+            colName: 'users',
+            recordId: userId,
+            oldStatus: oldStatus,
+            newStatus: 'denied',
+            timestamp: new Date().toISOString()
+          };
+          return this.pb.createAdminLog(logData);
+        } else {
+          return Promise.resolve(null);
+        }
+      })
+      .then(log => {
+        if (log) {
+          console.log('Admin log for user denial created:', log);
         }
       })
       .catch(err => {
-        console.error('Error denying user:', err);
+        console.error('Error denying user or logging action:', err);
       });
   }
 
@@ -256,27 +294,57 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-updateVapeStatus(record: any, newStatus: string): void {
-  record.applicationStatus = newStatus; 
-  this.pb.updateVapeRecordStatus(record.id, newStatus)
-    .then(updated => {
-      console.log('Vape record updated:', updated);
-    })
-    .catch(err => {
-      console.error('Error updating vape status:', err);
-    });
-}
+  updateVapeStatus(record: any, newStatus: string): void {
+    const oldStatus = record.applicationStatus;
+    record.applicationStatus = newStatus;
+    this.pb.updateVapeRecordStatus(record.id, newStatus)
+      .then(updated => {
+        console.log('Vape record updated:', updated);
+        const adminData = this.pb.getUserData();
+        const logData = {
+          adminId: adminData?.id,
+          adminName: adminData?.['firstName'],
+          colName: 'vape_regis',
+          recordId: record.id,
+          oldStatus: oldStatus,
+          newStatus: newStatus,
+          timestamp: new Date().toISOString()
+        };
+        return this.pb.createAdminLog(logData);
+      })
+      .then(log => {
+        console.log('Admin log created:', log);
+      })
+      .catch(err => {
+        console.error('Error updating vape status or logging admin action:', err);
+      });
+  }
 
-updateRetailerStatus(record: any, newStatus: string): void {
-  record.applicationStatus = newStatus; 
-  this.pb.updateRetailerRecordStatus(record.id, newStatus)
-    .then(updated => {
-      console.log('Retailer record updated:', updated);
-    })
-    .catch(err => {
-      console.error('Error updating retailer status:', err);
-    });
-}
+  updateRetailerStatus(record: any, newStatus: string): void {
+    const oldStatus = record.applicationStatus;
+    record.applicationStatus = newStatus;
+    this.pb.updateRetailerRecordStatus(record.id, newStatus)
+      .then(updated => {
+        console.log('Retailer record updated:', updated);
+        const adminData = this.pb.getUserData();
+        const logData = {
+          adminId: adminData?.id,
+          adminName: adminData?.['firstName'],
+          colName: 'retailer_regis',
+          recordId: record.id,
+          oldStatus: oldStatus,
+          newStatus: newStatus,
+          timestamp: new Date().toISOString()
+        };
+        return this.pb.createAdminLog(logData);
+      })
+      .then(log => {
+        console.log('Admin log created:', log);
+      })
+      .catch(err => {
+        console.error('Error updating retailer status or logging admin action:', err);
+      });
+  }
 
   getStatusButtonClass(status: string): string {
     switch (status) {

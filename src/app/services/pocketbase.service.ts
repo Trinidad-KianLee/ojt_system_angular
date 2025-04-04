@@ -83,10 +83,7 @@ export class PocketBaseService {
   async createRetailerRegisRecord(data: any): Promise<any> {
     await this.pb
       .collection('retailer_regis')
-      .create(data)
-      .then(async () => {
-        await this.pb.collection('users').requestVerification(data.email);
-      });
+      .create(data);
   }
 
   logout() {
@@ -178,6 +175,19 @@ export class PocketBaseService {
   async updateRetailerRecordStatus(recordId: string, newStatus: string): Promise<any> {
     return this.pb.collection('retailer_regis').update(recordId, {
       applicationStatus: newStatus
+    });
+  }
+
+  async createAdminLog(logData: any): Promise<any> {
+    return this.pb.collection('admin_logs').create(logData);
+  }
+
+  async getAllAdminLogs(): Promise<any[]> {
+    if (!this.isAdmin()) {
+      throw new Error('Access denied. Admin only method.');
+    }
+    return this.pb.collection('admin_logs').getFullList({
+      sort: '-created'
     });
   }
 

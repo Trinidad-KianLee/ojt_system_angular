@@ -1,11 +1,7 @@
 <div class="min-h-screen bg-gray-100 flex flex-col" data-theme="light">
   <header class="bg-white shadow-sm">
     <div class="container mx-auto p-4 flex items-center space-x-4">
-      <img
-        src="assets/dti_banner.png"
-        alt="DTI Banner"
-        class="max-h-16 object-contain"
-      />
+      <img src="assets/dti_banner.png" alt="DTI Banner" class="max-h-16 object-contain" />
       <h1 class="text-xl md:text-2xl font-bold text-blue-700">
         APPLICATION FOR CERTIFICATE OF REGISTRATION (COR)
         FOR WHOLESALER/TRADER/DISTRIBUTOR/RETAILER
@@ -22,44 +18,22 @@
       <!-- Angular template references -->
       <!-- The (ngSubmit)="submitForm(myForm)" is just an example; 
            actual TS is not shown here. -->
-      <form #myForm="ngForm" (ngSubmit)="submitForm(myForm)">
+      <form [formGroup]="form" (ngSubmit)="submitForm()">
         <!-- Row 1: Business Name / Store Name -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label class="font-medium text-gray-700">Name of Business</label>
-            <input
-              name="business_name"
-              [(ngModel)]="formData.business_name"
-              class="input input-bordered w-full mt-2 bg-white text-black"
-              required
-              #business_name="ngModel"
-            />
-            <div
-              *ngIf="
-                business_name.invalid &&
-                (business_name.dirty || business_name.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <input name="business_name" formControlName="business_name"
+              class="input input-bordered w-full mt-2 bg-white text-black" required />
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
           </div>
           <div>
             <label class="font-medium text-gray-700">Name of Store</label>
-            <input
-              name="store_name"
-              [(ngModel)]="formData.store_name"
-              class="input input-bordered w-full mt-2 bg-white text-black"
-              required
-              #store_name="ngModel"
-            />
-            <div
-              *ngIf="
-                store_name.invalid &&
-                (store_name.dirty || store_name.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <input name="store_name" formControlName="store_name"
+              class="input input-bordered w-full mt-2 bg-white text-black" required />
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
           </div>
@@ -69,132 +43,59 @@
         <div>
           <label class="font-medium text-gray-700">Store Address</label>
           <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-2 mb-4">
-            <input
-              name="floor_unit_no"
-              [(ngModel)]="formData.floor_unit_no"
-              class="input input-bordered bg-white text-black"
-              required
-              #floor_unit_no="ngModel"
-              placeholder="Floor/Unit No."
-            />
-            <div
-              *ngIf="
-                floor_unit_no.invalid &&
-                (floor_unit_no.dirty || floor_unit_no.touched)
-              "
-              class="text-red-600 text-sm mt-1 col-span-2"
-            >
+            <input name="floor_unit_no" formControlName="floor_unit_no"
+              class="input input-bordered bg-white text-black" required
+              placeholder="Floor/Unit No." />
+            <div class="text-red-600 text-sm mt-1 col-span-2">
               * Required
             </div>
 
-            <input
-              name="building_no_name"
-              [(ngModel)]="formData.building_no_name"
-              class="input input-bordered bg-white text-black"
-              required
-              #building_no_name="ngModel"
-              placeholder="Bldg. No./Name"
-            />
-            <div
-              *ngIf="
-                building_no_name.invalid &&
-                (building_no_name.dirty || building_no_name.touched)
-              "
-              class="text-red-600 text-sm mt-1 col-span-2"
-            >
+            <input name="building_no_name" formControlName="building_no_name"
+              class="input input-bordered bg-white text-black" required
+              placeholder="Bldg. No./Name" />
+            <div class="text-red-600 text-sm mt-1 col-span-2">
               * Required
             </div>
 
-            <input
-              name="street"
-              [(ngModel)]="formData.street"
-              class="input input-bordered bg-white text-black"
-              required
-              #street="ngModel"
-              placeholder="Street"
-            />
+            <input name="street" formControlName="street"
+              #street placeholder="Street" />
             <div
-              *ngIf="street.invalid && (street.dirty || street.touched)"
-              class="text-red-600 text-sm mt-1 col-span-2"
-            >
+              class="text-red-600 text-sm mt-1 col-span-2">
               * Required
             </div>
 
-            <input
-              name="barangay"
-              [(ngModel)]="formData.barangay"
-              class="input input-bordered bg-white text-black"
-              required
-              #barangay="ngModel"
-              placeholder="Barangay"
-            />
+            <input name="barangay" formControlName="barangay"
+              required placeholder="Barangay" />
             <div
-              *ngIf="barangay.invalid && (barangay.dirty || barangay.touched)"
-              class="text-red-600 text-sm mt-1 col-span-2"
-            >
+              class="text-red-600 text-sm mt-1 col-span-2">
               * Required
             </div>
 
-            <input
-              name="city_municipality"
-              [(ngModel)]="formData.city_municipality"
-              class="input input-bordered bg-white text-black"
-              required
-              #city_municipality="ngModel"
-              placeholder="City/Municipality"
-            />
-            <div
-              *ngIf="
-                city_municipality.invalid &&
-                (city_municipality.dirty || city_municipality.touched)
-              "
-              class="text-red-600 text-sm mt-1 col-span-2"
-            >
+            <input name="city_municipality" formControlName="city_municipality"
+              class="input input-bordered bg-white text-black" required
+              placeholder="City/Municipality" />
+            <div class="text-red-600 text-sm mt-1 col-span-2">
               * Required
             </div>
 
-            <input
-              name="province"
-              [(ngModel)]="formData.province"
-              class="input input-bordered bg-white text-black"
-              required
-              #province="ngModel"
-              placeholder="Province"
-            />
+            <input name="province" formControlName="province"
+              required placeholder="Province" />
             <div
-              *ngIf="province.invalid && (province.dirty || province.touched)"
-              class="text-red-600 text-sm mt-1 col-span-2"
-            >
+              class="text-red-600 text-sm mt-1 col-span-2">
               * Required
             </div>
 
-            <input
-              name="region"
-              [(ngModel)]="formData.region"
-              class="input input-bordered bg-white text-black"
-              required
-              #region="ngModel"
-              placeholder="Region"
-            />
+            <input name="region" formControlName="region"
+              #region placeholder="Region" />
             <div
-              *ngIf="region.invalid && (region.dirty || region.touched)"
-              class="text-red-600 text-sm mt-1 col-span-2"
-            >
+              class="text-red-600 text-sm mt-1 col-span-2">
               * Required
             </div>
 
-            <input
-              name="zip_code"
-              [(ngModel)]="formData.zip_code"
-              class="input input-bordered bg-white text-black"
-              required
-              #zip_code="ngModel"
-              placeholder="Zip Code"
-            />
-            <div
-              *ngIf="zip_code.invalid && (zip_code.dirty || zip_code.touched)"
-              class="text-red-600 text-sm mt-1 col-span-2"
-            >
+            <input name="zip_code" formControlName="zip_code"
+              required placeholder="Zip Code" />
+            <div 
+              class="text-red-600 text-sm mt-1 col-span-2">
               * Required
             </div>
           </div>
@@ -203,20 +104,9 @@
         <!-- Business Owner -->
         <div>
           <label class="font-medium text-gray-700">Name of Business Owner</label>
-          <input
-            name="business_owner"
-            [(ngModel)]="formData.business_owner"
-            class="input input-bordered w-full mt-1 bg-white text-black"
-            required
-            #business_owner="ngModel"
-          />
-          <div
-            *ngIf="
-              business_owner.invalid &&
-              (business_owner.dirty || business_owner.touched)
-            "
-            class="text-red-600 text-sm mt-1"
-          >
+          <input name="business_owner" formControlName="business_owner"
+            class="input input-bordered w-full mt-1 bg-white text-black" required />
+          <div class="text-red-600 text-sm mt-1">
             * Required
           </div>
         </div>
@@ -224,64 +114,29 @@
         <!-- Sex / Social Classification -->
         <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
           <div>
-            <label class="font-medium text-gray-700"
-              >Sex (Warehouse Owner)</label
-            >
+            <label class="font-medium text-gray-700">Sex (Warehouse Owner)</label>
             <div class="flex items-center space-x-4 mt-3">
               <label class="flex items-center">
-                <input
-                  type="radio"
-                  name="warehouse_owner_sex"
-                  value="M"
-                  [(ngModel)]="formData.warehouse_owner_sex"
-                  class="radio radio-primary"
-                  required
-                  #warehouse_owner_sex="ngModel"
-                />
+                <input type="radio" name="warehouse_owner_sex" value="M" formControlName=""
+                  class="radio radio-primary" required />
                 <span class="ml-2">M</span>
               </label>
               <label class="flex items-center">
-                <input
-                  type="radio"
-                  name="warehouse_owner_sex"
-                  value="F"
-                  [(ngModel)]="formData.warehouse_owner_sex"
-                  class="radio radio-primary"
-                  required
-                />
+                <input type="radio" name="warehouse_owner_sex" value="F" formControlName=""
+                  class="radio radio-primary" required />
                 <span class="ml-2">F</span>
               </label>
             </div>
-            <div
-              *ngIf="
-                warehouse_owner_sex.invalid &&
-                (warehouse_owner_sex.dirty || warehouse_owner_sex.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
           </div>
           <div>
-            <label class="font-medium text-gray-700"
-              >Social Classification</label
-            >
-            <input
-              name="social_classification"
-              [(ngModel)]="formData.social_classification"
-              class="input input-bordered w-full mt-2 bg-white text-black"
-              required
-              #social_classification="ngModel"
-              placeholder="e.g. Senior Citizen, PWD"
-            />
-            <div
-              *ngIf="
-                social_classification.invalid &&
-                (social_classification.dirty ||
-                  social_classification.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <label class="font-medium text-gray-700">Social Classification</label>
+            <input name="social_classification" formControlName="social_classification"
+              class="input input-bordered w-full mt-2 bg-white text-black" required
+              placeholder="e.g. Senior Citizen, PWD" />
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
           </div>
@@ -290,52 +145,21 @@
         <!-- Telephone / Email -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label class="font-medium text-gray-700"
-              >Telephone/Mobile Number</label
-            >
-            <input
-              name="telephone_mobile"
-              [(ngModel)]="formData.telephone_mobile"
-              class="input input-bordered w-full mt-2 bg-white text-black"
-              required
-              #telephone_mobile="ngModel"
-            />
-            <div
-              *ngIf="
-                telephone_mobile.invalid &&
-                (telephone_mobile.dirty || telephone_mobile.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <label class="font-medium text-gray-700">Telephone/Mobile Number</label>
+            <input name="telephone_mobile" formControlName="telephone_mobile"
+              class="input input-bordered w-full mt-2 bg-white text-black" required />
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
           </div>
           <div>
             <label class="font-medium text-gray-700">E-mail Address</label>
-            <input
-              name="email_address"
-              type="email"
-              [(ngModel)]="formData.email_address"
-              class="input input-bordered w-full mt-2 bg-white text-black"
-              required
-              #email_address="ngModel"
-            />
-            <div
-              *ngIf="
-                email_address.errors?.['required'] &&
-                (email_address.dirty || email_address.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <input name="email_address" type="email" formControlName="email_address"
+              class="input input-bordered w-full mt-2 bg-white text-black" required />
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
-            <div
-              *ngIf="
-                email_address.errors?.['email'] &&
-                (email_address.dirty || email_address.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <div class="text-red-600 text-sm mt-1">
               * Invalid email
             </div>
           </div>
@@ -344,23 +168,10 @@
         <!-- Website / Store Type -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label class="font-medium text-gray-700"
-              >Website/Social Media Page</label
-            >
-            <input
-              name="website_social_media"
-              [(ngModel)]="formData.website_social_media"
-              class="input input-bordered w-full mt-2 bg-white text-black"
-              required
-              #website_social_media="ngModel"
-            />
-            <div
-              *ngIf="
-                website_social_media.invalid &&
-                (website_social_media.dirty || website_social_media.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <label class="font-medium text-gray-700">Website/Social Media Page</label>
+            <input name="website_social_media" formControlName="website_social_media"
+              class="input input-bordered w-full mt-2 bg-white text-black" required />
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
           </div>
@@ -369,36 +180,17 @@
             <label class="font-medium text-gray-700">Type of Store</label>
             <div class="flex items-center space-x-4 mt-2">
               <label class="flex items-center">
-                <input
-                  type="radio"
-                  name="store_type"
-                  value="physical"
-                  [(ngModel)]="formData.store_type"
-                  class="radio radio-primary"
-                  required
-                  #store_type="ngModel"
-                />
+                <input type="radio" name="store_type" value="physical" formControlName=""
+                  class="radio radio-primary" required />
                 <span class="ml-2">Physical</span>
               </label>
               <label class="flex items-center">
-                <input
-                  type="radio"
-                  name="store_type"
-                  value="online"
-                  [(ngModel)]="formData.store_type"
-                  class="radio radio-primary"
-                  required
-                />
+                <input type="radio" name="store_type" value="online" formControlName=""
+                  class="radio radio-primary" required />
                 <span class="ml-2">Online</span>
               </label>
             </div>
-            <div
-              *ngIf="
-                store_type.invalid &&
-                (store_type.dirty || store_type.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
           </div>
@@ -407,54 +199,23 @@
         <!-- Digital Platform / URL -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label class="font-medium text-gray-700"
-              >Digital Platform/s to Use</label
-            >
-            <input
-              name="digital_platforms"
-              [(ngModel)]="formData.digital_platforms"
-              class="input input-bordered w-full mt-2 bg-white text-black"
-              required
-              #digital_platforms="ngModel"
-              placeholder="e.g. Shopee, Lazada, etc"
-            />
-            <div
-              *ngIf="
-                digital_platforms.invalid &&
-                (digital_platforms.dirty || digital_platforms.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <label class="font-medium text-gray-700">Digital Platform/s to Use</label>
+            <input name="digital_platforms" formControlName="digital_platforms"
+              class="input input-bordered w-full mt-2 bg-white text-black" required 
+              placeholder="e.g. Shopee, Lazada, etc" />
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
           </div>
           <div>
             <label class="font-medium text-gray-700">URL</label>
-            <input
-              name="store_url"
-              type="url"
-              [(ngModel)]="formData.store_url"
-              class="input input-bordered w-full mt-2 bg-white text-black"
-              required
-              #store_url="ngModel"
-              placeholder="For online store"
-            />
-            <div
-              *ngIf="
-                store_url.errors?.['required'] &&
-                (store_url.dirty || store_url.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <input name="store_url" type="url" formControlName="store_url"
+              class="input input-bordered w-full mt-2 bg-white text-black" required
+              placeholder="For online store" />
+            <div class="text-red-600 text-sm mt-1">
               * Required
             </div>
-            <div
-              *ngIf="
-                store_url.errors?.['email'] &&
-                (store_url.dirty || store_url.touched)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
+            <div class="text-red-600 text-sm mt-1">
               * Invalid email
             </div>
           </div>
@@ -462,128 +223,74 @@
 
         <!-- Products Offered -->
         <div class="mb-6">
-          <label class="font-medium text-gray-700 block"
-            >Products Being Offered for Sale</label
-          >
+          <label class="font-medium text-gray-700 block">Products Being Offered for Sale</label>
           <div class="flex flex-wrap gap-4 mt-2">
             <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="vapor_product_system"
-                [(ngModel)]="formData.vapor_product_system"
-                class="checkbox checkbox-primary"
-              />
+              <input type="checkbox" name="vapor_product_system" formControlName="vapor_product_system"
+                class="checkbox checkbox-primary" />
               <span>Vapor Product System</span>
             </label>
 
             <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="vapor_product_device"
-                [(ngModel)]="formData.vapor_product_device"
-                class="checkbox checkbox-primary"
-              />
+              <input type="checkbox" name="vapor_product_device" formControlName="vapor_product_device"
+                class="checkbox checkbox-primary" />
               <span>Vapor Product Device</span>
             </label>
 
             <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="refills_e_liquids"
-                [(ngModel)]="formData.refills_e_liquids"
-                class="checkbox checkbox-primary"
-              />
+              <input type="checkbox" name="refills_e_liquids" formControlName="refills_e_liquids"
+                class="checkbox checkbox-primary" />
               <span>Refills/E-liquids</span>
             </label>
 
             <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="htp_system"
-                [(ngModel)]="formData.htp_system"
-                class="checkbox checkbox-primary"
-              />
+              <input type="checkbox" name="htp_system" formControlName="htp_system"
+                class="checkbox checkbox-primary" />
               <span>Heated Tobacco Product (HTP) System</span>
             </label>
 
             <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="htp_device"
-                [(ngModel)]="formData.htp_device"
-                class="checkbox checkbox-primary"
-              />
+              <input type="checkbox" name="htp_device" formControlName="htp_device"
+                class="checkbox checkbox-primary" />
               <span>HTP Device</span>
             </label>
 
             <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="htp_consumables"
-                [(ngModel)]="formData.htp_consumables"
-                class="checkbox checkbox-primary"
-              />
+              <input type="checkbox" name="htp_consumables" formControlName="htp_consumables"
+                class="checkbox checkbox-primary" />
               <span>HTP Consumables</span>
             </label>
 
             <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="nicotine_pouch"
-                [(ngModel)]="formData.nicotine_pouch"
-                class="checkbox checkbox-primary"
-              />
+              <input type="checkbox" name="nicotine_pouch" formControlName="nicotine_pouch"
+                class="checkbox checkbox-primary" />
               <span>Nicotine Pouch</span>
             </label>
           </div>
         </div>
 
         <div class="mb-6">
-          <label class="font-medium text-gray-700 block"
-            >List of brands of products</label
-          >
-          <textarea
-            name="brands_list"
-            [(ngModel)]="formData.brands_list"
-            class="textarea textarea-bordered w-full bg-white text-black mt-2"
-            rows="3"
-          ></textarea>
+          <label class="font-medium text-gray-700 block">List of brands of products</label>
+          <textarea name="brands_list" formControlName="brands_list"
+            class="textarea textarea-bordered w-full bg-white text-black mt-2" rows="3"></textarea>
         </div>
 
         <div class="mb-6">
-          <label class="font-medium text-gray-700 block"
-            >Name of Supplier/s</label
-          >
-          <textarea
-            name="supplier_names"
-            [(ngModel)]="formData.supplier_names"
-            class="textarea textarea-bordered w-full bg-white text-black mt-2"
-            rows="3"
-          ></textarea>
+          <label class="font-medium text-gray-700 block">Name of Supplier/s</label>
+          <textarea name="supplier_names" formControlName="supplier_names"
+            class="textarea textarea-bordered w-full bg-white text-black mt-2" rows="3"></textarea>
         </div>
 
         <div class="mb-6">
-          <label class="font-medium text-gray-700 block"
-            >Asset Size (in PhP)</label
-          >
-          <textarea
-            name="asset_size"
-            [(ngModel)]="formData.asset_size"
-            class="textarea textarea-bordered w-full bg-white text-black mt-2"
-            rows="3"
-          ></textarea>
+          <label class="font-medium text-gray-700 block">Asset Size (in PhP)</label>
+          <textarea name="asset_size" formControlName="asset_size"
+            class="textarea textarea-bordered w-full bg-white text-black mt-2" rows="3"></textarea>
         </div>
 
         <div class="mb-6">
-          <label class="font-medium text-gray-700 block"
-            >Address of Warehouse/s</label
-          >
-          <textarea
-            name="warehouse_address"
-            [(ngModel)]="formData.warehouse_address"
-            class="textarea textarea-bordered w-full bg-white text-black mt-2"
-            rows="3"
-          ></textarea>
+          <label class="font-medium text-gray-700 block">Address of Warehouse/s</label>
+          <textarea name="warehouse_address" formControlName="warehouse_address"
+            class="textarea textarea-bordered w-full bg-white text-black mt-2" rows="3"></textarea>
         </div>
 
         <div class="flex justify-end space-x-4">
@@ -608,20 +315,14 @@
 
 
 <!-- SUCCESS MODAL (if you choose to show a success message) -->
-<div
-  *ngIf="showSuccessModal"
-  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
->
+<div *ngIf="showSuccessModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
   <div class="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
     <h2 class="text-xl font-bold mb-4 text-blue-600">Successful Registration!</h2>
     <p class="mb-6 text-gray-700">
       Your record has been submitted. We have successfully stored your data.
     </p>
     <div class="flex justify-end">
-      <button
-        class="btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-        (click)="closeSuccessModal()"
-      >
+      <button class="btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" (click)="closeSuccessModal()">
         OK
       </button>
     </div>

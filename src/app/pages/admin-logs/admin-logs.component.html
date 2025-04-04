@@ -1,0 +1,88 @@
+<style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+  
+  <div class="min-h-screen flex flex-col bg-gray-100 text-gray-800">
+    <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+      <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="assets/1-dti.png" alt="DTI Logo" class="h-10 w-auto" />
+          <span class="text-xl font-bold text-gray-800">
+            DTI - OSMV Admin Panel
+          </span>
+        </div>
+        <nav class="flex items-center gap-6 text-sm font-medium text-gray-700">
+          <a routerLink="/admin-dashboard" class="hover:text-blue-600 transition">Home</a>
+          <a routerLink="/admin-logs" class="hover:text-blue-600 transition">Logs</a>
+          <ng-container *ngIf="pb.isLoggedIn(); else notLoggedIn">
+            <a (click)="openLogoutModal()" class="hover:text-blue-600 transition cursor-pointer">
+              Logout
+            </a>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <a routerLink="/login" class="hover:text-blue-600 transition">Login</a>
+          </ng-template>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-2xl font-bold mb-4">Admin Logs</h1>
+  
+      <div *ngIf="loading" class="text-blue-600 font-semibold mb-2">
+        Loading logs...
+      </div>
+      <div *ngIf="errorMsg" class="text-red-600 font-semibold mb-2">
+        {{ errorMsg }}
+      </div>
+  
+      <div class="overflow-x-auto rounded shadow" *ngIf="!loading && logs.length">
+        <table class="table-auto w-full text-sm text-gray-700">
+          <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+            <tr>
+              <th class="py-3 px-4 border-b">Date/Time</th>
+              <th class="py-3 px-4 border-b">Admin</th>
+              <th class="py-3 px-4 border-b">Collection</th>
+              <th class="py-3 px-4 border-b">Record ID</th>
+              <th class="py-3 px-4 border-b">Old Status</th>
+              <th class="py-3 px-4 border-b">New Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of logs" class="border-b hover:bg-gray-100">
+              <td class="py-2 px-4">{{ log.created | date:'short' }}</td>
+              <td class="py-2 px-4">{{ log.adminName || log.adminId }}</td>
+              <td class="py-2 px-4">{{ log.colName }}</td>
+              <td class="py-2 px-4">{{ log.recordId }}</td>
+              <td class="py-2 px-4">{{ log.oldStatus || 'N/A' }}</td>
+              <td class="py-2 px-4">{{ log.newStatus || 'N/A' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <div class="p-4 text-center text-gray-500" *ngIf="!loading && !logs.length">
+        No logs found.
+      </div>
+    </div>
+
+    <div *ngIf="showLogoutModal" class="fixed inset-0 z-50 flex items-center justify-center" style="background-color: rgba(0,0,0,0.2);">
+      <div class="bg-white border border-gray-300 shadow-lg p-6 rounded max-w-md w-full text-center">
+        <h2 class="text-xl font-bold mb-4">Confirm Logout</h2>
+        <p class="mb-6 text-gray-700">
+          Are you sure you want to log out?
+        </p>
+        <div class="flex justify-end space-x-4">
+          <button (click)="cancelLogout()" class="btn bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded">
+            No
+          </button>
+          <button (click)="confirmLogout()" class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded">
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

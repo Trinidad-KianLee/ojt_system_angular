@@ -15,6 +15,7 @@
       </div>
       <nav class="flex items-center gap-6 text-sm font-medium text-gray-700">
         <a href="#" class="hover:text-blue-600 transition">Home</a>
+        <a routerLink="/admin-logs" class="hover:text-blue-600 transition">Logs</a>
         <ng-container *ngIf="pb.isLoggedIn(); else notLoggedIn">
           <a (click)="openLogoutModal()" class="hover:text-blue-600 transition cursor-pointer">
             Logout
@@ -200,7 +201,41 @@
                 <td class="py-2 px-4">{{ record.business_owner }}</td>
                 <td class="py-2 px-4">{{ record.region }}</td>
                 <td class="py-2 px-4">{{ record.email_address }}</td>
-                <td class="py-2 px-4">{{ record.products_offered || 'N/A' }}</td>
+                <td class="py-2 px-4">
+                  @if (record.vapor_product_system) {
+                    <div>Vapor Product System</div>
+                  } 
+                  @if (record.vapor_product_device) {
+                    <div>Vapor Product Device</div>
+                  } 
+                  @if (record.refills_e_liquid) {
+                    <div>Refills/E-Liquids</div>
+                  } 
+                  @if (record.htp_system) {
+                    <div>Heated Tobacco Product System</div>
+                  } 
+                  @if (record.htp_device) {
+                    <div>Heated Tobacco Product Device</div>
+                  } 
+                  @if (record.htp_consumables) {
+                    <div>Heated Tobacco Product Consumables</div>
+                  } 
+                  @if (record.nicotine_pouch) {
+                    <div>Nicotine Pouch</div>
+                  }
+                  @if (
+                    !record.vapor_product_system &&
+                    !record.vapor_product_device &&
+                    !record.refills_e_liquid &&
+                    !record.htp_system &&
+                    !record.htp_device &&
+                    !record.htp_consumables &&
+                    !record.nicotine_pouch
+                  ) {
+                    <div>N/A</div>
+                  }     
+                               
+                </td>
                 <td class="py-2 px-4">{{ record.created | date:'short' }}</td>
                 <td class="py-2 px-4">
                   <div class="dropdown dropdown-start">
@@ -211,11 +246,11 @@
                     tabindex="0"
                     class="dropdown-content menu p-2 shadow bg-white text-gray-800 rounded-box z-50"
                   >
-                    <li><a (click)="updateVapeStatus(record, 'Application received')">Application received</a></li>
-                    <li><a (click)="updateVapeStatus(record, 'Pending')">Pending</a></li>
-                    <li><a (click)="updateVapeStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
-                    <li><a (click)="updateVapeStatus(record, 'For approval')">For approval</a></li>
-                    <li><a (click)="updateVapeStatus(record, 'Approved')">Approved</a></li>
+                    <li><a (click)="updateRetailerStatus(record, 'Application received')">Application received</a></li>
+                    <li><a (click)="updateRetailerStatus(record, 'Pending')">Pending</a></li>
+                    <li><a (click)="updateRetailerStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
+                    <li><a (click)="updateRetailerStatus(record, 'For approval')">For approval</a></li>
+                    <li><a (click)="updateRetailerStatus(record, 'Approved')">Approved</a></li>
                   </ul>                  
                   </div>
                 </td>
