@@ -16,7 +16,7 @@ import { VapeRegisComponent } from './pages/user-dashboard/vape-regis/vape-regis
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 
 import { AdminGuard } from './guards/admin.guard';
-import { NewLandingpageComponent } from './new-landingpage/new-landingpage.component';
+import { NewLandingpageComponent } from './pages/user-dashboard/new-landingpage/new-landingpage.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'updated-landing-page', pathMatch: 'full' },
@@ -28,6 +28,7 @@ export const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'password-reset', component: PasswordResetComponent },
   { path: 'updated-landingpage', component: UpdatedLandingpageComponent },
+  {path: 'new-landingpage', component: NewLandingpageComponent},
 
   { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard] },
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
@@ -41,6 +42,6 @@ export const routes: Routes = [
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, AdminGuard]
   },
-  {path: 'new-landing page', component: NewLandingpageComponent},
+  
   { path: '**', redirectTo: 'updated-landingpage' }
 ];
