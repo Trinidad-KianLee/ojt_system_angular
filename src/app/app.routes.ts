@@ -19,6 +19,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { NewLandingpageComponent } from './pages/user-dashboard/new-landingpage/new-landingpage.component';
 import { NewLoginComponent } from './pages/new-login/new-login.component';
 import { FaqsComponent } from './pages/faqs/faqs.component';
+import { FaqsIndustryComponent } from './pages/faqs-industry/faqs-industry.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'updated-landing-page', pathMatch: 'full' },
@@ -33,6 +34,7 @@ export const routes: Routes = [
   {path: 'new-landingpage', component: NewLandingpageComponent},
   {path: 'new-login', component: NewLoginComponent},
   {path: 'faqs', component: FaqsComponent},
+  {path: 'faqs-industry', component: FaqsIndustryComponent},
 
   { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard] },
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
