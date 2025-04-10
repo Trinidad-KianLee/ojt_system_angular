@@ -8,13 +8,13 @@
     <h1 class="text-6xl ml-20 font-bold mt-5">Industry - OSMV</h1>
     <p class="text-lg ml-20 mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
       Curabitur bibendum erat sit amet magna placerat, in<br>rutrum nunc tincidunt.</p>
-    <input type="button" value="Apply now!"
-      class="bg-[#263081] text-white p-3 rounded-xl p-2 hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-700 hover:p-4 ml-19 mt-4 h-14 w-30" />
+    <button routerLink="/new-login"><input type="button" value="Apply now!"
+      class="bg-[#263081] text-white p-3 rounded-xl p-2 hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-700 hover:p-4 ml-19 mt-4 h-14 w-30 btn" /></button>
     <div class="button">
-      <input type="button" value="Login"
-        class="absolute top-0 left-0 right-0 ml-290 mt-6 bg-[#263081] text-white rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 hover:p-0 h-10 w-20 " />
-      <input type="button" value="Signup"
-        class="absolute top-0 left-0 right-0 ml-312 mt-6 bg-[#FDFAF6] text-[#263081] rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 hover:text-white h-10 w-20 " />
+      <button routerLink="/new-login"><input type="button" value="Login"
+        class="absolute top-0 left-0 right-0 ml-290 mt-6 bg-[#263081] text-white rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 hover:p-0 h-10 w-20 btn" /></button>
+      <button routerLink="/landing-registration"><input type="button" value="Signup"
+        class="absolute top-0 left-0 right-0 ml-312 mt-6 bg-[#FDFAF6] text-[#263081] rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 hover:text-white h-10 w-20 btn" /></button>
     </div>
   </div>
   <img src="assets/header.png" alt="dti-building" class="w-340 h-155">
@@ -42,7 +42,7 @@
       </ul>
     </div>
     <button routerLink="/new-landingpage" class="btn btn-ghost text-l">Home</button>
-    <a routerLink="#" class="btn btn-ghost text-l">FAQs</a>
+    <button routerLink="/faqs" class="btn btn-ghost text-l">FAQs</button>
     <button routerLink="/age-gating" class="btn btn-ghost text-l">Age gating</button>
     <button routerLink="/landing-page-retailer" class="btn btn-ghost text-l">Retailer</button>
     <button routerLink="/warehouse-reg" class="btn btn-ghost text-l">Warehouse</button>
@@ -113,7 +113,7 @@
 </div>
 
 <!--Footer-->
-<footer class="relative bg-[#3742FA] text-white p-10 ">
+<footer class="relative bg-[#263081] text-white p-10 ">
   <img src="assets/dti-footer.png" class="absolute w-2/3 px-20 opacity-20 z-0" />
 
   <div class="relative z-10 flex flex-wrap justify-between">
