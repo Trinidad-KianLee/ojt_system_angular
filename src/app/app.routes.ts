@@ -14,6 +14,8 @@ import { ForgotPasswordComponent } from './pages/user-dashboard/forgot-password/
 import { PasswordResetComponent } from './pages/password-reset/password-reset.component';
 import { VapeRegisComponent } from './pages/user-dashboard/vape-regis/vape-regis.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { AdminLogsComponent } from './pages/admin-logs/admin-logs.component';
+
 
 import { AdminGuard } from './guards/admin.guard';
 import { NewLandingpageComponent } from './pages/user-dashboard/new-landingpage/new-landingpage.component';
@@ -22,6 +24,7 @@ import { FaqsComponent } from './pages/faqs/faqs.component';
 import { FaqsIndustryComponent } from './pages/faqs-industry/faqs-industry.component';
 import { FaqsSupportComponent } from './pages/faqs-support/faqs-support.component';
 import { FaqsResourcesComponent } from './pages/faqs-resources/faqs-resources.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'updated-landing-page', pathMatch: 'full' },
@@ -50,6 +53,12 @@ export const routes: Routes = [
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
+    canActivate: [AuthGuard, AdminGuard]
+  },
+
+  {
+    path: 'admin-logs',
+    component: AdminLogsComponent,
     canActivate: [AuthGuard, AdminGuard]
   },
 

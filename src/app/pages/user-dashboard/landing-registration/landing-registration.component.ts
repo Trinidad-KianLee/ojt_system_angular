@@ -49,6 +49,7 @@ export class LandingRegistrationComponent implements OnInit {
         passwordConfirm: ['', Validators.required],
         emailVisibility: [true],
 
+        // Step 1
         firstName: ['', Validators.required],
         middleName: [''],
         lastName: ['', Validators.required],
@@ -56,12 +57,14 @@ export class LandingRegistrationComponent implements OnInit {
         socialClassification: [''],
         dob: ['', Validators.required],
 
+        // Step 2
         companyName: ['', Validators.required],
         companyAddress: ['', Validators.required],
         companyEmail: [''], // optional
         contactNumber: ['', Validators.required],
         proofFile: [null],
 
+        // Step 3
         agreeToTerms: [false, Validators.requiredTrue],
       },
       {
@@ -152,6 +155,7 @@ export class LandingRegistrationComponent implements OnInit {
       })
       .catch(err => {
         console.error('Registration error:', err);
+
         if (err?.data?.data?.email?.message?.includes('already used')) {
           this.emailErrorMsg = 'This email has been registered already';
         }
