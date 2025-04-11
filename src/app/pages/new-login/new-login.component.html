@@ -1,0 +1,68 @@
+<body class="overflow-hidden m-0 p-0">
+
+    <!-- Navbar -->
+    <div class="navbar bg-base-100 shadow-sm h-16">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li><a>Item 1</a></li>
+                    <li>
+                        <a>Parent</a>
+                        <ul class="p-2">
+                            <li><a>Submenu 1</a></li>
+                            <li><a>Submenu 2</a></li>
+                        </ul>
+                    </li>
+                    <li><a>Item 3</a></li>
+                </ul>
+            </div>
+
+            <button routerLink="/new-landingpage" class="btn btn-ghost text-l">Home</button>
+        </div>
+        <div class="navbar-end w-80 h-10 ml-100">
+            <a><img src="assets/DTI-logo.png"></a>
+        </div>
+    </div>
+
+
+    <div class="w-screen h-[calc(100vh-4rem)] relative overflow-hidden">
+
+        <div class="absolute inset-0 bg-[#263081B3] text-white p-4 z-10">
+            <h1 class="text-5xl font-bold text-white opacity-100 text-center mt-20">Welcome back!</h1>
+            <p class="text-center mt-4 text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br> Sed
+                do eiusmod tempor </p>
+
+            <div class="flex flex-col gap-4 p-6 rounded-xl shadow-lg w-full max-w-lg ml-105">
+
+                <label class="form-control w-full">
+                    <input type="email" placeholder="Email"
+                        class="input input-bordered w-full rounded-full text-black p-7 mt-5 text-base" />
+                </label>
+
+                <label class="form-control w-full">
+                    <input type="password" placeholder="Password"
+                        class="input input-bordered w-full rounded-full text-black p-7 text-base" />
+                </label>
+
+
+                <button class="bg-[#263081] text-white hover:bg-[#1b2360] rounded-full p-4 text-base"
+                    type="submit">Login</button>
+
+                <p class="text-center mt-20 text-gray-100 hover:text-blue-200 hover:underline"><a
+                        routerLink="/landing-registration">Create a new account</a></p>
+            </div>
+
+
+        </div>
+
+
+        <img src="assets/login-header.jpg" alt="makati-building"
+            class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none" />
+    </div>

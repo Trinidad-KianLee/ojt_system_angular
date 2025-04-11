@@ -1,56 +1,84 @@
-<div class="min-h-screen bg-gray-100 flex flex-col" data-theme="light">
-    <header class="bg-white shadow-sm">
-      <div class="mx-auto flex items-center justify-between px-6 py-2">
-        <div class="flex items-center space-x-3">
-          <img 
-            src="assets/dti_banner.png" 
-            alt="DTI Banner" 
-            class="max-h-16 object-contain"
-          />
-          <h1 class="text-sm font-bold text-blue-700">
-            Department of Trade and Industry - OSMV
-          </h1>
-        </div>
-        <nav>
-          <ul class="flex items-center space-x-6 text-sm font-semibold text-blue-700">
-            <li><a href="#" class="hover:underline">Home</a></li>
-            <li><a href="#" class="hover:underline">Feedback</a></li>
-            <li><a href="#" class="hover:underline">Contact Us</a></li>
-            <li>
-              <button class="px-3 py-1 bg-blue-500 text-white rounded-xl hover:bg-blue-600">
-                Login
-              </button>
-            </li>
+<div class="navbar bg-base-100 shadow-sm">
+  <div class="navbar-start">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+        </svg>
+      </div>
+      <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        <li><a>Item 1</a></li>
+        <li>
+          <a>Parent</a>
+          <ul class="p-2">
+            <li><a>Submenu 1</a></li>
+            <li><a>Submenu 2</a></li>
           </ul>
-        </nav>
-      </div>
-    </header>
-    <div class="min-h-screen flex flex-col">
-        <div class="flex-grow p-6">
-            <div class="container mx-auto p-6 flex-1">
-                <h1 class="text-2xl md:text-5xl font-bold text-blue-700 mb-2 text-center">
-                  Welcome to the Warehouse Registration
-                </h1>
-                <p class="text-gray-300 mb-6 text-center text-sm">
-                  Republic of the Philippines
-                </p>
-                <p class="text-gray-500 leading-relaxed mb-4 text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Vestibulum eget tortor a arcu pretium varius. Aliquam semper 
-                    sodales orci, at rhoncus nibh feugiat sed. Fusce tristique 
-                    aliquam ipsum, sed varius nibh blandit nec.
-                </p>
-                <div class="mt-6">
-                  <a 
-                    href="/retailer-regis" 
-                    class="btn btn-primary hover:bg-blue-700"
-                  >
-                    Register Here
-                  </a>
-                </div>
-              </div>
-        </div>
-        <div class="bg-blue-500 h-65 text-white text-center py-3">
-        </div>
-      </div>
+        </li>
+        <li><a>Item 3</a></li>
+      </ul>
+    </div>
+    <button routerLink="/new-landingpage" class="btn btn-ghost text-l">Home</button>
+    <button routerLink="/faqs" class="btn btn-ghost text-l">FAQs</button>
+    <button routerLink="/age-gating" class="btn btn-ghost text-l">Age gating</button>
+    <button routerLink="/landing-page-retailer" class="btn btn-ghost text-l">Retailer</button>
+    <button routerLink="/warehouse-reg" class="btn btn-ghost text-l">Warehouse</button>
+    <a class="btn btn-ghost text-l">Vape Registration</a>
+    <a class="btn btn-ghost text-l">PS License</a>
+    <a class="btn btn-ghost text-l">SOC/CCR</a>
+    <a class="btn btn-ghost text-l">Designated Vaping Area</a>
   </div>
+  <div class="navbar-end w-80 h-10 ml-100">
+    <a><img src="assets/DTI-logo.png"></a>
+  </div>
+</div>
+
+<div class="w-full h-[calc(50vh-2rem)] relative overflow-hidden">
+
+  <div class="absolute inset-0 bg-[#263081B3] text-white p-4 z-10">
+    <h1 class="text-5xl font-bold text-white opacity-100 text-center mt-20">Application for Certificate of Registration
+      (COR)</h1>
+    <h2 class="text-3xl font-semibold text-white opacity-100 text-center mt-2">for Wholesaler / Trader / Distributor /
+      Retailer</h2>
+
+  </div>
+
+
+  <img src="https://www.talk-business.co.uk/wp-content/uploads/2021/08/shutterstock_1848685948.jpg"
+    alt="makati-building" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none" />
+</div>
+
+<div class="flex flex-col md:flex-row items-center justify-center bg-[#FDFAF6] text-white p-10 shadow-lg h-120">
+  <!-- Left Image -->
+  <div class="w-full md:w-1/2 flex justify-center mb-4 md:mb-0 ">
+    <img src="https://www.atqor.com/media/p1th1p4b/logistics-transportation.png" alt="OSMV Illustration"
+      class="w-4/5 max-w-md mt-6" />
+  </div>
+
+  <!-- Right Content -->
+  <div class="w-full md:w-1/2 md:pl-10">
+    <div class="text-lg font-medium mt-5 mb-6 text-[#263081]">The Application for Certificate of Registration (COR) for
+      Wholesalers, Traders, Distributors, or Retailers in the vape industry is necessary to ensure legal compliance with
+      local regulations.</div>
+    <p class="text-base font-medium text-[#263081] mb-12 tracking-wider">
+      The Certificate of Registration (COR) ensures that the business is officially recognized by regulatory authorities
+      and can legally engage in the sale or distribution of vape products.
+
+    </p>
+    <p class="mb-3 text-sm text-gray-300">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+      nisi ut aliquip ex ea commodo consequat.
+    </p>
+    <p class="mb-6 text-sm text-gray-300">
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+
+    <button class="btn btn-soft text-base rounded-xl w-40  hover:text-[#263081] ">Learn more <svg
+        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path fill="currentColor"
+          d="M9 15.714V8.287q0-.368.244-.588q.243-.22.568-.22q.102 0 .213.028q.11.027.211.083l5.843 3.733q.186.13.28.298q.093.167.093.379t-.093.379t-.28.298l-5.843 3.733q-.101.055-.213.083t-.213.028q-.326 0-.568-.22T9 15.714" />
+      </svg></button>
+  </div>
+</div>
