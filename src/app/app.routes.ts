@@ -20,6 +20,8 @@ import { NewLandingpageComponent } from './pages/user-dashboard/new-landingpage/
 import { NewLoginComponent } from './pages/new-login/new-login.component';
 import { FaqsComponent } from './pages/faqs/faqs.component';
 import { FaqsIndustryComponent } from './pages/faqs-industry/faqs-industry.component';
+import { FaqsSupportComponent } from './pages/faqs-support/faqs-support.component';
+import { FaqsResourcesComponent } from './pages/faqs-resources/faqs-resources.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'updated-landing-page', pathMatch: 'full' },
@@ -31,10 +33,12 @@ export const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'password-reset', component: PasswordResetComponent },
   { path: 'updated-landingpage', component: UpdatedLandingpageComponent },
-  {path: 'new-landingpage', component: NewLandingpageComponent},
-  {path: 'new-login', component: NewLoginComponent},
-  {path: 'faqs', component: FaqsComponent},
-  {path: 'faqs-industry', component: FaqsIndustryComponent},
+  { path: 'new-landingpage', component: NewLandingpageComponent },
+  { path: 'new-login', component: NewLoginComponent },
+  { path: 'faqs', component: FaqsComponent },
+  { path: 'faqs-industry', component: FaqsIndustryComponent },
+  { path: 'faqs-support', component: FaqsSupportComponent},
+  { path: 'faqs-resources', component: FaqsResourcesComponent},
 
   { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard] },
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
@@ -48,6 +52,6 @@ export const routes: Routes = [
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, AdminGuard]
   },
-  
+
   { path: '**', redirectTo: 'updated-landingpage' }
 ];
