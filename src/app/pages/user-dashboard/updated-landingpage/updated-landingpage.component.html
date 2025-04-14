@@ -3,16 +3,11 @@
       scroll-behavior: smooth;
     }
   </style>
-  
-  <!-- Main Container -->
+
   <div class="bg-gray-100 relative min-h-screen text-gray-800">
-  
-    <!-- Top Nav (Home / Signup / Login or Logout) -->
+
     <nav class="absolute top-5 right-5 flex space-x-4 z-10">
-      <!-- Home link -->
       <a routerLink="/" class="text-white pt-3">Home</a>
-  
-      <!-- If user is NOT logged in, show Signup and Login -->
       <ng-container *ngIf="!pb.isLoggedIn(); else loggedInNav">
         <a
           routerLink="/landing-registration"
@@ -27,8 +22,7 @@
           Login
         </a>
       </ng-container>
-  
-      <!-- If user IS logged in, show Logout button + firstName -->
+
       <ng-template #loggedInNav>
         <div class="text-white pt-3">
           Hello, {{ firstName }}
@@ -41,8 +35,7 @@
         </button>
       </ng-template>
     </nav>
-  
-    <!-- Hero Section -->
+
     <section class="relative w-full h-[500px] overflow-hidden">
       <img
         src="assets/dti-bldg.jpg"
@@ -60,12 +53,10 @@
       </div>
     </section>
   
-    <!-- Registration Cards Section -->
     <section class="relative -mt-50">
       <div
         class="max-w-5xl mx-auto h-80 bg-white p-10 rounded-2xl shadow-lg flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 md:space-x-6 border-t-10 border-blue-600"
       >
-        <!-- Age Gating Card -->
         <div class="text-center relative group">
           <img src="assets/age-gating.png" alt="Age Gating" class="h-16 mx-auto" />
           <h2 class="text-blue-500 font-bold text-xl mt-3">AGE GATING</h2>
@@ -86,7 +77,6 @@
           </div>
         </div>
   
-        <!-- Retailer/Distributor Card -->
         <div class="text-center relative group">
           <img src="assets/retail.png" alt="Retailer" class="h-16 mx-auto" />
           <h2 class="text-blue-500 font-bold text-xl mt-3">RETAILER/DISTRIBUTOR</h2>
@@ -128,7 +118,6 @@
           </div>
         </div>
   
-        <!-- Vape Registration Card -->
         <div class="text-center relative group">
           <img src="assets/vape-regis.png" alt="Vape Registration" class="h-16 mx-auto" />
           <h2 class="text-blue-500 font-bold text-xl mt-3">VAPE REGISTRATION</h2>
@@ -151,9 +140,7 @@
       </div>
     </section>
   
-    <!-- OSMV / PS License Info Sections -->
     <div class="bg-gray-100">
-      <!-- OSMV Info -->
       <div class="flex items-start bg-gray-100 p-10">
         <div class="w-2/3 pl-2">
           <h1 class="text-blue-500 text-5xl font-bold">What is OSMV?</h1>
@@ -178,8 +165,7 @@
           </p>
         </div>
       </div>
-  
-      <!-- PS License Info -->
+
       <div class="flex items-start bg-gray-100 p-10">
         <div class="w-2/3 pl-2">
           <h1 class="text-blue-500 text-5xl font-bold">What is PS License?</h1>
@@ -203,10 +189,8 @@
         </div>
       </div>
     </div>
-  
-    <!-- CCR / SOC + Vaping Area Info -->
+
     <div class="bg-white p-10 space-y-16">
-      <!-- CCR and SOC -->
       <div class="flex items-start space-x-10">
         <div class="w-2/3">
           <h1 class="text-blue-500 text-5xl font-bold">
@@ -226,8 +210,7 @@
           <img src="assets/vape-regis.png" class="h-64 pl-20" />
         </div>
       </div>
-  
-      <!-- Designated Vaping Area -->
+
       <div class="flex items-start flex-row-reverse">
         <div class="w-2/3">
           <h1 class="text-blue-500 text-5xl font-bold pl-70">
@@ -247,8 +230,7 @@
         </div>
       </div>
     </div>
-  
-    <!-- Carousel -->
+
     <div class="carousel w-full">
       <div id="slide1" class="carousel-item relative w-full">
         <img src="assets/dti_1.jpg" class="w-full" />
@@ -359,7 +341,6 @@
     </footer>
   </div>
   
-  <!-- Logout Confirmation Modal -->
   <div
     *ngIf="showLogoutModal"
     class="fixed inset-0 z-50 flex items-center justify-center"

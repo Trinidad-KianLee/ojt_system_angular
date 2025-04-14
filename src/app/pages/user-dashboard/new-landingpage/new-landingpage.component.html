@@ -10,16 +10,47 @@
       Curabitur bibendum erat sit amet magna placerat, in<br>rutrum nunc tincidunt.</p>
     <button routerLink="/new-login"><input type="button" value="Apply now!"
       class="bg-[#263081] text-white p-3 rounded-xl p-2 hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-700 hover:p-4 ml-19 mt-4 h-14 w-30 btn" /></button>
-    <div class="button">
-      <button routerLink="/new-login"><input type="button" value="Login"
-        class="absolute top-0 left-0 right-0 ml-290 mt-6 bg-[#263081] text-white rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 hover:p-0 h-10 w-20 btn" /></button>
-      <button routerLink="/landing-registration"><input type="button" value="Signup"
-        class="absolute top-0 left-0 right-0 ml-312 mt-6 bg-[#FDFAF6] text-[#263081] rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 hover:text-white h-10 w-20 btn" /></button>
+    
+    <div class="absolute top-0 right-0 flex space-x-4 mr-6 mt-6">
+      <ng-container *ngIf="!pb.isLoggedIn(); else loggedInNav">
+        <button routerLink="/new-login">
+          <input type="button" value="Login"
+            class="bg-[#263081] text-white rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 h-10 w-20 btn" />
+        </button>
+        <button routerLink="/landing-registration">
+          <input type="button" value="Signup"
+            class="bg-[#FDFAF6] text-[#263081] rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 hover:text-white h-10 w-20 btn" />
+        </button>
+      </ng-container>
+
+      <ng-template #loggedInNav>
+        <div class="text-white pt-2 mr-2">
+          Hello, {{ firstName }}
+        </div>
+        <button (click)="openLogoutModal()">
+          <input type="button" value="Logout"  
+            class="bg-[#263081] text-white rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 h-10 w-20 btn" />
+        </button>
+      </ng-template>
     </div>
   </div>
   <img src="assets/header.png" alt="dti-building" class="w-340 h-155">
-</div>
 
+  <div *ngIf="showLogoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">Confirm Logout</h3>
+      <p class="text-gray-600 mb-6">Are you sure you want to logout?</p>
+      <div class="flex justify-center space-x-4">
+        <button (click)="cancelLogout()" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 text-gray-800">
+          Cancel
+        </button>
+        <button (click)="confirmLogout()" class="px-4 py-2 bg-[#263081] text-white rounded-lg hover:bg-blue-700">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="navbar bg-base-100 shadow-sm">
   <div class="navbar-start">

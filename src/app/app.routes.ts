@@ -64,5 +64,5 @@ export const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard]
   },
 
-  { path: '**', redirectTo: 'updated-landingpage' }
+  { path: '**', redirectTo: 'new-landingpage' }
 ];

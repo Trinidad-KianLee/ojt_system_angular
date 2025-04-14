@@ -60,11 +60,10 @@ export class LandingRegistrationComponent implements OnInit {
         // Step 2
         companyName: ['', Validators.required],
         companyAddress: ['', Validators.required],
-        companyEmail: [''], // optional
+        companyEmail: [''], 
         contactNumber: ['', Validators.required],
         proofFile: [null],
 
-        // Step 3
         agreeToTerms: [false, Validators.requiredTrue],
       },
       {
@@ -164,6 +163,6 @@ export class LandingRegistrationComponent implements OnInit {
 
   closeSuccessModal(): void {
     this.showSuccessModal = false;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/new-login']);
   }
 }

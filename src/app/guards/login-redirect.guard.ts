@@ -7,7 +7,7 @@ export const loginRedirectGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if(pb.isLoggedIn()){
-    return router.createUrlTree(['landingpage-orig']);
+    return router.createUrlTree(['new-landingpage']);
   }
   return true;
 };

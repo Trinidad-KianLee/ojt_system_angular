@@ -1,22 +1,52 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { PocketBaseService } from '../../services/pocketbase.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-new-login',
-  imports: [RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './new-login.component.html',
   styleUrl: './new-login.component.css'
 })
 export class NewLoginComponent {
 
-  email: string = '';
-  password: string = '';
-
-  onSubmit() {
-    if (this.email && this.password) {
-      // Handle login logic here (e.g., send the login data to the backend)
-      console.log('Email:', this.email);
-      console.log('Password:', this.password);
-    }
-  }
+  formData = {
+     email: '',
+     password: ''
+   };
+ 
+   loginError = false;
+   loginSuccess = false;
+ 
+   constructor(
+     private pbService: PocketBaseService,
+     private router: Router
+   ) {}
+ 
+   async onLogin() {
+     this.loginError = false;
+     this.loginSuccess = false;
+ 
+     try {
+       await this.pbService.loginUser(this.formData.email, this.formData.password);
+ 
+ 
+       this.loginSuccess = true; 
+       setTimeout(() => {
+         if (this.pbService.isAdmin()) {
+           this.router.navigate(['/admin-dashboard']);
+         } else {
+           this.router.navigate(['/new-landingpage']);
+         }
+       }, 1500);
+ 
+     } catch (error) {
+       console.error('Login error:', error);
+ 
+       this.loginError = true;
+     }
+   }
 }
