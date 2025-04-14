@@ -27,7 +27,7 @@ import { FaqsResourcesComponent } from './pages/faqs-resources/faqs-resources.co
 
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'updated-landing-page', pathMatch: 'full' },
+  { path: '', redirectTo: 'new-landingpage', pathMatch: 'full' },
 
   { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard] },
   { path: 'terms-conditions', component: TermsConditionsComponent },
@@ -62,5 +62,5 @@ export const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard]
   },
 
-  { path: '**', redirectTo: 'updated-landingpage' }
+  { path: '**', redirectTo: 'new-landingpage' }
 ];

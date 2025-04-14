@@ -13,7 +13,7 @@ export class AdminGuard implements CanActivate {
 
   canActivate(): boolean | UrlTree {
     if (!this.pbService.isLoggedIn()) {
-      return this.router.parseUrl('/login');
+      return this.router.parseUrl('/new-login');
     }
 
     if (!this.pbService.isAdmin()) {
