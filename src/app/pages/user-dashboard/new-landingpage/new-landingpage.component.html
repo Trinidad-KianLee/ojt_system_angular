@@ -11,9 +11,7 @@
     <button routerLink="/new-login"><input type="button" value="Apply now!"
       class="bg-[#263081] text-white p-3 rounded-xl p-2 hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-700 hover:p-4 ml-19 mt-4 h-14 w-30 btn" /></button>
     
-    <!-- Nav buttons with conditional rendering based on login status -->
     <div class="absolute top-0 right-0 flex space-x-4 mr-6 mt-6">
-      <!-- If user is NOT logged in, show Signup and Login -->
       <ng-container *ngIf="!pb.isLoggedIn(); else loggedInNav">
         <button routerLink="/new-login">
           <input type="button" value="Login"
@@ -24,8 +22,7 @@
             class="bg-[#FDFAF6] text-[#263081] rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 hover:text-white h-10 w-20 btn" />
         </button>
       </ng-container>
-      
-      <!-- If user IS logged in, show Logout button + firstName -->
+
       <ng-template #loggedInNav>
         <div class="text-white pt-2 mr-2">
           Hello, {{ firstName }}
@@ -38,8 +35,7 @@
     </div>
   </div>
   <img src="assets/header.png" alt="dti-building" class="w-340 h-155">
-  
-  <!-- Logout confirmation modal -->
+
   <div *ngIf="showLogoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
       <h3 class="text-lg font-bold text-gray-800 mb-4">Confirm Logout</h3>
