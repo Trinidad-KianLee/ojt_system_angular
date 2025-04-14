@@ -73,7 +73,7 @@ export class AdminDashboardComponent implements OnInit {
   confirmLogout(): void {
     this.showLogoutModal = false;
     this.pb.logout();
-    this.router.navigate(['login']);
+    this.router.navigate(['new-login']);
   }
 
   toggleVapeRegis(): void {

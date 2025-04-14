@@ -1,8 +1,6 @@
-
-
-<div class="min-h-screen flex flex-col bg-white text-gray-800">
-  <!-- Navbar -->
-  <div class="navbar bg-base-100 shadow-sm h-16">
+<div class="min-h-screen flex flex-col bg-gray-50">
+  <!-- Enhanced Navbar -->
+  <div class="navbar bg-white shadow-md h-16">
     <div class="navbar-start">
         <div class="dropdown">
             <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -12,46 +10,63 @@
                         d="M4 6h16M4 12h8m-8 6h16" />
                 </svg>
             </div>
-            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                <li><a>Item 1</a></li>
+            <ul tabindex="0" class="menu menu-sm dropdown-content bg-white rounded-box z-50 mt-3 w-52 p-2 shadow-lg">
+                <li><a class="hover:bg-gray-100">Item 1</a></li>
                 <li>
-                    <a>Parent</a>
+                    <a class="hover:bg-gray-100">Parent</a>
                     <ul class="p-2">
-                        <li><a>Submenu 1</a></li>
-                        <li><a>Submenu 2</a></li>
+                        <li><a class="hover:bg-gray-100">Submenu 1</a></li>
+                        <li><a class="hover:bg-gray-100">Submenu 2</a></li>
                     </ul>
                 </li>
-                <li><a>Item 3</a></li>
+                <li><a class="hover:bg-gray-100">Item 3</a></li>
             </ul>
         </div>
-
-        <button routerLink="/new-landingpage" class="btn btn-ghost text-l">Home</button>
+        <button routerLink="/new-landingpage" class="btn btn-ghost text-l font-semibold text-[#0D2E9E]">Home</button>
     </div>
     <div class="navbar-end w-80 h-10 ml-100">
-        <a><img src="assets/DTI-logo.png"></a>
+        <a><img src="assets/DTI-logo.png" class="h-full object-contain"></a>
     </div>
 </div>
 
-  <main class="container mx-auto px-4 py-8 flex-grow">
-    <div class="registration-container">
-      <h2 class="text-3xl font-bold mb-6 text-center md:text-left">
+  <main class="container mx-auto px-4 py-12 flex-grow">
+    <div class="registration-container max-w-5xl mx-auto">
+      <!-- Enhanced header with better spacing and animation -->
+      <h2 class="text-4xl font-bold mb-8 text-center text-[#0D2E9E] transition-all duration-300 hover:scale-105">
         User Registration
       </h2>
 
       <div class="flex flex-col md:flex-row gap-12">
-        <ul class="steps steps-vertical steps-primary md:w-1/5">
-          <li class="step" [ngClass]="{ 'step-primary': currentStep >= 1 }">Personal</li>
-          <li class="step" [ngClass]="{ 'step-primary': currentStep >= 2 }">Organization</li>
-          <li class="step" [ngClass]="{ 'step-primary': currentStep >= 3 }">Privacy</li>
-        </ul>
+        <!-- Enhanced stepper with animations -->
+        <div class="md:w-1/4">
+          <ul class="steps steps-vertical">
+            <li class="step transition-all duration-300" [ngClass]="{ 'step-primary font-medium': currentStep >= 1 }">
+              <div class="flex flex-col items-start">
+                <span class="text-lg">Personal</span>
+                <span class="text-xs text-gray-500">Basic Information</span>
+              </div>
+            </li>
+            <li class="step transition-all duration-300" [ngClass]="{ 'step-primary font-medium': currentStep >= 2 }">
+              <div class="flex flex-col items-start">
+                <span class="text-lg">Organization</span>
+                <span class="text-xs text-gray-500">Company Details</span>
+              </div>
+            </li>
+            <li class="step transition-all duration-300" [ngClass]="{ 'step-primary font-medium': currentStep >= 3 }">
+              <div class="flex flex-col items-start">
+                <span class="text-lg">Privacy</span>
+                <span class="text-xs text-gray-500">Terms & Conditions</span>
+              </div>
+            </li>
+          </ul>
+        </div>
 
-        <form
-          [formGroup]="form"
-          (ngSubmit)="onRegister()"
-          class="bg-gray-50 p-8 rounded shadow space-y-8 flex-1"
-        >
-         
-          <div *ngIf="currentStep === 1" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Enhanced form with better spacing and animations -->
+        <form [formGroup]="form" (ngSubmit)="onRegister()" 
+              class="bg-white p-8 rounded-lg shadow-lg space-y-8 flex-1 transition-all duration-300">
+          
+          <!-- Step 1: Personal Information -->
+          <div *ngIf="currentStep === 1" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="relative">
               <input
                 formControlName="email"
@@ -159,63 +174,43 @@
               </div>
             </div>
 
-            <div>
-              <label class="block font-semibold mb-1">Gender</label>
-              <div class="grid grid-cols-2 gap-2 mt-2">
-                <label class="flex items-center gap-1">
-                  <input
-                    formControlName="gender"
-                    type="radio"
-                    value="Male"
-                    class="radio radio-primary"
-                  />
-                  <span>Male</span>
+            <!-- Enhanced gender selection with better visual feedback -->
+            <div class="md:col-span-2">
+              <label class="block font-semibold mb-3 text-gray-700">Gender</label>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <label class="flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all duration-200 hover:border-[#0D2E9E] hover:bg-blue-50"
+                       [ngClass]="{'border-[#0D2E9E] bg-blue-50': form.get('gender')?.value === 'Male'}">
+                  <input formControlName="gender" type="radio" value="Male" class="radio radio-primary" />
+                  <span class="font-medium">Male</span>
                 </label>
-                <label class="flex items-center gap-1">
-                  <input
-                    formControlName="gender"
-                    type="radio"
-                    value="Female"
-                    class="radio radio-primary"
-                  />
-                  <span>Female</span>
+                <label class="flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all duration-200 hover:border-[#0D2E9E] hover:bg-blue-50"
+                       [ngClass]="{'border-[#0D2E9E] bg-blue-50': form.get('gender')?.value === 'Female'}">
+                  <input formControlName="gender" type="radio" value="Female" class="radio radio-primary" />
+                  <span class="font-medium">Female</span>
                 </label>
-                <label class="flex items-center gap-1">
-                  <input
-                    formControlName="gender"
-                    type="radio"
-                    value="Others"
-                    class="radio radio-primary"
-                  />
-                  <span>Others</span>
+                <label class="flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all duration-200 hover:border-[#0D2E9E] hover:bg-blue-50"
+                       [ngClass]="{'border-[#0D2E9E] bg-blue-50': form.get('gender')?.value === 'Others'}">
+                  <input formControlName="gender" type="radio" value="Others" class="radio radio-primary" />
+                  <span class="font-medium">Others</span>
                 </label>
-                <label class="flex items-center gap-1">
-                  <input
-                    formControlName="gender"
-                    type="radio"
-                    value="Prefer not to say"
-                    class="radio radio-primary"
-                  />
-                  <span>Prefer not to say</span>
+                <label class="flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all duration-200 hover:border-[#0D2E9E] hover:bg-blue-50"
+                       [ngClass]="{'border-[#0D2E9E] bg-blue-50': form.get('gender')?.value === 'Prefer not to say'}">
+                  <input formControlName="gender" type="radio" value="Prefer not to say" class="radio radio-primary" />
+                  <span class="font-medium">Prefer not to say</span>
                 </label>
               </div>
-              <div
-                class="error-text"
-                *ngIf="form.get('gender')?.touched && form.get('gender')?.hasError('required')"
-              >
+              <div class="error-text mt-2" *ngIf="form.get('gender')?.touched && form.get('gender')?.hasError('required')">
                 Gender is required
               </div>
             </div>
 
-            <div>
-              <label class="block font-semibold mb-1" for="socialClassification">
+            <!-- Enhanced social classification dropdown -->
+            <div class="relative">
+              <label class="block font-semibold mb-2 text-gray-700" for="socialClassification">
                 Social Classification
               </label>
-              <select
-                id="socialClassification"
-                formControlName="socialClassification"
-                class="select select-bordered w-full bg-white text-black"
-              >
+              <select id="socialClassification" formControlName="socialClassification"
+                      class="select select-bordered w-full bg-white text-black transition-all duration-200 hover:border-[#0D2E9E]">
                 <option value="">None</option>
                 <option value="PWD">PWD</option>
                 <option value="Senior Citizen">Senior Citizen</option>
@@ -309,185 +304,223 @@
             </div>
           </div>
 
-          <div *ngIf="currentStep === 2" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="md:col-span-2">
-              <h3 class="text-xl font-semibold mb-4">Organizational Info</h3>
+          <!-- Step 2: Organization Information -->
+          <div *ngIf="currentStep === 2" class="space-y-8">
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+              <h3 class="text-xl font-semibold text-[#0D2E9E] mb-2">Organizational Information</h3>
+              <p class="text-sm text-gray-600">Please provide your company details below</p>
             </div>
 
-            <div class="relative">
-              <input
-                id="companyName"
-                formControlName="companyName"
-                type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent"
-              />
-              <label
-                for="companyName"
-                class="absolute left-2 top-2 text-gray-500 transition-all duration-200
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-[#0D2E9E]
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-[#0D2E9E]"
-              >
-                Company Name
-              </label>
-              <div
-                class="error-text"
-                *ngIf="
-                  form.get('companyName')?.touched &&
-                  form.get('companyName')?.hasError('required')
-                "
-              >
-                Company Name is required
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="relative">
+                <input
+                  id="companyName"
+                  formControlName="companyName"
+                  type="text"
+                  placeholder=" "
+                  class="peer input input-bordered w-full bg-white text-black placeholder-transparent"
+                />
+                <label
+                  for="companyName"
+                  class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                         peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                         peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                         peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-[#0D2E9E]
+                         peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
+                         peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-[#0D2E9E]"
+                >
+                  Company Name
+                </label>
+                <div
+                  class="error-text"
+                  *ngIf="
+                    form.get('companyName')?.touched &&
+                    form.get('companyName')?.hasError('required')
+                  "
+                >
+                  Company Name is required
+                </div>
+              </div>
+
+              <div class="relative">
+                <input
+                  id="companyAddress"
+                  formControlName="companyAddress"
+                  type="text"
+                  placeholder=" "
+                  class="peer input input-bordered w-full bg-white text-black placeholder-transparent"
+                />
+                <label
+                  for="companyAddress"
+                  class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                         peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                         peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                         peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-[#0D2E9E]
+                         peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
+                         peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-[#0D2E9E]"
+                >
+                  Company Address
+                </label>
+                <div
+                  class="error-text"
+                  *ngIf="
+                    form.get('companyAddress')?.touched &&
+                    form.get('companyAddress')?.hasError('required')
+                  "
+                >
+                  Company Address is required
+                </div>
+              </div>
+
+              <div class="relative">
+                <input
+                  id="companyEmail"
+                  formControlName="companyEmail"
+                  type="email"
+                  placeholder=" "
+                  class="peer input input-bordered w-full bg-white text-black placeholder-transparent"
+                />
+                <label
+                  for="companyEmail"
+                  class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                         peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                         peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                         peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-[#0D2E9E]
+                         peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
+                         peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-[#0D2E9E]"
+                >
+                  Company Email (optional)
+                </label>
+              </div>
+
+              <div class="relative">
+                <input
+                  id="contactNumber"
+                  formControlName="contactNumber"
+                  type="text"
+                  placeholder=" "
+                  class="peer input input-bordered w-full bg-white text-black placeholder-transparent"
+                />
+                <label
+                  for="contactNumber"
+                  class="absolute left-2 top-2 text-gray-500 transition-all duration-200
+                         peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
+                         peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                         peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-[#0D2E9E]
+                         peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
+                         peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-[#0D2E9E]"
+                >
+                  Contact Number
+                </label>
+                <div
+                  class="error-text"
+                  *ngIf="
+                    form.get('contactNumber')?.touched &&
+                    form.get('contactNumber')?.hasError('required')
+                  "
+                >
+                  Contact Number is required
+                </div>
               </div>
             </div>
 
-            <div class="relative">
-              <input
-                id="companyAddress"
-                formControlName="companyAddress"
-                type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent"
-              />
-              <label
-                for="companyAddress"
-                class="absolute left-2 top-2 text-gray-500 transition-all duration-200
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-[#0D2E9E]
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-[#0D2E9E]"
-              >
-                Company Address
-              </label>
-              <div
-                class="error-text"
-                *ngIf="
-                  form.get('companyAddress')?.touched &&
-                  form.get('companyAddress')?.hasError('required')
-                "
-              >
-                Company Address is required
-              </div>
-            </div>
-
-            <div class="relative">
-              <input
-                id="companyEmail"
-                formControlName="companyEmail"
-                type="email"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent"
-              />
-              <label
-                for="companyEmail"
-                class="absolute left-2 top-2 text-gray-500 transition-all duration-200
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-[#0D2E9E]
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-[#0D2E9E]"
-              >
-                Company Email (optional)
-              </label>
-            </div>
-
-            <div class="relative">
-              <input
-                id="contactNumber"
-                formControlName="contactNumber"
-                type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent"
-              />
-              <label
-                for="contactNumber"
-                class="absolute left-2 top-2 text-gray-500 transition-all duration-200
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-[#0D2E9E]
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-[#0D2E9E]"
-              >
-                Contact Number
-              </label>
-              <div
-                class="error-text"
-                *ngIf="
-                  form.get('contactNumber')?.touched &&
-                  form.get('contactNumber')?.hasError('required')
-                "
-              >
-                Contact Number is required
-              </div>
-            </div>
-
-            <div class="md:col-span-2">
-              <label for="proofFile" class="block font-semibold mb-1">
+            <!-- Enhanced file upload section -->
+            <div class="mt-6">
+              <label for="proofFile" class="block font-semibold mb-2 text-gray-700">
                 Proof of Document
               </label>
-              <input
-                id="proofFile"
-                type="file"
-                (change)="onFileSelected($event)"
-                class="file-input file-input-bordered custom-file-input w-full bg-white text-black"
-              />
+              <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#0D2E9E] transition-all duration-200"
+                   [ngClass]="{'border-[#0D2E9E] bg-blue-50': form.get('proofFile')?.value}">
+                <input id="proofFile" type="file" (change)="onFileSelected($event)"
+                       class="file-input file-input-bordered w-full bg-white text-black hidden" 
+                       accept=".pdf,.doc,.docx" />
+                <label for="proofFile" class="cursor-pointer">
+                  <div *ngIf="!form.get('proofFile')?.value">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <span class="mt-2 block text-sm font-medium text-gray-900">
+                      Click to upload or drag and drop
+                    </span>
+                    <span class="mt-1 block text-sm text-gray-500">
+                      PDF, DOC, DOCX up to 10MB
+                    </span>
+                  </div>
+                  <div *ngIf="form.get('proofFile')?.value" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-[#0D2E9E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span class="mt-2 block text-sm font-medium text-gray-900">
+                      {{ getFileName() }}
+                    </span>
+                    <button type="button" 
+                            class="mt-2 text-sm text-red-600 hover:text-red-800"
+                            (click)="removeFile($event)">
+                      Remove file
+                    </button>
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
 
+          <!-- Step 3: Privacy Terms -->
           <div *ngIf="currentStep === 3">
-            <div class="bg-white p-6 rounded shadow mb-4">
-              <h3 class="text-xl font-semibold mb-2">Privacy Terms</h3>
-              <p class="text-base mb-4">
-                Please read and accept our Privacy Terms before proceeding.
-              </p>
-              <label class="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  formControlName="agreeToTerms"
-                  class="checkbox checkbox-primary"
-                />
-                <span>I agree to the terms</span>
+            <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
+              <div class="bg-blue-50 p-4 rounded-lg">
+                <h3 class="text-xl font-semibold text-[#0D2E9E] mb-2">Privacy Terms</h3>
+                <p class="text-gray-600">Please read and accept our Privacy Terms before proceeding.</p>
+              </div>
+              
+              <div class="prose max-w-none">
+                <p class="text-gray-600 mb-4">
+                  By accepting these terms, you agree to our data processing practices and acknowledge that your information
+                  will be handled in accordance with our privacy policy.
+                </p>
+              </div>
+
+              <label class="flex items-center gap-3 p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:border-[#0D2E9E] hover:bg-blue-50"
+                     [ngClass]="{'border-[#0D2E9E] bg-blue-50': form.get('agreeToTerms')?.value}">
+                <input type="checkbox" formControlName="agreeToTerms" 
+                       class="checkbox checkbox-primary" />
+                <span class="font-medium">I agree to the terms and conditions</span>
               </label>
-              <div
-                class="error-text mt-2"
-                *ngIf="
-                  form.get('agreeToTerms')?.touched &&
-                  form.get('agreeToTerms')?.hasError('required')
-                "
-              >
+              
+              <div class="error-text mt-2" 
+                   *ngIf="form.get('agreeToTerms')?.touched && form.get('agreeToTerms')?.hasError('required')">
                 You must agree to the terms before submitting
               </div>
             </div>
           </div>
-  
-          <div class="flex justify-end space-x-4">
-            <button
-              type="button"
-              class="btn bg-gray-300 hover:bg-gray-400 text-black px-6 py-2 rounded"
-              *ngIf="currentStep > 1"
-              (click)="previousStep()"
-            >
+
+          <!-- Enhanced navigation buttons -->
+          <div class="flex justify-end space-x-4 pt-6">
+            <button type="button"
+                    class="btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg transition-all duration-200"
+                    *ngIf="currentStep > 1"
+                    (click)="previousStep()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+              </svg>
               Back
             </button>
 
-            <button
-              type="button"
-              class="btn bg-[#0D2E9E] hover:bg-[#0c278b] text-white px-6 py-2 rounded"
-              *ngIf="currentStep < totalSteps"
-              (click)="nextStep()"
-            >
+            <button type="button"
+                    class="btn bg-[#0D2E9E] hover:bg-[#0c278b] text-white px-6 py-2 rounded-lg transition-all duration-200"
+                    *ngIf="currentStep < totalSteps"
+                    (click)="nextStep()">
               Next
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
             </button>
 
-            <button
-              type="submit"
-              class="btn bg-[#0D2E9E] hover:bg-[#0c278b] text-white px-8 py-2 text-base font-semibold rounded"
-              *ngIf="currentStep === totalSteps"
-            >
+            <button type="submit"
+                    class="btn bg-[#0D2E9E] hover:bg-[#0c278b] text-white px-8 py-2 rounded-lg transition-all duration-200"
+                    *ngIf="currentStep === totalSteps">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
               Register
             </button>
           </div>
@@ -496,23 +529,25 @@
     </div>
   </main>
 
-  <div
-  *ngIf="showSuccessModal"
-  class="fixed inset-0 z-50 flex items-center justify-center 
-         bg-opacity-100 p-4"
->
-  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm text-gray-800">
-    <h2 class="text-xl font-bold mb-4">Successful Registration!</h2>
-    <p class="mb-6">
-      Your account creation has submitted. Wait for the approval for 24 hours.
-    </p>
-    <div class="flex justify-end">
-      <button
-        class="btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-        (click)="closeSuccessModal()"
-      >
-        OK
-      </button>
+  <!-- Enhanced success modal -->
+  <div *ngIf="showSuccessModal"
+       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm transform transition-all duration-300 scale-100">
+      <div class="text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+          <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Registration Successful!</h2>
+        <p class="text-gray-600 mb-6">
+          Your account creation has been submitted. Please wait for approval within 24 hours.
+        </p>
+        <button class="btn bg-[#0D2E9E] hover:bg-[#0c278b] text-white px-6 py-2 rounded-lg transition-all duration-200"
+                (click)="closeSuccessModal()">
+          Got it
+        </button>
+      </div>
     </div>
   </div>
 </div>

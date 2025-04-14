@@ -9,7 +9,7 @@
     <p class="text-lg ml-20 mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
       Curabitur bibendum erat sit amet magna placerat, in<br>rutrum nunc tincidunt.</p>
     <button routerLink="/new-login"><input type="button" value="Apply now!"
-      class="bg-[#263081] text-white p-3 rounded-xl p-2 hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-700 hover:p-4 ml-19 mt-4 h-14 w-30 btn" /></button>
+      class="bg-[#263081] text-white rounded-xl p-3 hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-700 hover:p-4 ml-19 mt-4 h-14 w-30 btn" /></button>
     
     <div class="absolute top-0 right-0 flex space-x-4 mr-6 mt-6">
       <ng-container *ngIf="!pb.isLoggedIn(); else loggedInNav">
@@ -36,15 +36,16 @@
   </div>
   <img src="assets/header.png" alt="dti-building" class="w-340 h-155">
 
-  <div *ngIf="showLogoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
-      <h3 class="text-lg font-bold text-gray-800 mb-4">Confirm Logout</h3>
-      <p class="text-gray-600 mb-6">Are you sure you want to logout?</p>
-      <div class="flex justify-center space-x-4">
-        <button (click)="cancelLogout()" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 text-gray-800">
+  <div *ngIf="showLogoutModal" class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="fixed inset-0 bg-black/30 backdrop-blur-sm"></div>
+    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full mx-4 z-50 relative transform transition-all scale-100">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4">Confirm Logout</h3>
+      <p class="text-gray-600 mb-8">Are you sure you want to logout from your account?</p>
+      <div class="flex justify-end space-x-4">
+        <button (click)="cancelLogout()" class="px-6 py-2.5 bg-gray-100 rounded-lg hover:bg-gray-200 text-gray-700 font-medium transition-colors duration-200">
           Cancel
         </button>
-        <button (click)="confirmLogout()" class="px-4 py-2 bg-[#263081] text-white rounded-lg hover:bg-blue-700">
+        <button (click)="confirmLogout()" class="px-6 py-2.5 bg-[#263081] text-white rounded-lg hover:bg-blue-700 font-medium transition-colors duration-200">
           Logout
         </button>
       </div>
@@ -90,13 +91,15 @@
       OFFICE FOR THE SPECIAL MANDATE ON VAPORIZED NICOTINE AND NON-NICOTINE PRODUCTS
     </p>
     <p class="mb-3 text-sm text-gray-300">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.
+     The Office for the Special Mandate on Vaporized Nicotine and Non-Nicotine Products, their Devices, and Novel Tobacco Products (OSMV) is dedicated to 
+     regulating the vaporized nicotine and novel tobacco market, ensuring consumer safety and compliance with RA11900, the Vaporized Nicotine and
+      Non-Nicotine Products Regulation Act, also known as the Vape Law. 
     </p>
     <p class="mb-6 text-sm text-gray-300">
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      It was established under DTI Department Order No. 24-154 (DO24-154) in 2024. Focused on implementing RA11900, its mandate includes the proper collection of taxes and the effective regulation of
+       both online and physical advertising
+       and sales of vaporized nicotine, non-nicotine products, their devices, and novel tobacco products, 
+      ensuring alignment with internationally accepted product standards.
     </p>
 
     <button class="btn btn-soft text-base rounded-xl w-40  hover:text-[#263081] ">Learn more <svg

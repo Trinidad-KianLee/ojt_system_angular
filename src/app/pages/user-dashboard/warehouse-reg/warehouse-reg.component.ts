@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { PocketBaseService } from '../../../services/pocketbase.service';
 
 @Component({
   selector: 'app-warehouse-reg',
-  templateUrl: './warehouse-reg.component.html'
+  templateUrl: './warehouse-reg.component.html',
+  standalone: true,
+  imports: [RouterModule]
 })
 export class WarehouseRegComponent {
   firstName: string = '';

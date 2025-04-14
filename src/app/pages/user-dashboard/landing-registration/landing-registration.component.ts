@@ -130,8 +130,33 @@ export class LandingRegistrationComponent implements OnInit {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
+      // Check file size (10MB limit)
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File size must be less than 10MB');
+        return;
+      }
+      
+      // Check file type
+      const validTypes = ['.pdf', '.doc', '.docx'];
+      const fileExtension = file.name.toLowerCase().slice((file.name.lastIndexOf(".") - 1 >>> 0) + 2);
+      if (!validTypes.includes('.' + fileExtension)) {
+        alert('Only PDF, DOC, and DOCX files are allowed');
+        return;
+      }
+
       this.form.patchValue({ proofFile: file });
     }
+  }
+
+  getFileName(): string {
+    const file = this.form.get('proofFile')?.value;
+    return file ? file.name : '';
+  }
+
+  removeFile(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.form.patchValue({ proofFile: null });
   }
 
   onRegister(): void {
