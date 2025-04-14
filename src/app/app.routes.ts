@@ -24,6 +24,7 @@ import { FaqsComponent } from './pages/faqs/faqs.component';
 import { FaqsIndustryComponent } from './pages/faqs-industry/faqs-industry.component';
 import { FaqsSupportComponent } from './pages/faqs-support/faqs-support.component';
 import { FaqsResourcesComponent } from './pages/faqs-resources/faqs-resources.component';
+import { FaqsGeneralComponent } from './pages/faqs-general/faqs-general.component';
 
 
 export const routes: Routes = [
@@ -42,6 +43,7 @@ export const routes: Routes = [
   { path: 'faqs-industry', component: FaqsIndustryComponent },
   { path: 'faqs-support', component: FaqsSupportComponent},
   { path: 'faqs-resources', component: FaqsResourcesComponent},
+  { path: 'faqs-general', component: FaqsGeneralComponent},
 
   { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard] },
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
