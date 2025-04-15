@@ -46,7 +46,7 @@ export const routes: Routes = [
   { path: 'osmv', component: OsmvComponent},
   { path: 'vaping-area', component: VapingAreaComponent},
 
-  { path: 'age-gating', component: AgeGatingComponent, canActivate: [AuthGuard] },
+  { path: 'age-gating', component: AgeGatingComponent},
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
   { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard] },
   { path: 'vape-regis', component: VapeRegisComponent, canActivate: [AuthGuard] },
