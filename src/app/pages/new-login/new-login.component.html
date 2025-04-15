@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 shadow-sm h-16">
+<div class="navbar bg-base-100 shadow-sm h-16 px-4">
     <div class="navbar-start">
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -18,32 +18,33 @@
           </svg>
         </div>
       </div>
-  
-      <button routerLink="/new-landingpage" class="btn btn-ghost text-l">
-        Home
-      </button>
+      <button routerLink="/new-landingpage" class="btn btn-ghost text-lg">Home</button>
     </div>
-    <div class="navbar-end w-80 h-10 ml-100">
-      <a><img src="assets/DTI-logo.png" /></a>
+  
+    <div class="navbar-end">
+      <img src="assets/DTI-logo.png" class="h-10 w-auto" alt="DTI Logo" />
     </div>
   </div>
-  
-  <div class="w-screen h-[calc(100vh-4rem)] relative overflow-hidden">
-    <div class="absolute inset-0 bg-[#263081B3] text-white p-4 z-10">
-      <h1 class="text-5xl font-bold text-white opacity-100 text-center mt-20">
+
+  <div class="w-screen min-h-[calc(100vh-4rem)] relative overflow-hidden">
+    <div class="absolute inset-0 bg-[#263081B3] text-white p-4 z-10 flex flex-col items-center justify-center">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mt-10 md:mt-20">
         Welcome back!
       </h1>
-      <p class="text-center mt-4 text-gray-300">
+      <p class="text-center mt-4 text-gray-300 text-sm sm:text-base max-w-md">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br />
         Sed do eiusmod tempor
       </p>
-    
-      <form (ngSubmit)="onLogin()" class="flex flex-col gap-4 p-6 rounded-xl shadow-lg w-full max-w-lg ml-105">
+
+      <form
+        (ngSubmit)="onLogin()"
+        class="flex flex-col gap-4 mt-8 p-6 rounded-xl shadow-lg w-full max-w-md"
+      >
         <label class="form-control w-full">
           <input
             type="email"
             placeholder="Email"
-            class="input input-bordered w-full rounded-full text-black p-7 mt-5 text-base"
+            class="input input-bordered w-full rounded-full text-black p-4 text-base"
             [(ngModel)]="formData.email"
             name="email"
             required
@@ -54,7 +55,7 @@
           <input
             type="password"
             placeholder="Password"
-            class="input input-bordered w-full rounded-full text-black p-7 text-base"
+            class="input input-bordered w-full rounded-full text-black p-4 text-base"
             [(ngModel)]="formData.password"
             name="password"
             required
@@ -62,26 +63,25 @@
         </label>
   
         <button
-          class="bg-[#263081] text-white hover:bg-[#1b2360] rounded-full p-4 text-base"
+          class="bg-[#263081] text-white hover:bg-[#1b2360] rounded-full p-3 text-base"
           type="submit"
         >
           Login
         </button>
   
-        <p
-          class="text-center mt-20 text-gray-100 hover:text-blue-200 hover:underline"
-        >
+        <p class="text-center mt-6 text-gray-100 hover:text-blue-200 hover:underline text-sm">
           <a routerLink="/landing-registration">Create a new account</a>
         </p>
       </form>
     </div>
+
     <img
       src="assets/login-header.jpg"
       alt="makati-building"
       class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none"
     />
   
-    <div class="toast toast-top toast-center" style="z-index: 9999">
+    <div class="toast toast-top toast-center z-50">
       <div *ngIf="loginError" class="alert alert-error fade-in text-lg p-4">
         <span>Wrong credentials.</span>
       </div>
@@ -90,3 +90,4 @@
       </div>
     </div>
   </div>
+  
