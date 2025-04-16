@@ -6,11 +6,11 @@
     class="absolute top-0 left-0 right-0 bg-gradient-to-r from-[rgba(0,0,0,0.5)] to-transparent text-white p-4 shadow-lg z-10 h-155">
     <h1 class="text-6xl ml-20 font-bold mt-30">Department of Trade and</h1>
     <h1 class="text-6xl ml-20 font-bold mt-5">Industry - OSMV</h1>
-    <p class="text-lg ml-20 mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
-      Curabitur bibendum erat sit amet magna placerat, in<br>rutrum nunc tincidunt.</p>
+    <p class="text-lg ml-20 mt-5">Welcome to the Office for the Special Mandate on Vaporized <br>Products — advancing
+      public safety through smart regulation.</p>
     <button routerLink="/new-login"><input type="button" value="Apply now!"
-      class="bg-[#263081] text-white rounded-xl p-3 hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-700 hover:p-4 ml-19 mt-4 h-14 w-30 btn" /></button>
-    
+        class="bg-[#263081] text-white rounded-xl p-3 hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-700 hover:p-4 ml-19 mt-4 h-14 w-30 btn" /></button>
+
     <div class="absolute top-0 right-0 flex space-x-4 mr-6 mt-6">
       <ng-container *ngIf="!pb.isLoggedIn(); else loggedInNav">
         <button routerLink="/new-login">
@@ -28,7 +28,7 @@
           Hello, {{ firstName }}
         </div>
         <button (click)="openLogoutModal()">
-          <input type="button" value="Logout"  
+          <input type="button" value="Logout"
             class="bg-[#263081] text-white rounded-2xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent hover:border-blue-600 h-10 w-20 btn" />
         </button>
       </ng-template>
@@ -38,14 +38,17 @@
 
   <div *ngIf="showLogoutModal" class="fixed inset-0 flex items-center justify-center z-50">
     <div class="fixed inset-0 bg-black/30 backdrop-blur-sm"></div>
-    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full mx-4 z-50 relative transform transition-all scale-100">
+    <div
+      class="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full mx-4 z-50 relative transform transition-all scale-100">
       <h3 class="text-xl font-semibold text-gray-800 mb-4">Confirm Logout</h3>
       <p class="text-gray-600 mb-8">Are you sure you want to logout from your account?</p>
       <div class="flex justify-end space-x-4">
-        <button (click)="cancelLogout()" class="px-6 py-2.5 bg-gray-100 rounded-lg hover:bg-gray-200 text-gray-700 font-medium transition-colors duration-200">
+        <button (click)="cancelLogout()"
+          class="px-6 py-2.5 bg-gray-100 rounded-lg hover:bg-gray-200 text-gray-700 font-medium transition-colors duration-200">
           Cancel
         </button>
-        <button (click)="confirmLogout()" class="px-6 py-2.5 bg-[#263081] text-white rounded-lg hover:bg-blue-700 font-medium transition-colors duration-200">
+        <button (click)="confirmLogout()"
+          class="px-6 py-2.5 bg-[#263081] text-white rounded-lg hover:bg-blue-700 font-medium transition-colors duration-200">
           Logout
         </button>
       </div>
@@ -63,14 +66,14 @@
       </div>
     </div>
     <button routerLink="/new-landingpage" class="btn btn-ghost text-l">Home</button>
-    <button routerLink="/faqs" class="btn btn-ghost text-l">FAQs</button>
+    <button routerLink="/faqs-general" class="btn btn-ghost text-l">FAQs</button>
     <button routerLink="/age-gating" class="btn btn-ghost text-l">Age gating</button>
     <button routerLink="/landing-page-retailer" class="btn btn-ghost text-l">Retailer</button>
     <button routerLink="/warehouse-reg" class="btn btn-ghost text-l">Warehouse</button>
-    <button routerLink="/vape-regis" class="btn btn-ghost text-l">Vape Registration</button>
+    <button routerLink="/promo-events" class="btn btn-ghost text-l">Promotional Events</button>
     <a class="btn btn-ghost text-l">PS License</a>
     <a class="btn btn-ghost text-l">SOC/CCR</a>
-    <a class="btn btn-ghost text-l">Designated Vaping Area</a>
+    <button routerLink="/vaping-area" class="btn btn-ghost ">Designated Vaping Area</button>
   </div>
   <div class="navbar-end w-80 h-10 ml-100">
     <a><img src="assets/DTI-logo.png"></a>
@@ -90,14 +93,17 @@
       OFFICE FOR THE SPECIAL MANDATE ON VAPORIZED NICOTINE AND NON-NICOTINE PRODUCTS
     </p>
     <p class="mb-3 text-sm text-gray-300">
-     The Office for the Special Mandate on Vaporized Nicotine and Non-Nicotine Products, their Devices, and Novel Tobacco Products (OSMV) is dedicated to 
-     regulating the vaporized nicotine and novel tobacco market, ensuring consumer safety and compliance with RA11900, the Vaporized Nicotine and
-      Non-Nicotine Products Regulation Act, also known as the Vape Law. 
+      The Office for the Special Mandate on Vaporized Nicotine and Non-Nicotine Products, their Devices, and Novel
+      Tobacco Products (OSMV) is dedicated to
+      regulating the vaporized nicotine and novel tobacco market, ensuring consumer safety and compliance with RA11900,
+      the Vaporized Nicotine and
+      Non-Nicotine Products Regulation Act, also known as the Vape Law.
     </p>
     <p class="mb-6 text-sm text-gray-300">
-      It was established under DTI Department Order No. 24-154 (DO24-154) in 2024. Focused on implementing RA11900, its mandate includes the proper collection of taxes and the effective regulation of
-       both online and physical advertising
-       and sales of vaporized nicotine, non-nicotine products, their devices, and novel tobacco products, 
+      It was established under DTI Department Order No. 24-154 (DO24-154) in 2024. Focused on implementing RA11900, its
+      mandate includes the proper collection of taxes and the effective regulation of
+      both online and physical advertising
+      and sales of vaporized nicotine, non-nicotine products, their devices, and novel tobacco products,
       ensuring alignment with internationally accepted product standards.
     </p>
 

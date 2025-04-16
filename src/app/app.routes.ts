@@ -25,6 +25,7 @@ import { FaqsSupportComponent } from './pages/faqs-support/faqs-support.componen
 import { FaqsGeneralComponent } from './pages/faqs-general/faqs-general.component';
 import { OsmvComponent } from './pages/user-dashboard/osmv/osmv.component';
 import { VapingAreaComponent } from './pages/vaping-area/vaping-area.component';
+import { PromoEventsComponent } from './pages/user-dashboard/promo-events/promo-events.component';
 
 
 export const routes: Routes = [
@@ -45,6 +46,7 @@ export const routes: Routes = [
   { path: 'faqs-general', component: FaqsGeneralComponent},
   { path: 'osmv', component: OsmvComponent},
   { path: 'vaping-area', component: VapingAreaComponent},
+  { path: 'promo-events', component: PromoEventsComponent},
 
   { path: 'age-gating', component: AgeGatingComponent},
   { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
