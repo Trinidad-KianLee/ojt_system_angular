@@ -10,12 +10,13 @@
     <button routerLink="/new-landingpage" class="btn btn-ghost text-l">Home</button>
     <button routerLink="/faqs-general" class="btn btn-ghost text-l">FAQs</button>
     <button routerLink="/age-gating" class="btn btn-ghost text-l">Age gating</button>
-    <button routerLink="/landing-page-retailer" class="btn btn-ghost text-l">Retailer</button>
+    <button routerLink="/landing-page-retailer"
+      class="btn btn-ghost text-l btn-active text-l text-[#263081]">Retailer</button>
     <button routerLink="/warehouse-reg" class="btn btn-ghost text-l">Warehouse</button>
     <a class="btn btn-ghost text-l">Vape Registration</a>
     <a class="btn btn-ghost text-l">PS License</a>
     <a class="btn btn-ghost text-l">SOC/CCR</a>
-    <a class="btn btn-ghost text-l">Designated Vaping Area</a>
+    <a routerLink="/vaping-area" class="btn btn-ghost ">Designated Vaping Area</a>
   </div>
   <div class="navbar-end w-80 h-10 ml-100">
     <a><img src="assets/DTI-logo.png"></a>
@@ -24,7 +25,7 @@
 
 <div class="w-full h-[calc(50vh-2rem)] relative overflow-hidden">
 
-  <div class="absolute inset-0 bg-[#263081B3] text-white p-4 z-10">
+  <div class="absolute inset-0 bg-[#263081CC] text-white p-4 z-10">
     <h1 class="text-5xl font-bold text-white opacity-100 text-center mt-20">Application for Certificate of Registration
       (COR)</h1>
     <h2 class="text-3xl font-semibold text-white opacity-100 text-center mt-2">for Wholesaler / Trader / Distributor /
@@ -32,40 +33,48 @@
 
   </div>
 
-
-  <img src="https://www.talk-business.co.uk/wp-content/uploads/2021/08/shutterstock_1848685948.jpg"
+  <!-- https://www.talk-business.co.uk/wp-content/uploads/2021/08/shutterstock_1848685948.jpg
+   https://static.vecteezy.com/system/resources/previews/013/049/417/non_2x/people-in-supermarket-flat-horizontal-banner-with-people-buying-foods-and-goods-shopping-service-in-grocery-store-scene-with-men-and-women-cartoon-characters-flat-illustration-free-vector.jpg-->
+  <img
+    src="https://static.vecteezy.com/system/resources/previews/002/406/606/non_2x/people-shopping-in-store-concept-illustration-of-people-characters-in-flat-design-vector.jpg"
     alt="makati-building" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none" />
 </div>
 
 <div class="flex flex-col md:flex-row items-center justify-center bg-[#FDFAF6] text-white p-10 shadow-lg h-120">
   <!-- Left Image -->
   <div class="w-full md:w-1/2 flex justify-center mb-4 md:mb-0 ">
-    <img src="https://www.atqor.com/media/p1th1p4b/logistics-transportation.png" alt="OSMV Illustration"
-      class="w-4/5 max-w-md mt-6" />
+    <!-- <img src="https://www.atqor.com/media/p1th1p4b/logistics-transportation.png" alt="OSMV Illustration"
+      class="w-5/5 max-w-md mt-6" /> -->
+    <img src="https://img.freepik.com/free-vector/blogger-review-concept_23-2148527124.jpg" alt="OSMV Illustration"
+      class="w-5/5 max-w-md h-90 mt-2" />
   </div>
 
   <!-- Right Content -->
-  <div class="w-full md:w-1/2 md:pl-10">
-    <div class="text-lg font-medium mt-5 mb-6 text-[#263081]">The Application for Certificate of Registration (COR) for
+  <div class="w-full md:w-1/2 md:ml-2">
+    <div class="text-lg font-medium mt-15 mb-4 text-[#263081]">The Application for Certificate of Registration (COR) for
       Wholesalers, Traders, Distributors, or Retailers in the vape industry is necessary to ensure legal compliance with
       local regulations.</div>
-    <p class="text-base font-medium text-[#263081] mb-8 tracking-wider">
+    <p class="text-base font-medium text-[#263081] mb-2 tracking-wider">
       The Certificate of Registration (COR) ensures that the business is officially recognized by regulatory authorities
-      and can legally engage in the sale or distribution of vape products.
+      and can legally engage in the sale or distribution of vape products.<br>
 
-    </p>
-    <p class="mb-3 text-sm text-[#263081]">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.
-    </p>
-    <p class="mb-6 text-sm text-[#263081]">
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <br>
+      Obtaining the COR is necessary for all stakeholders in the vape supply chain to legally operate, distribute, or
+      retail vape-related products. It ensures that businesses adhere to safety, health, and age-restriction laws,
+      preventing underage access and promoting public health awareness.<br>
+
+      <br>The application process requires businesses to
+      demonstrate that they meet specific legal, regulatory, and safety requirements established by relevant
+      authorities. This includes providing accurate information about the nature of their operations, product offerings,
+      and business practices.
     </p>
 
-    <button routerLink="/retailer-regis" class="btn btn-soft text-base rounded-xl w-40  hover:text-[#263081] ">Learn
-      more <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+
+
+
+    <button routerLink="#"><input type="button" value="Apply now!"
+        class="bg-[#263081] text-white rounded-xl hover:bg-blue-700 focus:outline-none shadow-lg border border-transparent mt-2 h-10 w-40 btn" /><svg
+        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path fill="currentColor"
           d="M9 15.714V8.287q0-.368.244-.588q.243-.22.568-.22q.102 0 .213.028q.11.027.211.083l5.843 3.733q.186.13.28.298q.093.167.093.379t-.093.379t-.28.298l-5.843 3.733q-.101.055-.213.083t-.213.028q-.326 0-.568-.22T9 15.714" />
       </svg></button>
