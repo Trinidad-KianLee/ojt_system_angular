@@ -25,16 +25,16 @@
             <label class="font-medium text-gray-700">Name of Business</label>
             <input name="business_name" formControlName="business_name"
               class="input input-bordered w-full mt-2 bg-white text-black" required />
-            <div class="text-red-600 text-sm mt-1">
-              * Required
+            <div *ngIf="isFieldInvalid('business_name')" class="text-red-600 text-sm mt-1">
+              This field is required
             </div>
           </div>
           <div>
             <label class="font-medium text-gray-700">Name of Store</label>
             <input name="store_name" formControlName="store_name"
               class="input input-bordered w-full mt-2 bg-white text-black" required />
-            <div class="text-red-600 text-sm mt-1">
-              * Required
+            <div *ngIf="isFieldInvalid('store_name')" class="text-red-600 text-sm mt-1">
+              This field is required
             </div>
           </div>
         </div>
@@ -42,61 +42,77 @@
         <!-- Store Address -->
         <div>
           <label class="font-medium text-gray-700">Store Address</label>
-          <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-2 mb-4">
-            <input name="floor_unit_no" formControlName="floor_unit_no"
-              class="input input-bordered bg-white text-black" required
-              placeholder="Floor/Unit No." />
-            <div class="text-red-600 text-sm mt-1 col-span-2">
-              * Required
+          <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div class="relative">
+              <input name="floor_unit_no" formControlName="floor_unit_no"
+                class="input input-bordered bg-white text-black w-full" required
+                placeholder="Floor/Unit No." />
+              <div *ngIf="isFieldInvalid('floor_unit_no')" class="text-red-600 text-sm mt-1">
+                This field is required
+              </div>
             </div>
 
-            <input name="building_no_name" formControlName="building_no_name"
-              class="input input-bordered bg-white text-black" required
-              placeholder="Bldg. No./Name" />
-            <div class="text-red-600 text-sm mt-1 col-span-2">
-              * Required
+            <div class="relative">
+              <input name="building_no_name" formControlName="building_no_name"
+                class="input input-bordered bg-white text-black w-full" required
+                placeholder="Bldg. No./Name" />
+              <div *ngIf="isFieldInvalid('building_no_name')" class="text-red-600 text-sm mt-1">
+                This field is required
+              </div>
             </div>
 
-            <input name="street" formControlName="street"
-              #street placeholder="Street" />
-            <div
-              class="text-red-600 text-sm mt-1 col-span-2">
-              * Required
+            <div class="relative">
+              <input name="street" formControlName="street"
+                class="input input-bordered bg-white text-black w-full" required
+                placeholder="Street" />
+              <div *ngIf="isFieldInvalid('street')" class="text-red-600 text-sm mt-1">
+                This field is required
+              </div>
             </div>
 
-            <input name="barangay" formControlName="barangay"
-              required placeholder="Barangay" />
-            <div
-              class="text-red-600 text-sm mt-1 col-span-2">
-              * Required
+            <div class="relative">
+              <input name="barangay" formControlName="barangay"
+                class="input input-bordered bg-white text-black w-full" required
+                placeholder="Barangay" />
+              <div *ngIf="isFieldInvalid('barangay')" class="text-red-600 text-sm mt-1">
+                This field is required
+              </div>
             </div>
 
-            <input name="city_municipality" formControlName="city_municipality"
-              class="input input-bordered bg-white text-black" required
-              placeholder="City/Municipality" />
-            <div class="text-red-600 text-sm mt-1 col-span-2">
-              * Required
+            <div class="relative">
+              <input name="city_municipality" formControlName="city_municipality"
+                class="input input-bordered bg-white text-black w-full" required
+                placeholder="City/Municipality" />
+              <div *ngIf="isFieldInvalid('city_municipality')" class="text-red-600 text-sm mt-1">
+                This field is required
+              </div>
             </div>
 
-            <input name="province" formControlName="province"
-              required placeholder="Province" />
-            <div
-              class="text-red-600 text-sm mt-1 col-span-2">
-              * Required
+            <div class="relative">
+              <input name="province" formControlName="province"
+                class="input input-bordered bg-white text-black w-full" required
+                placeholder="Province" />
+              <div *ngIf="isFieldInvalid('province')" class="text-red-600 text-sm mt-1">
+                This field is required
+              </div>
             </div>
 
-            <input name="region" formControlName="region"
-              #region placeholder="Region" />
-            <div
-              class="text-red-600 text-sm mt-1 col-span-2">
-              * Required
+            <div class="relative">
+              <input name="region" formControlName="region"
+                class="input input-bordered bg-white text-black w-full" required
+                placeholder="Region" />
+              <div *ngIf="isFieldInvalid('region')" class="text-red-600 text-sm mt-1">
+                This field is required
+              </div>
             </div>
 
-            <input name="zip_code" formControlName="zip_code"
-              required placeholder="Zip Code" />
-            <div 
-              class="text-red-600 text-sm mt-1 col-span-2">
-              * Required
+            <div class="relative">
+              <input name="zip_code" formControlName="zip_code"
+                class="input input-bordered bg-white text-black w-full" required
+                placeholder="Zip Code" />
+              <div *ngIf="isFieldInvalid('zip_code')" class="text-red-600 text-sm mt-1">
+                This field is required
+              </div>
             </div>
           </div>
         </div>
@@ -106,8 +122,8 @@
           <label class="font-medium text-gray-700">Name of Business Owner</label>
           <input name="business_owner" formControlName="business_owner"
             class="input input-bordered w-full mt-1 bg-white text-black" required />
-          <div class="text-red-600 text-sm mt-1">
-            * Required
+          <div *ngIf="isFieldInvalid('business_owner')" class="text-red-600 text-sm mt-1">
+            This field is required
           </div>
         </div>
 
@@ -117,27 +133,32 @@
             <label class="font-medium text-gray-700">Sex (Warehouse Owner)</label>
             <div class="flex items-center space-x-4 mt-3">
               <label class="flex items-center">
-                <input type="radio" name="warehouse_owner_sex" value="M" formControlName=""
-                  class="radio radio-primary" required />
+                <input type="radio" 
+                       formControlName="warehouse_owner_sex" 
+                       value="M"
+                       class="radio radio-primary" />
                 <span class="ml-2">M</span>
               </label>
               <label class="flex items-center">
-                <input type="radio" name="warehouse_owner_sex" value="F" formControlName=""
-                  class="radio radio-primary" required />
+                <input type="radio" 
+                       formControlName="warehouse_owner_sex" 
+                       value="F"
+                       class="radio radio-primary" />
                 <span class="ml-2">F</span>
               </label>
             </div>
-            <div class="text-red-600 text-sm mt-1">
-              * Required
+            <div *ngIf="isFieldInvalid('warehouse_owner_sex')" class="text-red-600 text-sm mt-1">
+              This field is required
             </div>
           </div>
           <div>
             <label class="font-medium text-gray-700">Social Classification</label>
-            <input name="social_classification" formControlName="social_classification"
-              class="input input-bordered w-full mt-2 bg-white text-black" required
-              placeholder="e.g. Senior Citizen, PWD" />
-            <div class="text-red-600 text-sm mt-1">
-              * Required
+            <input name="social_classification" 
+                   formControlName="social_classification"
+                   class="input input-bordered w-full mt-2 bg-white text-black"
+                   placeholder="e.g. Senior Citizen, PWD" />
+            <div *ngIf="isFieldInvalid('social_classification')" class="text-red-600 text-sm mt-1">
+              This field is required
             </div>
           </div>
         </div>
@@ -148,19 +169,17 @@
             <label class="font-medium text-gray-700">Telephone/Mobile Number</label>
             <input name="telephone_mobile" formControlName="telephone_mobile"
               class="input input-bordered w-full mt-2 bg-white text-black" required />
-            <div class="text-red-600 text-sm mt-1">
-              * Required
+            <div *ngIf="isFieldInvalid('telephone_mobile')" class="text-red-600 text-sm mt-1">
+              This field is required
             </div>
           </div>
           <div>
             <label class="font-medium text-gray-700">E-mail Address</label>
             <input name="email_address" type="email" formControlName="email_address"
               class="input input-bordered w-full mt-2 bg-white text-black" required />
-            <div class="text-red-600 text-sm mt-1">
-              * Required
-            </div>
-            <div class="text-red-600 text-sm mt-1">
-              * Invalid email
+            <div *ngIf="isFieldInvalid('email_address')" class="text-red-600 text-sm mt-1">
+              <span *ngIf="form.get('email_address')?.errors?.['required']">Email is required</span>
+              <span *ngIf="form.get('email_address')?.errors?.['email']">Invalid email format</span>
             </div>
           </div>
         </div>
@@ -169,10 +188,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label class="font-medium text-gray-700">Website/Social Media Page</label>
-            <input name="website_social_media" formControlName="website_social_media"
-              class="input input-bordered w-full mt-2 bg-white text-black" required />
-            <div class="text-red-600 text-sm mt-1">
-              * Required
+            <input name="website_social_media" 
+                   formControlName="website_social_media"
+                   class="input input-bordered w-full mt-2 bg-white text-black" />
+            <div *ngIf="isFieldInvalid('website_social_media')" class="text-red-600 text-sm mt-1">
+              This field is required
             </div>
           </div>
 
@@ -180,18 +200,22 @@
             <label class="font-medium text-gray-700">Type of Store</label>
             <div class="flex items-center space-x-4 mt-2">
               <label class="flex items-center">
-                <input type="radio" name="store_type" value="physical" formControlName=""
-                  class="radio radio-primary" required />
+                <input type="radio" 
+                       formControlName="store_type" 
+                       value="physical"
+                       class="radio radio-primary" />
                 <span class="ml-2">Physical</span>
               </label>
               <label class="flex items-center">
-                <input type="radio" name="store_type" value="online" formControlName=""
-                  class="radio radio-primary" required />
+                <input type="radio" 
+                       formControlName="store_type" 
+                       value="online"
+                       class="radio radio-primary" />
                 <span class="ml-2">Online</span>
               </label>
             </div>
-            <div class="text-red-600 text-sm mt-1">
-              * Required
+            <div *ngIf="isFieldInvalid('store_type')" class="text-red-600 text-sm mt-1">
+              This field is required
             </div>
           </div>
         </div>
@@ -203,8 +227,8 @@
             <input name="digital_platforms" formControlName="digital_platforms"
               class="input input-bordered w-full mt-2 bg-white text-black" required 
               placeholder="e.g. Shopee, Lazada, etc" />
-            <div class="text-red-600 text-sm mt-1">
-              * Required
+            <div *ngIf="isFieldInvalid('digital_platforms')" class="text-red-600 text-sm mt-1">
+              This field is required
             </div>
           </div>
           <div>
@@ -212,11 +236,9 @@
             <input name="store_url" type="url" formControlName="store_url"
               class="input input-bordered w-full mt-2 bg-white text-black" required
               placeholder="For online store" />
-            <div class="text-red-600 text-sm mt-1">
-              * Required
-            </div>
-            <div class="text-red-600 text-sm mt-1">
-              * Invalid email
+            <div *ngIf="isFieldInvalid('store_url')" class="text-red-600 text-sm mt-1">
+              <span *ngIf="form.get('store_url')?.errors?.['required']">URL is required</span>
+              <span *ngIf="form.get('store_url')?.errors?.['pattern']">Invalid URL format</span>
             </div>
           </div>
         </div>

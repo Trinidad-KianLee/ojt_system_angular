@@ -4,6 +4,7 @@
   }
 </style>
 
+<!-- Main container with gradient background -->
 <div class="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-blue-50">
 
   <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-gray-200 shadow-sm">
@@ -36,6 +37,7 @@
   </header>
 
   <main class="flex-grow container mx-auto px-6 py-8 space-y-8">
+    <!-- Welcome Card -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start space-x-4">
         <div class="p-3 bg-blue-50 rounded-lg">
@@ -52,6 +54,7 @@
       </div>
     </div>
 
+    <!-- Vape Registrations Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -167,6 +170,7 @@
       </div>
     </div>
 
+    <!-- Retailer Registrations Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -299,6 +303,144 @@
       </div>
     </div>
 
+    <!-- PS License Registrations Section -->
+    <div class="bg-white mt-8 p-6 rounded-lg shadow">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-xl font-bold text-blue-800">
+            PS License Registrations
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Click the button to load user-submitted <code>PS license registration</code> records.
+          </p>
+        </div>
+        <div class="space-x-2">
+          <button
+            (click)="togglePsLicense()"
+            class="btn bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded shadow transition-colors"
+          >
+            View PS License Registrations
+          </button>
+          <button
+            (click)="downloadPsLicenseExcel()"
+            class="btn bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded shadow transition-colors"
+          >
+            Export to Excel
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showPsLicense" class="mt-4">
+        <div *ngIf="loadingPsLicense" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="psLicenseErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ psLicenseErrorMsg }}
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
+          <input
+            [(ngModel)]="searchTermPsLicense"
+            (input)="applyPsLicenseFilters()"
+            type="text"
+            placeholder="Search by Company Name..."
+            class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <select
+            [(ngModel)]="sortOrderPsLicense"
+            (change)="applyPsLicenseFilters()"
+            class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table
+            *ngIf="filteredPsLicense.length && !loadingPsLicense"
+            class="table-auto w-full text-sm text-gray-700"
+          >
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Company Name</th>
+                <th class="py-3 px-4 border-b">Office Address</th>
+                <th class="py-3 px-4 border-b">Factory Address</th>
+                <th class="py-3 px-4 border-b">TIN</th>
+                <th class="py-3 px-4 border-b">Company President</th>
+                <th class="py-3 px-4 border-b">QMR</th>
+                <th class="py-3 px-4 border-b">Product Type</th>
+                <th class="py-3 px-4 border-b">Brand Names</th>
+                <th class="py-3 px-4 border-b">Application Status</th>
+                <th class="py-3 px-4 border-b">Created</th>
+                <th class="py-3 px-4 border-b">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let record of filteredPsLicense"
+                class="border-b hover:bg-gray-100"
+              >
+                <td class="py-2 px-4">{{ record.company_name }}</td>
+                <td class="py-2 px-4">{{ record.office_address }}</td>
+                <td class="py-2 px-4">{{ record.factory_address }}</td>
+                <td class="py-2 px-4">{{ record.tin }}</td>
+                <td class="py-2 px-4">{{ record.company_president }}</td>
+                <td class="py-2 px-4">{{ record.quality_management_rep }}</td>
+                <td class="py-2 px-4">{{ record.product_type }}</td>
+                <td class="py-2 px-4">{{ record.brand_names }}</td>
+                <td class="py-2 px-4">{{ record.applicationStatus || 'Pending' }}</td>
+                <td class="py-2 px-4">{{ record.created | date:'short' }}</td>
+                <td class="py-2 px-4">
+                  <div class="flex space-x-2">
+                    <button
+                      [class]="'px-3 py-1 rounded text-xs font-semibold ' + getStatusButtonClass(record.applicationStatus)"
+                      [matMenuTriggerFor]="menu"
+                    >
+                      Update Status
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button
+                        mat-menu-item
+                        (click)="updatePsLicenseStatus(record, 'Application received')"
+                      >
+                        Application received
+                      </button>
+                      <button
+                        mat-menu-item
+                        (click)="updatePsLicenseStatus(record, 'Ongoing evaluation')"
+                      >
+                        Ongoing evaluation
+                      </button>
+                      <button
+                        mat-menu-item
+                        (click)="updatePsLicenseStatus(record, 'For approval')"
+                      >
+                        For approval
+                      </button>
+                      <button
+                        mat-menu-item
+                        (click)="updatePsLicenseStatus(record, 'Approved')"
+                      >
+                        Approved
+                      </button>
+                    </mat-menu>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            *ngIf="!filteredPsLicense.length && !loadingPsLicense"
+            class="p-4 text-center text-gray-500"
+          >
+            No matching records found.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Users Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -407,6 +549,7 @@
       </div>
     </div>
 
+    <!-- Approved Users Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -490,6 +633,7 @@
     </div>
   </main>
 
+  <!-- Enhanced Welcome Overlay -->
   <div *ngIf="showWelcomeOverlay" 
        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
     <div class="bg-white rounded-xl shadow-xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 hover:scale-100">
@@ -511,6 +655,7 @@
     </div>
   </div>
 
+  <!-- Enhanced Logout Modal -->
   <div *ngIf="showLogoutModal" 
        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
     <div class="bg-white rounded-xl shadow-xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 hover:scale-100">
