@@ -357,10 +357,7 @@
         </div>
 
         <div class="overflow-x-auto rounded shadow">
-          <table
-            *ngIf="filteredPsLicense.length && !loadingPsLicense"
-            class="table-auto w-full text-sm text-gray-700"
-          >
+          <table *ngIf="filteredPsLicense.length && !loadingPsLicense" class="table-auto w-full text-sm text-gray-700">
             <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
               <tr>
                 <th class="py-3 px-4 border-b">Company Name</th>
@@ -372,15 +369,11 @@
                 <th class="py-3 px-4 border-b">Product Type</th>
                 <th class="py-3 px-4 border-b">Brand Names</th>
                 <th class="py-3 px-4 border-b">Application Status</th>
-                <th class="py-3 px-4 border-b">Created</th>
                 <th class="py-3 px-4 border-b">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr
-                *ngFor="let record of filteredPsLicense"
-                class="border-b hover:bg-gray-100"
-              >
+              <tr *ngFor="let record of filteredPsLicense" class="border-b hover:bg-gray-100">
                 <td class="py-2 px-4">{{ record.company_name }}</td>
                 <td class="py-2 px-4">{{ record.office_address }}</td>
                 <td class="py-2 px-4">{{ record.factory_address }}</td>
@@ -389,51 +382,25 @@
                 <td class="py-2 px-4">{{ record.quality_management_rep }}</td>
                 <td class="py-2 px-4">{{ record.product_type }}</td>
                 <td class="py-2 px-4">{{ record.brand_names }}</td>
-                <td class="py-2 px-4">{{ record.applicationStatus || 'Pending' }}</td>
-                <td class="py-2 px-4">{{ record.created | date:'short' }}</td>
+                <td class="py-2 px-4">{{ record.applicationStatus }}</td>
                 <td class="py-2 px-4">
-                  <div class="flex space-x-2">
-                    <button
-                      [class]="'px-3 py-1 rounded text-xs font-semibold ' + getStatusButtonClass(record.applicationStatus)"
-                      [matMenuTriggerFor]="menu"
-                    >
-                      Update Status
-                    </button>
-                    <mat-menu #menu="matMenu">
-                      <button
-                        mat-menu-item
-                        (click)="updatePsLicenseStatus(record, 'Application received')"
-                      >
-                        Application received
-                      </button>
-                      <button
-                        mat-menu-item
-                        (click)="updatePsLicenseStatus(record, 'Ongoing evaluation')"
-                      >
-                        Ongoing evaluation
-                      </button>
-                      <button
-                        mat-menu-item
-                        (click)="updatePsLicenseStatus(record, 'For approval')"
-                      >
-                        For approval
-                      </button>
-                      <button
-                        mat-menu-item
-                        (click)="updatePsLicenseStatus(record, 'Approved')"
-                      >
-                        Approved
-                      </button>
-                    </mat-menu>
+                  <div class="dropdown dropdown-start">
+                    <div tabindex="0" role="button" class="btn m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
+                      {{ record.applicationStatus }}
+                    </div>
+                    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-white text-gray-800 rounded-box z-50">
+                      <li><a (click)="updatePsLicenseStatus(record, 'Application received')">Application received</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'Pending')">Pending</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'For approval')">For approval</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'Approved')">Approved</a></li>
+                    </ul>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div
-            *ngIf="!filteredPsLicense.length && !loadingPsLicense"
-            class="p-4 text-center text-gray-500"
-          >
+          <div *ngIf="!filteredPsLicense.length && !loadingPsLicense" class="p-4 text-center text-gray-500">
             No matching records found.
           </div>
         </div>

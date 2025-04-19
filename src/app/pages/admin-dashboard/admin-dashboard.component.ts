@@ -367,7 +367,11 @@ export class AdminDashboardComponent implements OnInit {
       this.loadingPsLicense = true;
       this.psLicenseErrorMsg = '';
       const data = await this.pb.getAllPsLicenseRecords();
-      this.psLicenseRecords = data;
+      // Set default status if not defined
+      this.psLicenseRecords = data.map(record => ({
+        ...record,
+        applicationStatus: record.applicationStatus || 'Application received'
+      }));
       this.applyPsLicenseFilters();
       if (!data.length) {
         this.psLicenseErrorMsg = 'No records found in ps_license_regis.';
@@ -397,7 +401,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   updatePsLicenseStatus(record: any, newStatus: string): void {
-    const oldStatus = record.applicationStatus;
+    const oldStatus = record.applicationStatus || 'Application received';
     record.applicationStatus = newStatus;
     this.pb.updatePsLicenseRecordStatus(record.id, newStatus)
       .then(updated => {
@@ -419,6 +423,8 @@ export class AdminDashboardComponent implements OnInit {
       })
       .catch(err => {
         console.error('Error updating PS License status or logging admin action:', err);
+        // Revert the status on error
+        record.applicationStatus = oldStatus;
       });
   }
 

@@ -46,7 +46,7 @@ export class PsLicenseRegistrationComponent implements OnInit {
       seeking_approval_details: this.fb.array([]),
       rated_capacity: ['1000', Validators.required],
       actual_capacity: ['800', Validators.required],
-      production_percentage_ph: [50],
+      production_ph_percentage: [50],
       total_employees: ['100', Validators.required],
       employees_per_premise: ['50', Validators.required],
       employees_per_shift: ['25', Validators.required],

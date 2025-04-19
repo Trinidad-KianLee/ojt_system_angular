@@ -1,430 +1,361 @@
 <!-- ps-license-application.component.html -->
 
-<div class="container mx-auto p-6">
-    <h1 class="text-2xl font-bold mb-6">APPLICATION FOR LICENSE TO USE THE PHILIPPINE STANDARD (PS) QUALITY AND/OR SAFETY CERTIFICATION MARK</h1>
-    <p class="text-gray-600 mb-8">This application is valid for three (3) months only upon submission, after which, the application will be deemed abandoned.</p>
-    
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header section -->
+    <div class="text-center mb-8">
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">APPLICATION FOR LICENSE TO USE THE PHILIPPINE STANDARD (PS) QUALITY AND/OR SAFETY CERTIFICATION MARK</h1>
+      <p class="text-gray-600 text-sm sm:text-base">This application is valid for three (3) months only upon submission, after which, the application will be deemed abandoned.</p>
+    </div>
+
     <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()" class="space-y-8">
-      <!-- Success and Error Messages -->
-      <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-        {{ successMessage }}
-      </div>
-      <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-        {{ errorMessage }}
-      </div>
-  
-      <!-- Question 1 -->
-      <div class="form-group">
-        <label for="company_name" class="block text-sm font-medium text-gray-700">1. Name of applicant company:</label>
-        <input type="text" id="company_name" formControlName="company_name" 
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          [ngClass]="{'border-red-500': submitted && applicationForm.get('company_name')?.errors}">
-        <div *ngIf="submitted && applicationForm.get('company_name')?.errors" class="text-red-500 text-sm mt-1">
-          Company name is required
-        </div>
-      </div>
-  
-      <!-- Question 2 -->
-      <div class="form-group">
-        <label for="office_address" class="block text-sm font-medium text-gray-700">2. Office address and telephone/fax no./e-mail:</label>
-        <textarea id="office_address" formControlName="office_address" rows="3"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          [ngClass]="{'border-red-500': submitted && applicationForm.get('office_address')?.errors}"></textarea>
-        <div *ngIf="submitted && applicationForm.get('office_address')?.errors" class="text-red-500 text-sm mt-1">
-          Office address is required
-        </div>
-      </div>
-  
-      <!-- Question 3 -->
-      <div class="form-group">
-        <label for="factory_address" class="block text-sm font-medium text-gray-700">3. Factory address and telephone/fax no./e-mail:</label>
-        <textarea id="factory_address" formControlName="factory_address" rows="3"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          [ngClass]="{'border-red-500': submitted && applicationForm.get('factory_address')?.errors}"></textarea>
-        <div *ngIf="submitted && applicationForm.get('factory_address')?.errors" class="text-red-500 text-sm mt-1">
-          Factory address is required
-        </div>
-      </div>
-  
-      <!-- Question 4 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="form-group">
-          <label for="tin" class="block text-sm font-medium text-gray-700">4. TIN:</label>
-          <input type="text" id="tin" formControlName="tin"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            [ngClass]="{'border-red-500': submitted && applicationForm.get('tin')?.errors}">
-          <div *ngIf="submitted && applicationForm.get('tin')?.errors" class="text-red-500 text-sm mt-1">
-            TIN is required
+      <!-- Alert Messages -->
+      <div *ngIf="successMessage" class="animate-fade-in bg-green-50 border-l-4 border-green-400 p-4 mb-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="tin_issue_date" class="block text-sm font-medium text-gray-700">Date of Issue:</label>
-          <input type="date" id="tin_issue_date" formControlName="tin_issue_date"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            [ngClass]="{'border-red-500': submitted && applicationForm.get('tin_issue_date')?.errors}">
-          <div *ngIf="submitted && applicationForm.get('tin_issue_date')?.errors" class="text-red-500 text-sm mt-1">
-            Issue date is required
+          <div class="ml-3">
+            <p class="text-sm text-green-700">{{ successMessage }}</p>
           </div>
         </div>
       </div>
-  
-      <!-- Question 5 -->
-      <div class="form-group">
-        <label for="company_president" class="block text-sm font-medium text-gray-700">5. Name of Company President/General Manager:</label>
-        <input type="text" id="company_president" formControlName="company_president"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          [ngClass]="{'border-red-500': submitted && applicationForm.get('company_president')?.errors}">
-        <div *ngIf="submitted && applicationForm.get('company_president')?.errors" class="text-red-500 text-sm mt-1">
-          Company President/General Manager name is required
-        </div>
-      </div>
-  
-      <!-- Question 6 -->
-      <div class="form-group">
-        <label for="quality_management_rep" class="block text-sm font-medium text-gray-700">6. Name of Quality Management Representative:</label>
-        <input type="text" id="quality_management_rep" formControlName="quality_management_rep"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          [ngClass]="{'border-red-500': submitted && applicationForm.get('quality_management_rep')?.errors}">
-        <div *ngIf="submitted && applicationForm.get('quality_management_rep')?.errors" class="text-red-500 text-sm mt-1">
-          Quality Management Representative name is required
-        </div>
-      </div>
-  
-      <!-- Question 7 -->
-      <div class="form-group">
-        <label for="qmr_contact" class="block text-sm font-medium text-gray-700">7. Telephone/fax number/e-mail of QMR:</label>
-        <input type="text" id="qmr_contact" formControlName="qmr_contact"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          [ngClass]="{'border-red-500': submitted && applicationForm.get('qmr_contact')?.errors}">
-        <div *ngIf="submitted && applicationForm.get('qmr_contact')?.errors" class="text-red-500 text-sm mt-1">
-          QMR contact information is required
-        </div>
-      </div>
-  
-      <!-- Question 8 -->
-      <div class="form-group">
-        <label class="block text-sm font-medium text-gray-700">8. Product(s):</label>
-        <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-          @for (type of productTypes; track type) {
-          <div class="flex items-center">
-            <input type="radio" [id]="'product_type_' + type" [value]="type" formControlName="product_type"
-              class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-            <label [for]="'product_type_' + type" class="ml-3 block text-sm font-medium text-gray-700">{{ type }}</label>
+
+      <div *ngIf="errorMessage" class="animate-fade-in bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+            </svg>
           </div>
-          }
-        </div>
-        <div *ngIf="submitted && applicationForm.get('product_type')?.errors" class="text-red-500 text-sm mt-1">
-          Please select a product type
-        </div>
-      </div>
-  
-      <!-- Question 9 -->
-      <div class="form-group">
-        <label for="product_description" class="block text-sm font-medium text-gray-700">9. Type/description:</label>
-        <textarea id="product_description" formControlName="product_description" rows="3"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          [ngClass]="{'border-red-500': submitted && applicationForm.get('product_description')?.errors}"></textarea>
-        <div *ngIf="submitted && applicationForm.get('product_description')?.errors" class="text-red-500 text-sm mt-1">
-          Product description is required
-        </div>
-      </div>
-  
-      <!-- Question 10 -->
-      <div class="form-group">
-        <label for="brand_names" class="block text-sm font-medium text-gray-700">10. Brand name(s) of products:</label>
-        <input type="text" id="brand_names" formControlName="brand_names"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          [ngClass]="{'border-red-500': submitted && applicationForm.get('brand_names')?.errors}">
-        <div *ngIf="submitted && applicationForm.get('brand_names')?.errors" class="text-red-500 text-sm mt-1">
-          Brand name(s) are required
-        </div>
-      </div>
-  
-      <!-- Question 11 -->
-      <div class="space-y-4">
-        <h3 class="text-lg font-medium text-gray-900">11. Standard(s) used:</h3>
-        
-        <div class="form-group">
-          <label for="qms_standard" class="block text-sm font-medium text-gray-700">a. Quality Management System Standard:</label>
-          <input type="text" id="qms_standard" formControlName="qms_standard"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            [ngClass]="{'border-red-500': submitted && applicationForm.get('qms_standard')?.errors}">
-          <div *ngIf="submitted && applicationForm.get('qms_standard')?.errors" class="text-red-500 text-sm mt-1">
-            QMS standard is required
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label for="specific_product_standards" class="block text-sm font-medium text-gray-700">b. Specific Product Standard(s):</label>
-          <input type="text" id="specific_product_standards" formControlName="specific_product_standards"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            [ngClass]="{'border-red-500': submitted && applicationForm.get('specific_product_standards')?.errors}">
-          <div *ngIf="submitted && applicationForm.get('specific_product_standards')?.errors" class="text-red-500 text-sm mt-1">
-            Specific product standards are required
+          <div class="ml-3">
+            <p class="text-sm text-red-700">{{ errorMessage }}</p>
           </div>
         </div>
       </div>
-  
-      <!-- Question 13 - Part A -->
-      <div class="border p-4 rounded-md bg-gray-50">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">13. Quality Certificate Received/Applied for:</h3>
-        
-        <div class="form-group mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2">a. Is your company currently holding any Quality Systems' Certificate Approvals granted by other certifying authorities?</label>
+
+      <!-- Form Sections -->
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <!-- Company Information Section -->
+        <div class="p-6 space-y-6 border-b border-gray-200">
+          <h2 class="text-xl font-semibold text-gray-900">Company Information</h2>
           
-          <div class="flex items-center space-x-4">
-            <div class="flex items-center">
-              <input type="radio" id="holds_yes" [value]="true" formControlName="holds_quality_certificate" 
-                (change)="onHoldsQualityCertificateChange($event)"
-                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-              <label for="holds_yes" class="ml-2 block text-sm text-gray-700">Yes</label>
-            </div>
-            
-            <div class="flex items-center">
-              <input type="radio" id="holds_no" [value]="false" formControlName="holds_quality_certificate"
-                (change)="onHoldsQualityCertificateChange($event)"
-                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-              <label for="holds_no" class="ml-2 block text-sm text-gray-700">No</label>
-            </div>
-          </div>
-        </div>
-        
-        <div *ngIf="applicationForm.get('holds_quality_certificate')?.value">
-          <div formArrayName="quality_certificates" class="space-y-4">
-            @for (certificate of qualityCertificates.controls; track $index) {
-            <div [formGroupName]="$index" class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded bg-white">
-              <div class="form-group">
-                <label [for]="'cert_body_' + $index" class="block text-sm font-medium text-gray-700">Body</label>
-                <input type="text" [id]="'cert_body_' + $index" formControlName="body"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-              </div>
-              
-              <div class="form-group">
-                <label [for]="'cert_type_' + $index" class="block text-sm font-medium text-gray-700">Type of Approval</label>
-                <input type="text" [id]="'cert_type_' + $index" formControlName="approval_type"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-              </div>
-              
-              <div class="form-group">
-                <label [for]="'cert_validity_' + $index" class="block text-sm font-medium text-gray-700">Validity</label>
-                <input type="text" [id]="'cert_validity_' + $index" formControlName="validity"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-              </div>
-              
-              <div class="md:col-span-3 flex justify-end">
-                <button type="button" (click)="removeCertificate($index)"
-                  class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                  Remove
-                </button>
+          <div class="grid gap-6 md:grid-cols-2">
+            <!-- Company Name -->
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">1. Name of applicant company <span class="text-red-500">*</span></label>
+              <input type="text" formControlName="company_name" 
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300 transition duration-150 ease-in-out"
+                     [ngClass]="{'border-red-300': submitted && applicationForm.get('company_name')?.errors}">
+              <div *ngIf="submitted && applicationForm.get('company_name')?.errors" class="mt-1 text-sm text-red-600">
+                Company name is required
               </div>
             </div>
-            }
-            
-            <button type="button" (click)="addCertificate()"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Add Certificate
-            </button>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Question 13 - Part B -->
-      <div class="border p-4 rounded-md bg-gray-50">
-        <div class="form-group mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2">b. Is your company currently seeking approval/certification from other bodies?</label>
-          
-          <div class="flex items-center space-x-4">
-            <div class="flex items-center">
-              <input type="radio" id="seeking_yes" [value]="true" formControlName="seeking_approval"
-                (change)="onSeekingApprovalChange($event)"
-                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-              <label for="seeking_yes" class="ml-2 block text-sm text-gray-700">Yes</label>
+
+            <!-- Office Address -->
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">2. Office address and contact details <span class="text-red-500">*</span></label>
+              <textarea rows="3" formControlName="office_address"
+                        class="form-textarea block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300 transition duration-150 ease-in-out"
+                        [ngClass]="{'border-red-300': submitted && applicationForm.get('office_address')?.errors}"
+                        placeholder="Complete address, telephone/fax numbers, email"></textarea>
+              <div *ngIf="submitted && applicationForm.get('office_address')?.errors" class="mt-1 text-sm text-red-600">
+                Office address is required
+              </div>
             </div>
-            
-            <div class="flex items-center">
-              <input type="radio" id="seeking_no" [value]="false" formControlName="seeking_approval"
-                (change)="onSeekingApprovalChange($event)"
-                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-              <label for="seeking_no" class="ml-2 block text-sm text-gray-700">No</label>
+
+            <!-- Factory Address -->
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">3. Factory address and contact details <span class="text-red-500">*</span></label>
+              <textarea rows="3" formControlName="factory_address"
+                        class="form-textarea block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300 transition duration-150 ease-in-out"
+                        [ngClass]="{'border-red-300': submitted && applicationForm.get('factory_address')?.errors}"
+                        placeholder="Complete address, telephone/fax numbers, email"></textarea>
+              <div *ngIf="submitted && applicationForm.get('factory_address')?.errors" class="mt-1 text-sm text-red-600">
+                Factory address is required
+              </div>
             </div>
           </div>
         </div>
 
-        <div *ngIf="applicationForm.get('seeking_approval')?.value">
-            <div formArrayName="seeking_approval_details" class="space-y-4">
-              @for (approval of seekingApprovalDetails.controls; track $index) {
-              <div [formGroupName]="$index" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border rounded bg-white">
-                <div class="form-group">
-                  <label [for]="'approval_body_' + $index" class="block text-sm font-medium text-gray-700">Body</label>
-                  <input type="text" [id]="'approval_body_' + $index" formControlName="body"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                
-                <div class="form-group">
-                  <label [for]="'approval_type_' + $index" class="block text-sm font-medium text-gray-700">Type of Approval/Certification</label>
-                  <input type="text" [id]="'approval_type_' + $index" formControlName="approval_type"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                
-                <div class="md:col-span-2 flex justify-end">
-                  <button type="button" (click)="removeApproval($index)"
-                    class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                    Remove
+        <!-- Tax Information Section -->
+        <div class="p-6 space-y-6 border-b border-gray-200 bg-gray-50">
+          <h2 class="text-xl font-semibold text-gray-900">Tax Information</h2>
+          
+          <div class="grid gap-6 md:grid-cols-2">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">4. TIN Number <span class="text-red-500">*</span></label>
+              <input type="text" formControlName="tin"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">5. TIN Issue Date <span class="text-red-500">*</span></label>
+              <input type="date" formControlName="tin_issue_date"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+          </div>
+        </div>
+
+        <!-- Management Section -->
+        <div class="p-6 space-y-6 border-b border-gray-200">
+          <h2 class="text-xl font-semibold text-gray-900">Management Information</h2>
+          
+          <div class="grid gap-6 md:grid-cols-2">
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">6. Company President/CEO <span class="text-red-500">*</span></label>
+              <input type="text" formControlName="company_president"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">7. Quality Management Representative <span class="text-red-500">*</span></label>
+              <input type="text" formControlName="quality_management_rep"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">8. QMR Contact Details <span class="text-red-500">*</span></label>
+              <input type="text" formControlName="qmr_contact"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Information Section -->
+        <div class="p-6 space-y-6 border-b border-gray-200 bg-gray-50">
+          <h2 class="text-xl font-semibold text-gray-900">Product Information</h2>
+          
+          <div class="grid gap-6 md:grid-cols-2">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">9. Product Type <span class="text-red-500">*</span></label>
+              <select formControlName="product_type"
+                      class="form-select block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+                <option value="">Select product type</option>
+                <option *ngFor="let type of productTypes" [value]="type">{{type}}</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">10. Product Description <span class="text-red-500">*</span></label>
+              <textarea rows="3" formControlName="product_description"
+                        class="form-textarea block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"></textarea>
+            </div>
+            <div class="col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">11. Brand Names <span class="text-red-500">*</span></label>
+              <input type="text" formControlName="brand_names"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                     placeholder="Separate multiple brands with commas">
+            </div>
+          </div>
+        </div>
+
+        <!-- Standards Section -->
+        <div class="p-6 space-y-6 border-b border-gray-200">
+          <h2 class="text-xl font-semibold text-gray-900">Quality Standards</h2>
+          
+          <div class="grid gap-6 md:grid-cols-2">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">12. QMS Standard <span class="text-red-500">*</span></label>
+              <input type="text" formControlName="qms_standard"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">13. Product Standards <span class="text-red-500">*</span></label>
+              <input type="text" formControlName="specific_product_standards"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+
+            <!-- Quality Certificate Question -->
+            <div class="col-span-2 mt-6">
+              <label class="block text-sm font-medium text-gray-700 mb-3">13.1. Is your company currently holding any Quality Systems' Certificate Approvals granted by other certifying authorities?</label>
+              <div class="flex gap-4">
+                <label class="inline-flex items-center">
+                  <input type="radio" [value]="true" formControlName="holds_quality_certificate" 
+                         (change)="onHoldsQualityCertificateChange($event)"
+                         class="form-radio h-4 w-4 text-blue-600">
+                  <span class="ml-2">Yes</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input type="radio" [value]="false" formControlName="holds_quality_certificate"
+                         (change)="onHoldsQualityCertificateChange($event)"
+                         class="form-radio h-4 w-4 text-blue-600">
+                  <span class="ml-2">No</span>
+                </label>
+              </div>
+
+              <div *ngIf="applicationForm.get('holds_quality_certificate')?.value" class="mt-4">
+                <p class="text-sm text-gray-700 mb-2">If "yes", give details and attach copy:</p>
+                <div formArrayName="quality_certificates" class="space-y-4">
+                  <div *ngFor="let certificate of qualityCertificates.controls; let i=index" 
+                       [formGroupName]="i"
+                       class="grid grid-cols-3 gap-4">
+                    <div>
+                      <input type="text" formControlName="body" 
+                             class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                             placeholder="Certifying Body">
+                    </div>
+                    <div>
+                      <input type="text" formControlName="approval_type"
+                             class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                             placeholder="Type of Approval">
+                    </div>
+                    <div class="flex gap-2">
+                      <input type="text" formControlName="validity"
+                             class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                             placeholder="Validity">
+                      <button type="button" (click)="removeCertificate(i)"
+                              class="inline-flex items-center p-1 border border-transparent rounded-full text-red-600 hover:bg-red-50">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <button type="button" (click)="addCertificate()"
+                          class="mt-2 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    + Add Certificate
                   </button>
                 </div>
               </div>
-              }
-              
-              <button type="button" (click)="addApproval()"
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Add Approval/Certification
-              </button>
             </div>
-          </div>
-        </div>
-    
-        <!-- Question 14 -->
-        <div class="space-y-4">
-          <h3 class="text-lg font-medium text-gray-900">14. Plant Capacity:</h3>
-          
-          <div class="form-group">
-            <label for="rated_capacity" class="block text-sm font-medium text-gray-700">a. Rated capacity per shift & per month:</label>
-            <input type="text" id="rated_capacity" formControlName="rated_capacity"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              [ngClass]="{'border-red-500': submitted && applicationForm.get('rated_capacity')?.errors}">
-            <div *ngIf="submitted && applicationForm.get('rated_capacity')?.errors" class="text-red-500 text-sm mt-1">
-              Rated capacity is required
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="actual_capacity" class="block text-sm font-medium text-gray-700">b. Actual capacity per shift & per month:</label>
-            <input type="text" id="actual_capacity" formControlName="actual_capacity"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              [ngClass]="{'border-red-500': submitted && applicationForm.get('actual_capacity')?.errors}">
-            <div *ngIf="submitted && applicationForm.get('actual_capacity')?.errors" class="text-red-500 text-sm mt-1">
-              Actual capacity is required
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="production_percentage_ph" class="block text-sm font-medium text-gray-700">c. If foreign, percentage of production dedicated to the Philippine market:</label>
-            <input type="number" id="production_percentage_ph" formControlName="production_percentage_ph"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-          </div>
-        </div>
-    
-        <!-- Question 15 -->
-        <div class="space-y-4">
-          <h3 class="text-lg font-medium text-gray-900">15. Number of Employees:</h3>
-          
-          <div class="form-group">
-            <label for="total_employees" class="block text-sm font-medium text-gray-700">Total Number of Employees:</label>
-            <input type="number" id="total_employees" formControlName="total_employees"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              [ngClass]="{'border-red-500': submitted && applicationForm.get('total_employees')?.errors}">
-            <div *ngIf="submitted && applicationForm.get('total_employees')?.errors" class="text-red-500 text-sm mt-1">
-              Total number of employees is required
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="employees_per_premise" class="block text-sm font-medium text-gray-700">a. Number of employees per premise/site in the company for which certification is being sought:</label>
-            <input type="text" id="employees_per_premise" formControlName="employees_per_premise"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              [ngClass]="{'border-red-500': submitted && applicationForm.get('employees_per_premise')?.errors}">
-            <div *ngIf="submitted && applicationForm.get('employees_per_premise')?.errors" class="text-red-500 text-sm mt-1">
-              This field is required
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="employees_per_shift" class="block text-sm font-medium text-gray-700">b. If the company works in several shifts, number of employees per shift:</label>
-            <input type="text" id="employees_per_shift" formControlName="employees_per_shift"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              [ngClass]="{'border-red-500': submitted && applicationForm.get('employees_per_shift')?.errors}">
-            <div *ngIf="submitted && applicationForm.get('employees_per_shift')?.errors" class="text-red-500 text-sm mt-1">
-              This field is required
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="employees_during_assessment" class="block text-sm font-medium text-gray-700">c. Number of employees likely to be present on the premises during time of assessment:</label>
-            <input type="number" id="employees_during_assessment" formControlName="employees_during_assessment"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              [ngClass]="{'border-red-500': submitted && applicationForm.get('employees_during_assessment')?.errors}">
-            <div *ngIf="submitted && applicationForm.get('employees_during_assessment')?.errors" class="text-red-500 text-sm mt-1">
-              This field is required
-            </div>
-          </div>
-        </div>
-    
-        <!-- Question 16 -->
-        <div class="form-group">
-          <label for="assets_in_million" class="block text-sm font-medium text-gray-700">16. Assets (In Million Pesos):</label>
-          <div class="mt-1 relative rounded-md shadow-sm">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span class="text-gray-500 sm:text-sm">PHP</span>
-            </div>
-            <input type="number" id="assets_in_million" formControlName="assets_in_million"
-              class="pl-12 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              [ngClass]="{'border-red-500': submitted && applicationForm.get('assets_in_million')?.errors}">
-          </div>
-          <div *ngIf="submitted && applicationForm.get('assets_in_million')?.errors" class="text-red-500 text-sm mt-1">
-            Assets value is required
-          </div>
-          <p class="text-sm text-gray-500 mt-1">Please submit a copy of previous year's duly audited financial statement</p>
-        </div>
-    
-        <!-- Question 17 -->
-        <div class="space-y-4">
-          <h3 class="text-lg font-medium text-gray-900">17. Volume of Production during the last three (3) calendar years:</h3>
-          
-          <div formArrayName="production_volumes" class="space-y-4">
-            @for (volume of productionVolumes.controls; track $index) {
-            <div [formGroupName]="$index" class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded bg-white">
-              <div class="form-group">
-                <label [for]="'year_' + $index" class="block text-sm font-medium text-gray-700">Year</label>
-                <input type="text" [id]="'year_' + $index" formControlName="year"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                  [ngClass]="{'border-red-500': submitted && volume.get('year')?.errors}">
+
+            <!-- Seeking Approval Question -->
+            <div class="col-span-2 mt-6">
+              <label class="block text-sm font-medium text-gray-700 mb-3">13.2. Is your company currently seeking approval/certification from other bodies?</label>
+              <div class="flex gap-4">
+                <label class="inline-flex items-center">
+                  <input type="radio" [value]="true" formControlName="seeking_approval"
+                         (change)="onSeekingApprovalChange($event)"
+                         class="form-radio h-4 w-4 text-blue-600">
+                  <span class="ml-2">Yes</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input type="radio" [value]="false" formControlName="seeking_approval"
+                         (change)="onSeekingApprovalChange($event)"
+                         class="form-radio h-4 w-4 text-blue-600">
+                  <span class="ml-2">No</span>
+                </label>
               </div>
-              
-              <div class="form-group">
-                <label [for]="'production_' + $index" class="block text-sm font-medium text-gray-700">Production</label>
-                <input type="text" [id]="'production_' + $index" formControlName="production"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                  [ngClass]="{'border-red-500': submitted && volume.get('production')?.errors}">
-              </div>
-              
-              <div class="form-group">
-                <label [for]="'value_' + $index" class="block text-sm font-medium text-gray-700">Value (In Million Pesos)</label>
-                <div class="mt-1 relative rounded-md shadow-sm">
-                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span class="text-gray-500 sm:text-sm">PHP</span>
+
+              <div *ngIf="applicationForm.get('seeking_approval')?.value" class="mt-4">
+                <p class="text-sm text-gray-700 mb-2">If "yes", give details:</p>
+                <div formArrayName="seeking_approval_details" class="space-y-4">
+                  <div *ngFor="let approval of seekingApprovalDetails.controls; let i=index"
+                       [formGroupName]="i"
+                       class="grid grid-cols-2 gap-4">
+                    <div>
+                      <input type="text" formControlName="body"
+                             class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                             placeholder="Body">
+                    </div>
+                    <div class="flex gap-2">
+                      <input type="text" formControlName="approval_type"
+                             class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                             placeholder="Type of Approval/Certification">
+                      <button type="button" (click)="removeApproval(i)"
+                              class="inline-flex items-center p-1 border border-transparent rounded-full text-red-600 hover:bg-red-50">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                  <input type="number" [id]="'value_' + $index" formControlName="value_in_million"
-                    class="pl-12 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    [ngClass]="{'border-red-500': submitted && volume.get('value_in_million')?.errors}">
+                  <button type="button" (click)="addApproval()"
+                          class="mt-2 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    + Add Approval
+                  </button>
                 </div>
               </div>
             </div>
-            }
           </div>
         </div>
-    
-        <!-- Submit Button -->
-        <div class="flex justify-end">
-          <button type="submit" [disabled]="submitting"
-            class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span *ngIf="submitting" class="mr-2">
-              <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            </span>
-            {{ submitting ? 'Submitting...' : 'Submit Application' }}
-          </button>
+
+        <!-- Production Capacity Section -->
+        <div class="p-6 space-y-6 border-b border-gray-200 bg-gray-50">
+          <h2 class="text-xl font-semibold text-gray-900">14. Plant Capacity:</h2>
+          
+          <div class="grid gap-6 md:grid-cols-1">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">14.1. Rated capacity per shift & per month:</label>
+              <input type="text" formControlName="rated_capacity"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">14.2. Actual capacity per shift & per month:</label>
+              <input type="text" formControlName="actual_capacity"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">14.3. If foreign, percentage of production dedicated to the Philippine market:</label>
+              <div class="relative mt-1 rounded-md shadow-sm">
+                <input type="number" formControlName="production_ph_percentage"
+                       class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300 pr-12"
+                       placeholder="0">
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
+
+        <!-- Employee Information Section -->
+        <div class="p-6 space-y-6">
+          <h2 class="text-xl font-semibold text-gray-900">15. Number of Employees:</h2>
+          
+          <div class="grid gap-6 md:grid-cols-1">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">15.1. Please give the number of employees per premise/site in the company for which certification is being sought:</label>
+              <input type="number" formControlName="employees_per_premise"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">15.2. If the company works in several shifts, please indicate the number of employees per shift:</label>
+              <input type="number" formControlName="employees_per_shift"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">15.3. Please indicate the number of employees likely to be present on the premises during time of assessment:</label>
+              <input type="number" formControlName="employees_assessment_time"
+                     class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            </div>
+          </div>
+        </div>
+
+        <!-- Financial Information Section -->
+        <div class="p-6 space-y-6 bg-gray-50">
+          <h2 class="text-xl font-semibold text-gray-900">16. Assets (In Million Pesos): PHP</h2>
+          <p class="text-sm text-gray-600 mb-4">(Please submit a copy of previous year's duly audited financial statement)</p>
+          
+          <div class="grid gap-6 md:grid-cols-1">
+            <div>
+              <div class="relative mt-1 rounded-md shadow-sm">
+                <input type="number" formControlName="assets_million_php"
+                       class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300 pr-16"
+                       step="0.01">
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">M PHP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Submit Button Section -->
+      <div class="flex justify-end pt-6">
+        <button type="submit" 
+                [disabled]="submitting"
+                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+          <span *ngIf="submitting" class="mr-2">
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </span>
+          {{ submitting ? 'Submitting...' : 'Submit Application' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
