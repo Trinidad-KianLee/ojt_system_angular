@@ -1,5 +1,3 @@
-// ps-license-registration.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -19,7 +17,7 @@ export class PsLicenseRegistrationComponent implements OnInit {
   submitting = false;
   successMessage = '';
   errorMessage = '';
-  productTypes = ['Product Type A', 'Product Type B', 'Product Type C'];
+  productTypes = ['HTP', 'Electronic ', 'Product Type C'];
 
   constructor(
     private fb: FormBuilder,
@@ -146,8 +144,6 @@ export class PsLicenseRegistrationComponent implements OnInit {
 
     try {
       const formData = this.applicationForm.value;
-
-      // Convert arrays to string/number formats as needed
       if (formData.quality_certificates) {
         formData.quality_certificates = JSON.stringify(formData.quality_certificates);
       }
