@@ -20,50 +20,46 @@ export class WarehouseRegistrationComponent implements OnInit {
     private fb: FormBuilder,
     private pocketBaseService: PocketBaseService
   ) {
-    // Initialize the form with validation
     this.form = this.fb.group({
-      // Business Information
-      business_name: ['Dummy Business', Validators.required],
-      floor_unit_no: ['1A', Validators.required],
-      building_no_name: ['Dummy Building', Validators.required],
-      street: ['Dummy Street', Validators.required],
-      barangay: ['Dummy Barangay', Validators.required],
-      city_municipality: ['Dummy City', Validators.required],
-      province: ['Dummy Province', Validators.required],
-      region: ['Dummy Region', Validators.required],
-      zip_code: ['12345', Validators.required],
-      
-      // Business Owner Information
-      business_owner: ['John Doe', Validators.required],
-      owner_sex: ['Male', Validators.required],
-      owner_social_classification: ['General'],
-      owner_telephone: ['1234567890', Validators.required],
-      owner_email: ['johndoe@example.com', [Validators.required, Validators.email]],
-      owner_mobile: ['0987654321', Validators.required],
-      owner_website: ['www.dummybusiness.com'],
-      
-      // Warehouse Owner Information
-      warehouse_owner: ['Jane Doe', Validators.required],
-      warehouse_owner_sex: ['Female', Validators.required],
-      warehouse_owner_social_classification: ['General'],
-      warehouse_owner_telephone: ['1122334455', Validators.required],
-      warehouse_owner_email: ['janedoe@example.com', [Validators.required, Validators.email]],
-      warehouse_owner_mobile: ['5544332211', Validators.required],
-      warehouse_owner_website: ['www.dummywarehouse.com'],
-      
-      // Products Information
-      vapor_product_system: [true],
+      business_name: ['', Validators.required],
+      floor_unit_no: ['', Validators.required],
+      building_no_name: ['', Validators.required],
+      street: ['', Validators.required],
+      barangay: ['', Validators.required],
+      city_municipality: ['', Validators.required],
+      province: ['', Validators.required],
+      region: ['', Validators.required],
+      zip_code: ['', Validators.required],
+
+      business_owner: ['', Validators.required],
+      owner_sex: ['', Validators.required],
+      owner_social_classification: [''],
+      owner_telephone: ['', Validators.required],
+      owner_email: ['', [Validators.required, Validators.email]],
+      owner_mobile: ['', Validators.required],
+      owner_website: [''],
+      owner_address: ['', Validators.required],
+
+      warehouse_owner: ['', Validators.required],
+      warehouse_owner_sex: ['', Validators.required],
+      warehouse_owner_social_classification: [''],
+      warehouse_owner_telephone: ['', Validators.required],
+      warehouse_owner_email: ['', [Validators.required, Validators.email]],
+      warehouse_owner_mobile: ['', Validators.required],
+      warehouse_owner_website: [''],
+      warehouse_owner_address: ['', Validators.required],
+      vapor_product_system: [false],
       vapor_product_device: [false],
-      vapor_product_refills: [true],
+      vapor_product_refills: [false],
       htp_system: [false],
-      htp_device: [true],
+      htp_device: [false],
       htp_consumables: [false],
-      nicotine_pouch: [true],
-      brands_list: ['Brand A, Brand B', Validators.required],
-      supplier_names: ['Supplier X, Supplier Y', Validators.required],
+      nicotine_pouch: [false],
+      brands_list: ['', Validators.required],
+      supplier_names: ['', Validators.required],
       
       // Financial Information
-      asset_size: ['1000000', Validators.required],
+      asset_size: ['', Validators.required],
     });
   }
   

@@ -16,6 +16,7 @@ import { VapeRegisComponent } from './pages/user-dashboard/vape-regis/vape-regis
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { AdminLogsComponent } from './pages/admin-logs/admin-logs.component';
 import { PsLicenseRegistrationComponent } from './pages/user-dashboard/ps-license-application/ps-license-registration.component';
+import { AgeGatingRegistrationComponent } from './pages/user-dashboard/age-gating-registration/age-gating-registration.component';
 
 import { AdminGuard } from './guards/admin.guard';
 import { NewLandingpageComponent } from './pages/user-dashboard/new-landingpage/new-landingpage.component';
@@ -50,6 +51,7 @@ export const routes: Routes = [
   { path: 'promo-events', component: PromoEventsComponent},
 
   { path: 'age-gating', component: AgeGatingComponent},
+  { path: 'age-gating-registration', component: AgeGatingRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-registration', component: WarehouseRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard] },
   { path: 'vape-regis', component: VapeRegisComponent, canActivate: [AuthGuard] },

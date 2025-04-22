@@ -70,6 +70,16 @@ export class AdminDashboardComponent implements OnInit {
   searchTermPsLicense: string = '';
   sortOrderPsLicense: 'newest' | 'oldest' = 'newest';
 
+  ageGatingRecords: any[] = [];
+  filteredAgeGating: any[] = [];
+  showAgeGating: boolean = false;
+  showAgeGatingDetailsModal: boolean = false;
+  selectedAgeGating: any = null;
+  loadingAgeGating: boolean = false;
+  ageGatingErrorMsg: string = '';
+  searchTermAgeGating: string = '';
+  sortOrderAgeGating: 'newest' | 'oldest' = 'newest';
+
   constructor(
     public pb: PocketBaseService,
     private router: Router,
@@ -534,6 +544,85 @@ export class AdminDashboardComponent implements OnInit {
     XLSX.writeFile(workbook, 'ps_license_regis.xlsx');
   }
 
+  toggleAgeGating(): void {
+    if (!this.showAgeGating) {
+      this.loadAgeGatingRecords();
+    }
+    this.showAgeGating = !this.showAgeGating;
+  }
+
+  async loadAgeGatingRecords(): Promise<void> {
+    try {
+      this.loadingAgeGating = true;
+      this.ageGatingErrorMsg = '';
+      const data = await this.pb.getAllAgeGatingRecords();
+      this.ageGatingRecords = data;
+      this.applyAgeGatingFilters();
+      if (!data.length) {
+        this.ageGatingErrorMsg = 'No records found in age_gating.';
+      }
+    } catch (error) {
+      this.ageGatingErrorMsg = 'Failed to load age_gating records.';
+      console.error('Error fetching age_gating records:', error);
+    } finally {
+      this.loadingAgeGating = false;
+    }
+  }
+
+  applyAgeGatingFilters(): void {
+    let filtered = [...this.ageGatingRecords];
+    if (this.searchTermAgeGating.trim()) {
+      const term = this.searchTermAgeGating.toLowerCase();
+      filtered = filtered.filter((r) =>
+        r.name?.toLowerCase().includes(term)
+      );
+    }
+    if (this.sortOrderAgeGating === 'newest') {
+      filtered.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+    } else {
+      filtered.sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime());
+    }
+    this.filteredAgeGating = filtered;
+  }
+
+  updateAgeGatingStatus(record: any, newStatus: string): void {
+    const oldStatus = record.applicationStatus;
+    record.applicationStatus = newStatus;
+    this.pb.updateAgeGatingRecordStatus(record.id, newStatus)
+      .then(updated => {
+        console.log('Age Gating record updated:', updated);
+        const adminData = this.pb.getUserData();
+        const logData = {
+          adminId: adminData?.id,
+          adminName: adminData?.['firstName'],
+          colName: 'age_gating',
+          recordId: record.id,
+          oldStatus: oldStatus,
+          newStatus: newStatus,
+          timestamp: new Date().toISOString()
+        };
+        return this.pb.createAdminLog(logData);
+      })
+      .then(log => {
+        console.log('Admin log created:', log);
+      })
+      .catch(err => {
+        console.error('Error updating age gating status or logging admin action:', err);
+        // Revert the status on error
+        record.applicationStatus = oldStatus;
+      });
+  }
+
+  downloadAgeGatingExcel(): void {
+    const dataToExport = this.filteredAgeGating.length
+      ? this.filteredAgeGating
+      : this.ageGatingRecords;
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'AgeGating');
+    XLSX.writeFile(workbook, 'age_gating.xlsx');
+  }
+
   showVapeDetails(record: any): void {
     this.selectedVape = record;
     this.showVapeDetailsModal = true;
@@ -574,6 +663,16 @@ export class AdminDashboardComponent implements OnInit {
     this.selectedPsLicense = null;
   }
 
+  showAgeGatingDetails(record: any): void {
+    this.selectedAgeGating = record;
+    this.showAgeGatingDetailsModal = true;
+  }
+
+  closeAgeGatingDetails(): void {
+    this.showAgeGatingDetailsModal = false;
+    this.selectedAgeGating = null;
+  }
+
   getVapeFileUrl(record: any, fileKey: string): string {
     return this.pb.getAttachmentUrl(record, fileKey);
   }
@@ -587,6 +686,10 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   getPsLicenseFileUrl(record: any, fileKey: string): string {
+    return this.pb.getAttachmentUrl(record, fileKey);
+  }
+
+  getAgeGatingFileUrl(record: any, fileKey: string): string {
     return this.pb.getAttachmentUrl(record, fileKey);
   }
 

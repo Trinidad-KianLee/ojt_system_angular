@@ -107,6 +107,48 @@ export class PocketBaseService {
     return this.pb.collection('warehouse_regis').create(data);
   }
 
+  async createAgeGatingRegistration(data: FormData): Promise<any> {
+    // Add user ID as owner if not already in data
+    if (!data.get('owner') && this.isLoggedIn()) {
+      const userData = this.getUserData();
+      if (userData) {
+        data.append('owner', userData.id);
+      }
+    }
+    
+    // Ensure application status is set
+    if (!data.get('applicationStatus')) {
+      data.append('applicationStatus', 'pending');
+    }
+    
+    return this.pb.collection('age_gating').create(data);
+  }
+
+  async getUserAgeGatingRegistrations(): Promise<any[]> {
+    if (!this.isLoggedIn()) {
+      throw new Error('User must be logged in.');
+    }
+    const userData = this.getUserData();
+    return this.pb.collection('age_gating').getFullList({
+      filter: `owner="${userData?.id}"`,
+    });
+  }
+
+  async getAllAgeGatingRecords(): Promise<any[]> {
+    if (!this.isAdmin()) {
+      throw new Error('Access denied. Admin only method.');
+    }
+    return this.pb.collection('age_gating').getFullList({
+      expand: 'owner',
+    });
+  }
+
+  async updateAgeGatingRecordStatus(recordId: string, newStatus: string): Promise<any> {
+    return this.pb.collection('age_gating').update(recordId, {
+      applicationStatus: newStatus
+    });
+  }
+
   async getAllWarehouseRegisRecords(): Promise<any[]> {
     if (!this.isAdmin()) {
       throw new Error('Access denied. Admin only method.');
@@ -215,6 +257,8 @@ export class PocketBaseService {
       collectionName = 'retailer_regis';
     } else if (record.company_name) {
       collectionName = 'ps_license_regis';
+    } else if (record.nameOfCompany) {
+      collectionName = 'age_gating';
     }
     
     return `${this.pb.baseUrl}/api/files/${collectionName}/${record.id}/${record[fileKey]}`;
