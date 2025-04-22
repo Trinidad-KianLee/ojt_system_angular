@@ -90,6 +90,48 @@ export class PocketBaseService {
     return this.pb.collection('ps_license_regis').create(data);
   }
 
+  async createWarehouseRegistration(data: FormData): Promise<any> {
+    // Add user ID as owner if not already in data
+    if (!data.get('owner') && this.isLoggedIn()) {
+      const userData = this.getUserData();
+      if (userData) {
+        data.append('owner', userData.id);
+      }
+    }
+    
+    // Ensure application status is set
+    if (!data.get('applicationStatus')) {
+      data.append('applicationStatus', 'pending');
+    }
+    
+    return this.pb.collection('warehouse_regis').create(data);
+  }
+
+  async getAllWarehouseRegisRecords(): Promise<any[]> {
+    if (!this.isAdmin()) {
+      throw new Error('Access denied. Admin only method.');
+    }
+    return this.pb.collection('warehouse_regis').getFullList({
+      expand: 'owner',
+    });
+  }
+
+  async getUserWarehouseRegistrations(): Promise<any[]> {
+    if (!this.isLoggedIn()) {
+      throw new Error('User must be logged in.');
+    }
+    const userData = this.getUserData();
+    return this.pb.collection('warehouse_regis').getFullList({
+      filter: `owner="${userData?.id}"`,
+    });
+  }
+
+  async updateWarehouseRecordStatus(recordId: string, newStatus: string): Promise<any> {
+    return this.pb.collection('warehouse_regis').update(recordId, {
+      applicationStatus: newStatus
+    });
+  }
+
   logout() {
     this.pb.authStore.clear();
   }
@@ -163,7 +205,19 @@ export class PocketBaseService {
     if (!record?.id || !record[fileKey]) {
       return '';
     }
-    return `${this.pb.baseUrl}/api/files/vape_regis/${record.id}/${record[fileKey]}`;
+
+    // Determine collection name from record
+    let collectionName = 'vape_regis';
+    
+    if (record.warehouseBldgNameNo || record.nameOfBusiness) {
+      collectionName = 'warehouse_regis';
+    } else if (record.business_name || record.store_name) {
+      collectionName = 'retailer_regis';
+    } else if (record.company_name) {
+      collectionName = 'ps_license_regis';
+    }
+    
+    return `${this.pb.baseUrl}/api/files/${collectionName}/${record.id}/${record[fileKey]}`;
   }
 
   getUserAttachmentUrl(record: any, fileKey: string): string {

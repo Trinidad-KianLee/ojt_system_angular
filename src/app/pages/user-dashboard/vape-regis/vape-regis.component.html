@@ -1,132 +1,86 @@
-<style>
-    html {
-      scroll-behavior: smooth;
-    }
-    .error-text {
-      color: #e53e3e;
-      font-size: 0.875rem;
-      margin-top: 0.25rem;
-    }
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .modal-content {
-      background: #ffffff;
-      padding: 2rem;
-      border-radius: 0.5rem;
-      max-width: 500px;
-      width: 100%;
-    }
-  </style>
-  
-  <div class="min-h-screen flex flex-col bg-gray-100 text-gray-800">
-    <header class="sticky top-0 z-50 bg-gradient-to-r from-blue-900 to-blue-600 text-white shadow">
-      <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-        <h1 class="text-2xl md:text-3xl font-bold">Promo Registration</h1>
-      </div>
-    </header>
-  
-    <main class="container mx-auto px-4 py-8 flex-grow">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
-        <div class="bg-white shadow-md rounded-lg p-6">
-          <h2 class="text-xl font-semibold mb-4 border-b pb-2">A. Applicant Number</h2>
+<div class="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header section -->
+    <div class="bg-white shadow-sm rounded-lg p-6 mb-8 border-l-4 border-blue-600">
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 text-center md:text-left">Promo Registration</h1>
+      <p class="text-gray-600 text-sm text-center md:text-left">Complete the form below to register your promotion campaign</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Applicant Information Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">A. Applicant Information</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="relative">
-              <input
+            <div>
+              <label for="applicantToken" class="block text-sm font-medium text-gray-700 mb-1">
+                Applicant Token <span class="text-red-500">*</span>
+              </label>
+              <input 
                 id="applicantToken"
                 formControlName="applicantToken"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="applicantToken"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Applicant Token
-              </label>
               <div
-                class="error-text"
+                class="mt-1 text-sm text-red-600"
                 *ngIf="form.get('applicantToken')?.touched && form.get('applicantToken')?.invalid"
               >
                 Applicant Token is required
               </div>
             </div>
+
             <div>
-              <label class="block font-semibold mb-2">Type of Application</label>
-              <div class="flex items-center space-x-4">
-                <label class="flex items-center">
+              <label class="block text-sm font-medium text-gray-700 mb-3">Type of Application</label>
+              <div class="flex items-center space-x-6">
+                <label class="inline-flex items-center">
                   <input
                     type="radio"
                     value="New"
                     formControlName="typeOfApplication"
-                    class="mr-2"
+                    class="form-radio h-4 w-4 text-blue-600"
                   />
-                  <span>New</span>
+                  <span class="ml-2 text-sm text-gray-700">New</span>
                 </label>
-                <label class="flex items-center">
+                <label class="inline-flex items-center">
                   <input
                     type="radio"
                     value="Amendment"
                     formControlName="typeOfApplication"
-                    class="mr-2"
+                    class="form-radio h-4 w-4 text-blue-600"
                   />
-                  <span>Amendment</span>
+                  <span class="ml-2 text-sm text-gray-700">Amendment</span>
                 </label>
               </div>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="permit" class="block text-sm font-medium text-gray-700 mb-1">
+                Permit
+              </label>
               <input
                 id="permit"
                 formControlName="permit"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="permit"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Permit
-              </label>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="applicationDate" class="block text-sm font-medium text-gray-700 mb-1">
+                Application Date <span class="text-red-500">*</span>
+              </label>
               <input
                 id="applicationDate"
                 formControlName="applicationDate"
                 type="date"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="applicationDate"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Application Date
-              </label>
               <div
-                class="error-text"
+                class="mt-1 text-sm text-red-600"
                 *ngIf="form.get('applicationDate')?.touched && form.get('applicationDate')?.invalid"
               >
                 Application Date is required
@@ -134,130 +88,112 @@
             </div>
           </div>
         </div>
-  
-        <div class="bg-white shadow-md rounded-lg p-6">
-          <h2 class="text-xl font-semibold mb-4 border-b pb-2">B. Sales Promotion Details</h2>
+      </div>
+
+      <!-- Promo Details Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">B. Sales Promotion Details</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="relative">
+            <div>
+              <label for="promoTitle" class="block text-sm font-medium text-gray-700 mb-1">
+                Promo Title <span class="text-red-500">*</span>
+              </label>
               <input
                 id="promoTitle"
                 formControlName="promoTitle"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="promoTitle"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Promo Title
-              </label>
               <div
-                class="error-text"
+                class="mt-1 text-sm text-red-600"
                 *ngIf="form.get('promoTitle')?.touched && form.get('promoTitle')?.invalid"
               >
                 Promo Title is required
               </div>
             </div>
+
             <div formGroupName="promoSchemes">
-              <label class="block font-semibold mb-2">Promo Schemes</label>
-              <div class="flex flex-wrap gap-4">
-                <label class="flex items-center space-x-2">
+              <label class="block text-sm font-medium text-gray-700 mb-3">Promo Schemes</label>
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
+                <label class="inline-flex items-center">
                   <input
                     type="checkbox"
                     formControlName="discount"
-                    class="cursor-pointer"
+                    class="form-checkbox h-4 w-4 text-blue-600"
                   />
-                  <span>Discount</span>
+                  <span class="ml-2 text-sm text-gray-700">Discount</span>
                 </label>
-                <label class="flex items-center space-x-2">
+                <label class="inline-flex items-center">
                   <input
                     type="checkbox"
                     formControlName="contest"
-                    class="cursor-pointer"
+                    class="form-checkbox h-4 w-4 text-blue-600"
                   />
-                  <span>Contest</span>
+                  <span class="ml-2 text-sm text-gray-700">Contest</span>
                 </label>
-                <label class="flex items-center space-x-2">
+                <label class="inline-flex items-center">
                   <input
                     type="checkbox"
                     formControlName="premium"
-                    class="cursor-pointer"
+                    class="form-checkbox h-4 w-4 text-blue-600"
                   />
-                  <span>Premium</span>
+                  <span class="ml-2 text-sm text-gray-700">Premium</span>
                 </label>
-                <label class="flex items-center space-x-2">
+                <label class="inline-flex items-center">
                   <input
                     type="checkbox"
                     formControlName="redemption"
-                    class="cursor-pointer"
+                    class="form-checkbox h-4 w-4 text-blue-600"
                   />
-                  <span>Redemption</span>
+                  <span class="ml-2 text-sm text-gray-700">Redemption</span>
                 </label>
-                <label class="flex items-center space-x-2">
+                <label class="inline-flex items-center">
                   <input
                     type="checkbox"
                     formControlName="raffle"
-                    class="cursor-pointer"
+                    class="form-checkbox h-4 w-4 text-blue-600"
                   />
-                  <span>Raffle</span>
+                  <span class="ml-2 text-sm text-gray-700">Raffle</span>
                 </label>
-                <label class="flex items-center space-x-2">
+                <label class="inline-flex items-center">
                   <input
                     type="checkbox"
                     formControlName="game"
-                    class="cursor-pointer"
+                    class="form-checkbox h-4 w-4 text-blue-600"
                   />
-                  <span>Game</span>
+                  <span class="ml-2 text-sm text-gray-700">Game</span>
                 </label>
               </div>
-              <div class="relative mt-4">
+
+              <div class="mt-4">
+                <label for="coverage" class="block text-sm font-medium text-gray-700 mb-1">
+                  Coverage
+                </label>
                 <input
                   id="coverage"
                   type="text"
-                  placeholder=" "
                   formControlName="coverage"
-                  class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
                 />
-                <label
-                  for="coverage"
-                  class="absolute left-2 top-2 text-gray-500 transition-all
-                         peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                         peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                         peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                         peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                         peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-                >
-                  Coverage
-                </label>
               </div>
             </div>
-            <div class="relative md:col-span-2">
+
+            <div class="col-span-1 md:col-span-2">
+              <label for="promoPeriod" class="block text-sm font-medium text-gray-700 mb-1">
+                Promo Period <span class="text-red-500">*</span>
+              </label>
               <input
                 id="promoPeriod"
                 formControlName="promoPeriod"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="promoPeriod"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Promo Period
-              </label>
               <div
-                class="error-text"
+                class="mt-1 text-sm text-red-600"
                 *ngIf="form.get('promoPeriod')?.touched && form.get('promoPeriod')?.invalid"
               >
                 Promo Period is required
@@ -265,338 +201,271 @@
             </div>
           </div>
         </div>
-  
-        <div class="bg-white shadow-md rounded-lg p-6">
-          <h2 class="text-xl font-semibold mb-4 border-b pb-2">C. Sponsor Details</h2>
+      </div>
+
+      <!-- Sponsor Details Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">C. Sponsor Details</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="relative">
+            <div>
+              <label for="sponsorName" class="block text-sm font-medium text-gray-700 mb-1">
+                Name of Sponsor <span class="text-red-500">*</span>
+              </label>
               <input
                 id="sponsorName"
                 formControlName="sponsorName"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="sponsorName"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Name of Sponsor
-              </label>
               <div
-                class="error-text"
+                class="mt-1 text-sm text-red-600"
                 *ngIf="form.get('sponsorName')?.touched && form.get('sponsorName')?.invalid"
               >
                 Sponsor Name is required
               </div>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="sponsorRefNo" class="block text-sm font-medium text-gray-700 mb-1">
+                NegosyoKonek Reference No.
+              </label>
               <input
                 id="sponsorRefNo"
                 formControlName="sponsorRefNo"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="sponsorRefNo"
-                class="absolute left-2 top-2 text-gray-500 transition-all 
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                NegosyoKonekReference No.
-              </label>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="sponsorAddress" class="block text-sm font-medium text-gray-700 mb-1">
+                Address
+              </label>
               <input
                 id="sponsorAddress"
                 formControlName="sponsorAddress"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="sponsorAddress"
-                class="absolute left-2 top-2 text-gray-500 transition-all 
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Address
-              </label>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="sponsorAuthorizedRep" class="block text-sm font-medium text-gray-700 mb-1">
+                Authorized Representative
+              </label>
               <input
                 id="sponsorAuthorizedRep"
                 formControlName="sponsorAuthorizedRep"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="sponsorAuthorizedRep"
-                class="absolute left-2 top-2 text-gray-500 transition-all 
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Authorized Representative
-              </label>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="sponsorDesignation" class="block text-sm font-medium text-gray-700 mb-1">
+                Designation
+              </label>
               <input
                 id="sponsorDesignation"
                 formControlName="sponsorDesignation"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="sponsorDesignation"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Designation
-              </label>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="sponsorContactNo" class="block text-sm font-medium text-gray-700 mb-1">
+                Contact No.
+              </label>
               <input
                 id="sponsorContactNo"
                 formControlName="sponsorContactNo"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="sponsorContactNo"
-                class="absolute left-2 top-2 text-gray-500 transition-all 
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Contact No.
-              </label>
             </div>
           </div>
         </div>
-  
-        <div class="bg-white shadow-md rounded-lg p-6">
-          <h2 class="text-xl font-semibold mb-4 border-b pb-2">D. Advertising Agency Details</h2>
+      </div>
+
+      <!-- Advertising Agency Details Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">D. Advertising Agency Details</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="relative">
+            <div>
+              <label for="agencyName" class="block text-sm font-medium text-gray-700 mb-1">
+                Name of Advertising Agency <span class="text-red-500">*</span>
+              </label>
               <input
                 id="agencyName"
                 formControlName="agencyName"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="agencyName"
-                class="absolute left-2 top-2 text-gray-500 transition-all 
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Name of Advertising Agency
-              </label>
               <div
-                class="error-text"
+                class="mt-1 text-sm text-red-600"
                 *ngIf="form.get('agencyName')?.touched && form.get('agencyName')?.invalid"
               >
                 Agency Name is required
               </div>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="agencyRefNo" class="block text-sm font-medium text-gray-700 mb-1">
+                NegosyoKonek Reference No.
+              </label>
               <input
                 id="agencyRefNo"
                 formControlName="agencyRefNo"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="agencyRefNo"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                NegosyoKonekReference No.
-              </label>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="agencyAddress" class="block text-sm font-medium text-gray-700 mb-1">
+                Address
+              </label>
               <input
                 id="agencyAddress"
                 formControlName="agencyAddress"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="agencyAddress"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Address
-              </label>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="agencyAuthorizedRep" class="block text-sm font-medium text-gray-700 mb-1">
+                Authorized Representative
+              </label>
               <input
                 id="agencyAuthorizedRep"
                 formControlName="agencyAuthorizedRep"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="agencyAuthorizedRep"
-                class="absolute left-2 top-2 text-gray-500 transition-all 
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2 
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Authorized Representative
-              </label>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="agencyDesignation" class="block text-sm font-medium text-gray-700 mb-1">
+                Designation
+              </label>
               <input
                 id="agencyDesignation"
                 formControlName="agencyDesignation"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="agencyDesignation"
-                class="absolute left-2 top-2 text-gray-500 transition-all
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Designation
-              </label>
             </div>
-            <div class="relative">
+
+            <div>
+              <label for="agencyContactNo" class="block text-sm font-medium text-gray-700 mb-1">
+                Contact No.
+              </label>
               <input
                 id="agencyContactNo"
                 formControlName="agencyContactNo"
                 type="text"
-                placeholder=" "
-                class="peer input input-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
               />
-              <label
-                for="agencyContactNo"
-                class="absolute left-2 top-2 text-gray-500 transition-all 
-                       peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                       peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                       peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                       peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2
-                       peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600"
-              >
-                Contact No.
-              </label>
             </div>
           </div>
         </div>
-  
-        <div class="bg-white shadow-md rounded-lg p-6">
-          <h2 class="text-xl font-semibold mb-4 border-b pb-2">E. Attachments</h2>
-          <label class="block font-semibold mb-2">Upload Files</label>
-          <input
-            type="file"
-            multiple
-            (change)="onFileSelected($event)"
-            class="block w-full text-base text-gray-900 border border-gray-300 
-                   rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+      </div>
+
+      <!-- Attachments Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">E. Attachments</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Upload Files</label>
+          <div class="flex items-center justify-center w-full">
+            <label class="flex flex-col w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-150 ease-in-out">
+              <div class="flex flex-col items-center justify-center pt-7">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+                  Attach your files
+                </p>
+              </div>
+              <input type="file" multiple (change)="onFileSelected($event)" class="opacity-0" />
+            </label>
+          </div>
           <div class="mt-3" *ngIf="uploadedFiles.length > 0">
-            <p class="font-medium mb-1">Selected files:</p>
+            <p class="font-medium mb-1 text-sm text-gray-700">Selected files:</p>
             <ul class="list-disc list-inside text-sm text-gray-700">
-              <li *ngFor="let file of uploadedFiles">{{ file.name }}</li>
+              <li *ngFor="let file of uploadedFiles" class="mt-1">
+                {{ file.name }}
+              </li>
             </ul>
           </div>
         </div>
-  
-        <div class="bg-white shadow-md rounded-lg p-6">
-          <h2 class="text-xl font-semibold mb-4 border-b pb-2">F. Amendment Reasons</h2>
-          <div class="relative">
-            <textarea
-              id="amendmentReason"
-              formControlName="amendmentReason"
-              placeholder=" "
-              class="peer textarea textarea-bordered w-full bg-white text-black placeholder-transparent focus:ring-2 focus:ring-blue-500"
-              rows="3"
-            ></textarea>
-            <label
-              for="amendmentReason"
-              class="absolute left-2 top-2 text-gray-500 transition-all
-                     peer-placeholder-shown:top-2 peer-placeholder-shown:left-2
-                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                     peer-focus:top-[-0.6rem] peer-focus:left-2 peer-focus:text-sm peer-focus:text-blue-600
-                     peer-not-placeholder-shown:top-[-0.6rem] peer-not-placeholder-shown:left-2
-                     peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-blue-600" 
-            >
-              Amendment Reasons
-            </label>
-          </div>
+      </div>
+
+      <!-- Amendment Reasons Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">F. Amendment Reasons</h2>
         </div>
-  
-        <div class="flex justify-end mt-6">
-          <button
-            type="submit"
-            class="btn bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 text-base font-semibold rounded shadow-sm
-                   focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            Submit
-          </button>
+        
+        <div class="p-6 space-y-6">
+          <label for="amendmentReason" class="block text-sm font-medium text-gray-700 mb-1">
+            Amendment Reasons
+          </label>
+          <textarea
+            id="amendmentReason"
+            formControlName="amendmentReason"
+            class="form-textarea block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+            rows="3"
+          ></textarea>
         </div>
-      </form>
-    </main>
-  
-    <div *ngIf="showSuccessModal" class="modal-overlay">
-      <div class="modal-content">
-        <h2 class="text-xl font-bold mb-4">Successful Registration!</h2>
-        <p class="mb-6">Your data has been successfully stored!</p>
-        <div class="flex justify-end">
-          <button
-            class="btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-            (click)="closeSuccessModal()"
-          >
-            OK
-          </button>
-        </div>
+      </div>
+
+      <!-- Submit Button Section -->
+      <div class="flex justify-end pt-6">
+        <button
+          type="button" 
+          class="mr-4 inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Success Modal -->
+  <div *ngIf="showSuccessModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+    <div class="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md animate-fade-in-up">
+      <div class="flex items-center mb-4 text-green-600">
+        <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <h2 class="text-xl font-bold">Successful Registration!</h2>
+      </div>
+      <p class="mb-6 text-gray-700">
+        Your data has been successfully stored!
+      </p>
+      <div class="flex justify-end">
+        <button class="px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out" (click)="closeSuccessModal()">
+          OK
+        </button>
       </div>
     </div>
   </div>
-  
+</div>

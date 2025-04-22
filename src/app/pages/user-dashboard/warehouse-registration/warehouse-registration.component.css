@@ -1,0 +1,20 @@
+/* Warehouse Registration Component Styles */
+
+/* Any additional custom styling can be added here */
+.invalid-field {
+  border-color: red !important;
+}
+
+/* Success modal animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.success-modal {
+  animation: fadeIn 0.3s ease-in-out;
+}

@@ -36,38 +36,38 @@ export class VapeRegisComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      applicantToken: ['', Validators.required],
+      applicantToken: ['DUMMY_TOKEN', Validators.required],
       typeOfApplication: ['New'],
-      permit: [''],
-      applicationDate: ['', Validators.required],
+      permit: ['DUMMY_PERMIT'],
+      applicationDate: ['2023-01-01', Validators.required],
 
-      promoTitle: ['', Validators.required],
+      promoTitle: ['DUMMY_PROMO_TITLE', Validators.required],
       promoSchemes: this.fb.group({
-        discount: [false],
-        contest: [false],
-        premium: [false],
-        redemption: [false],
-        raffle: [false],
-        game: [false],
-        coverage: ['']
+      discount: [true],
+      contest: [false],
+      premium: [true],
+      redemption: [false],
+      raffle: [true],
+      game: [false],
+      coverage: ['National']
       }),
-      promoPeriod: ['', Validators.required],
+      promoPeriod: ['2023-01-01 to 2023-12-31', Validators.required],
 
-      sponsorName: ['', Validators.required],
-      sponsorRefNo: [''],
-      sponsorAddress: [''],
-      sponsorAuthorizedRep: [''],
-      sponsorDesignation: [''],
-      sponsorContactNo: [''],
+      sponsorName: ['DUMMY_SPONSOR_NAME', Validators.required],
+      sponsorRefNo: ['DUMMY_REF_NO'],
+      sponsorAddress: ['DUMMY_ADDRESS'],
+      sponsorAuthorizedRep: ['DUMMY_REP'],
+      sponsorDesignation: ['DUMMY_DESIGNATION'],
+      sponsorContactNo: ['1234567890'],
 
-      agencyName: ['', Validators.required],
-      agencyRefNo: [''],
-      agencyAddress: [''],
-      agencyAuthorizedRep: [''],
-      agencyDesignation: [''],
-      agencyContactNo: [''],
+      agencyName: ['DUMMY_AGENCY_NAME', Validators.required],
+      agencyRefNo: ['DUMMY_AGENCY_REF_NO'],
+      agencyAddress: ['DUMMY_AGENCY_ADDRESS'],
+      agencyAuthorizedRep: ['DUMMY_AGENCY_REP'],
+      agencyDesignation: ['DUMMY_AGENCY_DESIGNATION'],
+      agencyContactNo: ['0987654321'],
 
-      amendmentReason: [''],
+      amendmentReason: ['DUMMY_REASON'],
       attachments: [null]
     });
   }

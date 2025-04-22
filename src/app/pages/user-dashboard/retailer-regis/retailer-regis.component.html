@@ -1,350 +1,380 @@
-<div class="min-h-screen bg-gray-100 flex flex-col" data-theme="light">
-  <header class="bg-white shadow-sm">
-    <div class="container mx-auto p-4 flex items-center space-x-4">
-      <img src="assets/dti_banner.png" alt="DTI Banner" class="max-h-16 object-contain" />
-      <h1 class="text-xl md:text-2xl font-bold text-blue-700">
-        APPLICATION FOR CERTIFICATE OF REGISTRATION (COR)
-        FOR WHOLESALER/TRADER/DISTRIBUTOR/RETAILER
-      </h1>
+<div class="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header section -->
+    <div class="bg-white shadow-sm rounded-lg p-6 mb-8 border-l-4 border-blue-600">
+      <div class="flex flex-col md:flex-row items-center gap-4">
+        <img src="assets/dti_banner.png" alt="DTI Banner" class="h-16 object-contain" />
+        <h1 class="text-xl md:text-2xl font-bold text-gray-900 text-center md:text-left">
+          APPLICATION FOR CERTIFICATE OF REGISTRATION (COR)
+          FOR WHOLESALER/TRADER/DISTRIBUTOR/RETAILER
+        </h1>
+      </div>
     </div>
-  </header>
 
-  <main class="container mx-auto p-6 flex-1">
-    <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200">
-      <nav class="bg-blue-600 text-white p-4 rounded-md font-semibold mb-4">
-        OSMV PRODUCT CERTIFICATION BODY
-      </nav>
-
-      <!-- Angular template references -->
-      <!-- The (ngSubmit)="submitForm(myForm)" is just an example; 
-           actual TS is not shown here. -->
-      <form [formGroup]="form" (ngSubmit)="submitForm()">
-        <!-- Row 1: Business Name / Store Name -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label class="font-medium text-gray-700">Name of Business</label>
-            <input name="business_name" formControlName="business_name"
-              class="input input-bordered w-full mt-2 bg-white text-black" required />
-            <div *ngIf="isFieldInvalid('business_name')" class="text-red-600 text-sm mt-1">
-              This field is required
+    <form [formGroup]="form" (ngSubmit)="submitForm()" class="space-y-6">
+      <!-- Business Information Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">Business Information</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Business Name -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Name of Business <span class="text-red-500">*</span></label>
+              <input name="business_name" formControlName="business_name"
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('business_name')" class="mt-1 text-sm text-red-600">
+                This field is required
+              </div>
             </div>
-          </div>
-          <div>
-            <label class="font-medium text-gray-700">Name of Store</label>
-            <input name="store_name" formControlName="store_name"
-              class="input input-bordered w-full mt-2 bg-white text-black" required />
-            <div *ngIf="isFieldInvalid('store_name')" class="text-red-600 text-sm mt-1">
-              This field is required
+
+            <!-- Store Name -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Name of Store <span class="text-red-500">*</span></label>
+              <input name="store_name" formControlName="store_name"
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('store_name')" class="mt-1 text-sm text-red-600">
+                This field is required
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Store Address -->
-        <div>
-          <label class="font-medium text-gray-700">Store Address</label>
-          <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-2">
-            <div class="relative">
+      <!-- Store Address Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">Store Address</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Floor/Unit No. <span class="text-red-500">*</span></label>
               <input name="floor_unit_no" formControlName="floor_unit_no"
-                class="input input-bordered bg-white text-black w-full" required
-                placeholder="Floor/Unit No." />
-              <div *ngIf="isFieldInvalid('floor_unit_no')" class="text-red-600 text-sm mt-1">
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('floor_unit_no')" class="mt-1 text-sm text-red-600">
                 This field is required
               </div>
             </div>
 
-            <div class="relative">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Building No./Name <span class="text-red-500">*</span></label>
               <input name="building_no_name" formControlName="building_no_name"
-                class="input input-bordered bg-white text-black w-full" required
-                placeholder="Bldg. No./Name" />
-              <div *ngIf="isFieldInvalid('building_no_name')" class="text-red-600 text-sm mt-1">
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('building_no_name')" class="mt-1 text-sm text-red-600">
                 This field is required
               </div>
             </div>
 
-            <div class="relative">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Street <span class="text-red-500">*</span></label>
               <input name="street" formControlName="street"
-                class="input input-bordered bg-white text-black w-full" required
-                placeholder="Street" />
-              <div *ngIf="isFieldInvalid('street')" class="text-red-600 text-sm mt-1">
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('street')" class="mt-1 text-sm text-red-600">
                 This field is required
               </div>
             </div>
 
-            <div class="relative">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Barangay <span class="text-red-500">*</span></label>
               <input name="barangay" formControlName="barangay"
-                class="input input-bordered bg-white text-black w-full" required
-                placeholder="Barangay" />
-              <div *ngIf="isFieldInvalid('barangay')" class="text-red-600 text-sm mt-1">
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('barangay')" class="mt-1 text-sm text-red-600">
                 This field is required
               </div>
             </div>
 
-            <div class="relative">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">City/Municipality <span class="text-red-500">*</span></label>
               <input name="city_municipality" formControlName="city_municipality"
-                class="input input-bordered bg-white text-black w-full" required
-                placeholder="City/Municipality" />
-              <div *ngIf="isFieldInvalid('city_municipality')" class="text-red-600 text-sm mt-1">
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('city_municipality')" class="mt-1 text-sm text-red-600">
                 This field is required
               </div>
             </div>
 
-            <div class="relative">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Province <span class="text-red-500">*</span></label>
               <input name="province" formControlName="province"
-                class="input input-bordered bg-white text-black w-full" required
-                placeholder="Province" />
-              <div *ngIf="isFieldInvalid('province')" class="text-red-600 text-sm mt-1">
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('province')" class="mt-1 text-sm text-red-600">
                 This field is required
               </div>
             </div>
 
-            <div class="relative">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Region <span class="text-red-500">*</span></label>
               <input name="region" formControlName="region"
-                class="input input-bordered bg-white text-black w-full" required
-                placeholder="Region" />
-              <div *ngIf="isFieldInvalid('region')" class="text-red-600 text-sm mt-1">
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('region')" class="mt-1 text-sm text-red-600">
                 This field is required
               </div>
             </div>
 
-            <div class="relative">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Zip Code <span class="text-red-500">*</span></label>
               <input name="zip_code" formControlName="zip_code"
-                class="input input-bordered bg-white text-black w-full" required
-                placeholder="Zip Code" />
-              <div *ngIf="isFieldInvalid('zip_code')" class="text-red-600 text-sm mt-1">
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('zip_code')" class="mt-1 text-sm text-red-600">
                 This field is required
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Business Owner -->
-        <div>
-          <label class="font-medium text-gray-700">Name of Business Owner</label>
-          <input name="business_owner" formControlName="business_owner"
-            class="input input-bordered w-full mt-1 bg-white text-black" required />
-          <div *ngIf="isFieldInvalid('business_owner')" class="text-red-600 text-sm mt-1">
-            This field is required
+      <!-- Owner Information Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">Owner Information</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Name of Business Owner <span class="text-red-500">*</span></label>
+            <input name="business_owner" formControlName="business_owner"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+            <div *ngIf="isFieldInvalid('business_owner')" class="mt-1 text-sm text-red-600">
+              This field is required
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-3">Sex (Warehouse Owner)</label>
+              <div class="flex items-center space-x-6">
+                <label class="inline-flex items-center">
+                  <input type="radio" 
+                        formControlName="warehouse_owner_sex" 
+                        value="M"
+                        class="form-radio h-4 w-4 text-blue-600" />
+                  <span class="ml-2 text-sm text-gray-700">Male</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input type="radio" 
+                        formControlName="warehouse_owner_sex" 
+                        value="F"
+                        class="form-radio h-4 w-4 text-blue-600" />
+                  <span class="ml-2 text-sm text-gray-700">Female</span>
+                </label>
+              </div>
+              <div *ngIf="isFieldInvalid('warehouse_owner_sex')" class="mt-1 text-sm text-red-600">
+                This field is required
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Social Classification</label>
+              <input name="social_classification" 
+                    formControlName="social_classification"
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                    placeholder="e.g. Senior Citizen, PWD" />
+              <div *ngIf="isFieldInvalid('social_classification')" class="mt-1 text-sm text-red-600">
+                This field is required
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Sex / Social Classification -->
-        <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
+      <!-- Contact Information Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">Contact Information</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Telephone/Mobile Number <span class="text-red-500">*</span></label>
+              <input name="telephone_mobile" formControlName="telephone_mobile"
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('telephone_mobile')" class="mt-1 text-sm text-red-600">
+                This field is required
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">E-mail Address <span class="text-red-500">*</span></label>
+              <input name="email_address" type="email" formControlName="email_address"
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('email_address')" class="mt-1 text-sm text-red-600">
+                <span *ngIf="form.get('email_address')?.errors?.['required']">Email is required</span>
+                <span *ngIf="form.get('email_address')?.errors?.['email']">Invalid email format</span>
+              </div>
+            </div>
+          
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Website/Social Media Page</label>
+              <input name="website_social_media" 
+                    formControlName="website_social_media"
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" />
+              <div *ngIf="isFieldInvalid('website_social_media')" class="mt-1 text-sm text-red-600">
+                This field is required
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-3">Type of Store <span class="text-red-500">*</span></label>
+              <div class="flex items-center space-x-6">
+                <label class="inline-flex items-center">
+                  <input type="radio" 
+                        formControlName="store_type" 
+                        value="physical"
+                        class="form-radio h-4 w-4 text-blue-600" />
+                  <span class="ml-2 text-sm text-gray-700">Physical</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input type="radio" 
+                        formControlName="store_type" 
+                        value="online"
+                        class="form-radio h-4 w-4 text-blue-600" />
+                  <span class="ml-2 text-sm text-gray-700">Online</span>
+                </label>
+              </div>
+              <div *ngIf="isFieldInvalid('store_type')" class="mt-1 text-sm text-red-600">
+                This field is required
+              </div>
+            </div>
+          
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Digital Platform/s to Use <span class="text-red-500">*</span></label>
+              <input name="digital_platforms" formControlName="digital_platforms"
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                    placeholder="e.g. Shopee, Lazada, etc" />
+              <div *ngIf="isFieldInvalid('digital_platforms')" class="mt-1 text-sm text-red-600">
+                This field is required
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">URL <span class="text-red-500">*</span></label>
+              <input name="store_url" type="url" formControlName="store_url"
+                    class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                    placeholder="For online store" />
+              <div *ngIf="isFieldInvalid('store_url')" class="mt-1 text-sm text-red-600">
+                <span *ngIf="form.get('store_url')?.errors?.['required']">URL is required</span>
+                <span *ngIf="form.get('store_url')?.errors?.['pattern']">Invalid URL format</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">Products Information</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
           <div>
-            <label class="font-medium text-gray-700">Sex (Warehouse Owner)</label>
-            <div class="flex items-center space-x-4 mt-3">
-              <label class="flex items-center">
-                <input type="radio" 
-                       formControlName="warehouse_owner_sex" 
-                       value="M"
-                       class="radio radio-primary" />
-                <span class="ml-2">M</span>
+            <label class="block text-sm font-medium text-gray-700 mb-3">Products Being Offered for Sale</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2">
+              <label class="inline-flex items-center">
+                <input type="checkbox" name="vapor_product_system" formControlName="vapor_product_system"
+                      class="form-checkbox h-4 w-4 text-blue-600" />
+                <span class="ml-2 text-sm text-gray-700">Vapor Product System</span>
               </label>
-              <label class="flex items-center">
-                <input type="radio" 
-                       formControlName="warehouse_owner_sex" 
-                       value="F"
-                       class="radio radio-primary" />
-                <span class="ml-2">F</span>
+
+              <label class="inline-flex items-center">
+                <input type="checkbox" name="vapor_product_device" formControlName="vapor_product_device"
+                      class="form-checkbox h-4 w-4 text-blue-600" />
+                <span class="ml-2 text-sm text-gray-700">Vapor Product Device</span>
+              </label>
+
+              <label class="inline-flex items-center">
+                <input type="checkbox" name="refills_e_liquids" formControlName="refills_e_liquids"
+                      class="form-checkbox h-4 w-4 text-blue-600" />
+                <span class="ml-2 text-sm text-gray-700">Refills/E-liquids</span>
+              </label>
+
+              <label class="inline-flex items-center">
+                <input type="checkbox" name="htp_system" formControlName="htp_system"
+                      class="form-checkbox h-4 w-4 text-blue-600" />
+                <span class="ml-2 text-sm text-gray-700">Heated Tobacco Product (HTP) System</span>
+              </label>
+
+              <label class="inline-flex items-center">
+                <input type="checkbox" name="htp_device" formControlName="htp_device"
+                      class="form-checkbox h-4 w-4 text-blue-600" />
+                <span class="ml-2 text-sm text-gray-700">HTP Device</span>
+              </label>
+
+              <label class="inline-flex items-center">
+                <input type="checkbox" name="htp_consumables" formControlName="htp_consumables"
+                      class="form-checkbox h-4 w-4 text-blue-600" />
+                <span class="ml-2 text-sm text-gray-700">HTP Consumables</span>
+              </label>
+
+              <label class="inline-flex items-center">
+                <input type="checkbox" name="nicotine_pouch" formControlName="nicotine_pouch"
+                      class="form-checkbox h-4 w-4 text-blue-600" />
+                <span class="ml-2 text-sm text-gray-700">Nicotine Pouch</span>
               </label>
             </div>
-            <div *ngIf="isFieldInvalid('warehouse_owner_sex')" class="text-red-600 text-sm mt-1">
-              This field is required
-            </div>
-          </div>
-          <div>
-            <label class="font-medium text-gray-700">Social Classification</label>
-            <input name="social_classification" 
-                   formControlName="social_classification"
-                   class="input input-bordered w-full mt-2 bg-white text-black"
-                   placeholder="e.g. Senior Citizen, PWD" />
-            <div *ngIf="isFieldInvalid('social_classification')" class="text-red-600 text-sm mt-1">
-              This field is required
-            </div>
-          </div>
-        </div>
-
-        <!-- Telephone / Email -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div>
-            <label class="font-medium text-gray-700">Telephone/Mobile Number</label>
-            <input name="telephone_mobile" formControlName="telephone_mobile"
-              class="input input-bordered w-full mt-2 bg-white text-black" required />
-            <div *ngIf="isFieldInvalid('telephone_mobile')" class="text-red-600 text-sm mt-1">
-              This field is required
-            </div>
-          </div>
-          <div>
-            <label class="font-medium text-gray-700">E-mail Address</label>
-            <input name="email_address" type="email" formControlName="email_address"
-              class="input input-bordered w-full mt-2 bg-white text-black" required />
-            <div *ngIf="isFieldInvalid('email_address')" class="text-red-600 text-sm mt-1">
-              <span *ngIf="form.get('email_address')?.errors?.['required']">Email is required</span>
-              <span *ngIf="form.get('email_address')?.errors?.['email']">Invalid email format</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Website / Store Type -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div>
-            <label class="font-medium text-gray-700">Website/Social Media Page</label>
-            <input name="website_social_media" 
-                   formControlName="website_social_media"
-                   class="input input-bordered w-full mt-2 bg-white text-black" />
-            <div *ngIf="isFieldInvalid('website_social_media')" class="text-red-600 text-sm mt-1">
-              This field is required
-            </div>
           </div>
 
-          <div>
-            <label class="font-medium text-gray-700">Type of Store</label>
-            <div class="flex items-center space-x-4 mt-2">
-              <label class="flex items-center">
-                <input type="radio" 
-                       formControlName="store_type" 
-                       value="physical"
-                       class="radio radio-primary" />
-                <span class="ml-2">Physical</span>
-              </label>
-              <label class="flex items-center">
-                <input type="radio" 
-                       formControlName="store_type" 
-                       value="online"
-                       class="radio radio-primary" />
-                <span class="ml-2">Online</span>
-              </label>
-            </div>
-            <div *ngIf="isFieldInvalid('store_type')" class="text-red-600 text-sm mt-1">
-              This field is required
-            </div>
+          <div class="mt-6">
+            <label class="block text-sm font-medium text-gray-700 mb-1">List of brands of products</label>
+            <textarea name="brands_list" formControlName="brands_list"
+                    class="form-textarea block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                    rows="3"></textarea>
+          </div>
+
+          <div class="mt-6">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Name of Supplier/s</label>
+            <textarea name="supplier_names" formControlName="supplier_names"
+                    class="form-textarea block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                    rows="3"></textarea>
+          </div>
+
+          <div class="mt-6">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Asset Size (in PhP)</label>
+            <textarea name="asset_size" formControlName="asset_size"
+                    class="form-textarea block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                    rows="3"></textarea>
+          </div>
+
+          <div class="mt-6">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Address of Warehouse/s</label>
+            <textarea name="warehouse_address" formControlName="warehouse_address"
+                    class="form-textarea block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                    rows="3"></textarea>
           </div>
         </div>
+      </div>
 
-        <!-- Digital Platform / URL -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div>
-            <label class="font-medium text-gray-700">Digital Platform/s to Use</label>
-            <input name="digital_platforms" formControlName="digital_platforms"
-              class="input input-bordered w-full mt-2 bg-white text-black" required 
-              placeholder="e.g. Shopee, Lazada, etc" />
-            <div *ngIf="isFieldInvalid('digital_platforms')" class="text-red-600 text-sm mt-1">
-              This field is required
-            </div>
-          </div>
-          <div>
-            <label class="font-medium text-gray-700">URL</label>
-            <input name="store_url" type="url" formControlName="store_url"
-              class="input input-bordered w-full mt-2 bg-white text-black" required
-              placeholder="For online store" />
-            <div *ngIf="isFieldInvalid('store_url')" class="text-red-600 text-sm mt-1">
-              <span *ngIf="form.get('store_url')?.errors?.['required']">URL is required</span>
-              <span *ngIf="form.get('store_url')?.errors?.['pattern']">Invalid URL format</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Products Offered -->
-        <div class="mb-6">
-          <label class="font-medium text-gray-700 block">Products Being Offered for Sale</label>
-          <div class="flex flex-wrap gap-4 mt-2">
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" name="vapor_product_system" formControlName="vapor_product_system"
-                class="checkbox checkbox-primary" />
-              <span>Vapor Product System</span>
-            </label>
-
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" name="vapor_product_device" formControlName="vapor_product_device"
-                class="checkbox checkbox-primary" />
-              <span>Vapor Product Device</span>
-            </label>
-
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" name="refills_e_liquids" formControlName="refills_e_liquids"
-                class="checkbox checkbox-primary" />
-              <span>Refills/E-liquids</span>
-            </label>
-
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" name="htp_system" formControlName="htp_system"
-                class="checkbox checkbox-primary" />
-              <span>Heated Tobacco Product (HTP) System</span>
-            </label>
-
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" name="htp_device" formControlName="htp_device"
-                class="checkbox checkbox-primary" />
-              <span>HTP Device</span>
-            </label>
-
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" name="htp_consumables" formControlName="htp_consumables"
-                class="checkbox checkbox-primary" />
-              <span>HTP Consumables</span>
-            </label>
-
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" name="nicotine_pouch" formControlName="nicotine_pouch"
-                class="checkbox checkbox-primary" />
-              <span>Nicotine Pouch</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="mb-6">
-          <label class="font-medium text-gray-700 block">List of brands of products</label>
-          <textarea name="brands_list" formControlName="brands_list"
-            class="textarea textarea-bordered w-full bg-white text-black mt-2" rows="3"></textarea>
-        </div>
-
-        <div class="mb-6">
-          <label class="font-medium text-gray-700 block">Name of Supplier/s</label>
-          <textarea name="supplier_names" formControlName="supplier_names"
-            class="textarea textarea-bordered w-full bg-white text-black mt-2" rows="3"></textarea>
-        </div>
-
-        <div class="mb-6">
-          <label class="font-medium text-gray-700 block">Asset Size (in PhP)</label>
-          <textarea name="asset_size" formControlName="asset_size"
-            class="textarea textarea-bordered w-full bg-white text-black mt-2" rows="3"></textarea>
-        </div>
-
-        <div class="mb-6">
-          <label class="font-medium text-gray-700 block">Address of Warehouse/s</label>
-          <textarea name="warehouse_address" formControlName="warehouse_address"
-            class="textarea textarea-bordered w-full bg-white text-black mt-2" rows="3"></textarea>
-        </div>
-
-        <div class="flex justify-end space-x-4">
-          <button type="button" class="btn btn-error hover:bg-red-600">
-            Cancel
-          </button>
-          <button type="submit" class="btn btn-primary hover:bg-blue-700">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
-  </main>
-
-  <footer class="bg-white mt-auto py-4 shadow-inner">
-    <div class="container mx-auto text-center text-gray-600 text-sm">
-      © 2025 OSMV Product Certification Body. All rights reserved.
-    </div>
-  </footer>
+      <!-- Submit Button Section -->
+      <div class="flex justify-end gap-4 pt-6">
+        <button type="button" class="px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-150 ease-in-out">
+          Cancel
+        </button>
+        <button type="submit" class="px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
-
-
-<!-- SUCCESS MODAL (if you choose to show a success message) -->
+<!-- SUCCESS MODAL -->
 <div *ngIf="showSuccessModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-  <div class="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
-    <h2 class="text-xl font-bold mb-4 text-blue-600">Successful Registration!</h2>
+  <div class="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md animate-fade-in-up">
+    <div class="flex items-center mb-4 text-green-600">
+      <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+      </svg>
+      <h2 class="text-xl font-bold">Successful Registration!</h2>
+    </div>
     <p class="mb-6 text-gray-700">
       Your record has been submitted. We have successfully stored your data.
     </p>
     <div class="flex justify-end">
-      <button class="btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" (click)="closeSuccessModal()">
+      <button class="px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out" (click)="closeSuccessModal()">
         OK
       </button>
     </div>

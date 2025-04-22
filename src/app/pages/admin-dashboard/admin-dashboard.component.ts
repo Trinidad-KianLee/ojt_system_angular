@@ -23,6 +23,8 @@ export class AdminDashboardComponent implements OnInit {
   vapeRegisRecords: any[] = [];
   filteredVapeRegis: any[] = [];
   showVapeRegis: boolean = false;
+  showVapeDetailsModal: boolean = false;
+  selectedVape: any = null;
   loadingVape: boolean = false;
   errorMsg: string = '';
   searchTerm: string = '';
@@ -31,10 +33,22 @@ export class AdminDashboardComponent implements OnInit {
   retailerRegisRecords: any[] = [];
   filteredRetailerRegis: any[] = [];
   showRetailerRegis: boolean = false;
+  showRetailerDetailsModal: boolean = false;
+  selectedRetailer: any = null;
   loadingRetailer: boolean = false;
   retailerErrorMsg: string = '';
   searchTermRetailer: string = '';
   sortOrderRetailer: 'newest' | 'oldest' = 'newest';
+
+  warehouseRegisRecords: any[] = [];
+  filteredWarehouseRegis: any[] = [];
+  showWarehouseRegis: boolean = false;
+  showWarehouseDetailsModal: boolean = false;
+  selectedWarehouse: any = null;
+  loadingWarehouse: boolean = false;
+  warehouseErrorMsg: string = '';
+  searchTermWarehouse: string = '';
+  sortOrderWarehouse: 'newest' | 'oldest' = 'newest';
 
   pendingUsers: any[] = [];
   showPendingUsers: boolean = false;
@@ -49,6 +63,8 @@ export class AdminDashboardComponent implements OnInit {
   psLicenseRecords: any[] = [];
   filteredPsLicense: any[] = [];
   showPsLicense: boolean = false;
+  showPsLicenseDetailsModal: boolean = false;
+  selectedPsLicense: any = null;
   loadingPsLicense: boolean = false;
   psLicenseErrorMsg: string = '';
   searchTermPsLicense: string = '';
@@ -185,6 +201,58 @@ export class AdminDashboardComponent implements OnInit {
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'RetailerRegis');
     XLSX.writeFile(workbook, 'retailer_regis.xlsx');
+  }
+
+  toggleWarehouseRegis(): void {
+    if (!this.showWarehouseRegis) {
+      this.loadWarehouseRegisRecords();
+    }
+    this.showWarehouseRegis = !this.showWarehouseRegis;
+  }
+
+  async loadWarehouseRegisRecords(): Promise<void> {
+    try {
+      this.loadingWarehouse = true;
+      this.warehouseErrorMsg = '';
+      const data = await this.pb.getAllWarehouseRegisRecords();
+      this.warehouseRegisRecords = data;
+      this.applyWarehouseFilters();
+      if (!data.length) {
+        this.warehouseErrorMsg = 'No records found in warehouse_regis.';
+      }
+    } catch (error) {
+      this.warehouseErrorMsg = 'Failed to load warehouse_regis records.';
+      console.error('Error fetching warehouse_regis records:', error);
+    } finally {
+      this.loadingWarehouse = false;
+    }
+  }
+
+  applyWarehouseFilters(): void {
+    let filtered = [...this.warehouseRegisRecords];
+    if (this.searchTermWarehouse.trim()) {
+      const term = this.searchTermWarehouse.toLowerCase();
+      filtered = filtered.filter((r) =>
+        r.businessOwnerName?.toLowerCase().includes(term) || 
+        r.nameOfBusiness?.toLowerCase().includes(term)
+      );
+    }
+    if (this.sortOrderWarehouse === 'newest') {
+      filtered.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+    } else {
+      filtered.sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime());
+    }
+    this.filteredWarehouseRegis = filtered;
+  }
+
+  downloadWarehouseExcel(): void {
+    const dataToExport = this.filteredWarehouseRegis.length
+      ? this.filteredWarehouseRegis
+      : this.warehouseRegisRecords;
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'WarehouseRegis');
+    XLSX.writeFile(workbook, 'warehouse_regis.xlsx');
   }
 
   togglePendingUsers(): void {
@@ -355,6 +423,34 @@ export class AdminDashboardComponent implements OnInit {
       });
   }
 
+  updateWarehouseStatus(record: any, newStatus: string): void {
+    const oldStatus = record.applicationStatus;
+    record.applicationStatus = newStatus;
+    this.pb.updateWarehouseRecordStatus(record.id, newStatus)
+      .then(updated => {
+        console.log('Warehouse record updated:', updated);
+        const adminData = this.pb.getUserData();
+        const logData = {
+          adminId: adminData?.id,
+          adminName: adminData?.['firstName'],
+          colName: 'warehouse_regis',
+          recordId: record.id,
+          oldStatus: oldStatus,
+          newStatus: newStatus,
+          timestamp: new Date().toISOString()
+        };
+        return this.pb.createAdminLog(logData);
+      })
+      .then(log => {
+        console.log('Admin log created:', log);
+      })
+      .catch(err => {
+        console.error('Error updating warehouse status or logging admin action:', err);
+        // Revert the status on error
+        record.applicationStatus = oldStatus;
+      });
+  }
+
   togglePsLicense(): void {
     if (!this.showPsLicense) {
       this.loadPsLicenseRecords();
@@ -436,6 +532,79 @@ export class AdminDashboardComponent implements OnInit {
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'PsLicenseRegis');
     XLSX.writeFile(workbook, 'ps_license_regis.xlsx');
+  }
+
+  showVapeDetails(record: any): void {
+    this.selectedVape = record;
+    this.showVapeDetailsModal = true;
+  }
+
+  closeVapeDetails(): void {
+    this.showVapeDetailsModal = false;
+    this.selectedVape = null;
+  }
+
+  showRetailerDetails(record: any): void {
+    this.selectedRetailer = record;
+    this.showRetailerDetailsModal = true;
+  }
+
+  closeRetailerDetails(): void {
+    this.showRetailerDetailsModal = false;
+    this.selectedRetailer = null;
+  }
+
+  showWarehouseDetails(record: any): void {
+    this.selectedWarehouse = record;
+    this.showWarehouseDetailsModal = true;
+  }
+
+  closeWarehouseDetails(): void {
+    this.showWarehouseDetailsModal = false;
+    this.selectedWarehouse = null;
+  }
+
+  showPsLicenseDetails(record: any): void {
+    this.selectedPsLicense = record;
+    this.showPsLicenseDetailsModal = true;
+  }
+
+  closePsLicenseDetails(): void {
+    this.showPsLicenseDetailsModal = false;
+    this.selectedPsLicense = null;
+  }
+
+  getVapeFileUrl(record: any, fileKey: string): string {
+    return this.pb.getAttachmentUrl(record, fileKey);
+  }
+
+  getRetailerFileUrl(record: any, fileKey: string): string {
+    return this.pb.getAttachmentUrl(record, fileKey);
+  }
+
+  getWarehouseFileUrl(record: any, fileKey: string): string {
+    return this.pb.getAttachmentUrl(record, fileKey);
+  }
+
+  getPsLicenseFileUrl(record: any, fileKey: string): string {
+    return this.pb.getAttachmentUrl(record, fileKey);
+  }
+
+  getStatusPillClass(status: string): string {
+    switch (status) {
+      case 'Application received':
+        return 'bg-blue-100 text-blue-800';
+      case 'Pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'Ongoing evaluation':
+        return 'bg-orange-100 text-orange-800';
+      case 'For approval':
+        return 'bg-purple-100 text-purple-800';
+      case 'Approved':
+        return 'bg-green-100 text-green-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
   }
 
   getStatusButtonClass(status: string): string {
