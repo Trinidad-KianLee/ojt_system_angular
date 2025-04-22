@@ -28,6 +28,8 @@ import { FaqsGeneralComponent } from './pages/faqs-general/faqs-general.componen
 import { OsmvComponent } from './pages/user-dashboard/osmv/osmv.component';
 import { VapingAreaComponent } from './pages/vaping-area/vaping-area.component';
 import { PromoEventsComponent } from './pages/user-dashboard/promo-events/promo-events.component';
+import { PslicenseLandingComponent } from './pages/user-dashboard/pslicense-landing/pslicense-landing.component';
+import { SocCcrLandingComponent } from './pages/user-dashboard/soc-ccr-landing/soc-ccr-landing.component';
 
 
 export const routes: Routes = [
@@ -49,6 +51,8 @@ export const routes: Routes = [
   { path: 'osmv', component: OsmvComponent},
   { path: 'vaping-area', component: VapingAreaComponent},
   { path: 'promo-events', component: PromoEventsComponent},
+  { path: 'pslicense-landing', component: PslicenseLandingComponent},
+  { path: 'soc-ccr-landing', component: SocCcrLandingComponent},
 
   { path: 'age-gating', component: AgeGatingComponent},
   { path: 'age-gating-registration', component: AgeGatingRegistrationComponent, canActivate: [AuthGuard] },
