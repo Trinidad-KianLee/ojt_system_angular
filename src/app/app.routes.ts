@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { TermsConditionsComponent } from './pages/user-dashboard/terms-conditions/terms-conditions.component';
-import { RegistrationFormComponent } from './pages/registration-form/registration-form.component';
+import { WarehouseRegistrationComponent } from './pages/user-dashboard/warehouse-registration/warehouse-registration.component';
 import { WarehouseRegComponent } from './pages/user-dashboard/warehouse-reg/warehouse-reg.component';
 import { LandingRegistrationComponent } from './pages/user-dashboard/landing-registration/landing-registration.component';
 import { LandingPageRetailerComponent } from './pages/user-dashboard/landing-page-retailer/landing-page-retailer.component';
@@ -16,6 +16,7 @@ import { VapeRegisComponent } from './pages/user-dashboard/vape-regis/vape-regis
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { AdminLogsComponent } from './pages/admin-logs/admin-logs.component';
 import { PsLicenseRegistrationComponent } from './pages/user-dashboard/ps-license-application/ps-license-registration.component';
+import { AgeGatingRegistrationComponent } from './pages/user-dashboard/age-gating-registration/age-gating-registration.component';
 
 import { AdminGuard } from './guards/admin.guard';
 import { NewLandingpageComponent } from './pages/user-dashboard/new-landingpage/new-landingpage.component';
@@ -54,11 +55,12 @@ export const routes: Routes = [
   { path: 'soc-ccr-landing', component: SocCcrLandingComponent},
 
   { path: 'age-gating', component: AgeGatingComponent},
-  { path: 'registration-form', component: RegistrationFormComponent, canActivate: [AuthGuard] },
+  { path: 'age-gating-registration', component: AgeGatingRegistrationComponent, canActivate: [AuthGuard] },
+  { path: 'warehouse-registration', component: WarehouseRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard] },
   { path: 'vape-regis', component: VapeRegisComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-reg', component: WarehouseRegComponent},
-  { path: 'user-registration', component: RegistrationFormComponent, canActivate: [AuthGuard] },
+  { path: 'user-registration', component: WarehouseRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'ps-license-registration', component: PsLicenseRegistrationComponent, canActivate: [AuthGuard] },
 
   {
