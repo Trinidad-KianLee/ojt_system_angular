@@ -4,6 +4,7 @@
   }
 </style>
 
+<!-- Main container with gradient background -->
 <div class="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-blue-50">
 
   <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-gray-200 shadow-sm">
@@ -36,6 +37,7 @@
   </header>
 
   <main class="flex-grow container mx-auto px-6 py-8 space-y-8">
+    <!-- Welcome Card -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start space-x-4">
         <div class="p-3 bg-blue-50 rounded-lg">
@@ -52,6 +54,7 @@
       </div>
     </div>
 
+    <!-- Vape Registrations Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -167,6 +170,7 @@
       </div>
     </div>
 
+    <!-- Retailer Registrations Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -299,6 +303,116 @@
       </div>
     </div>
 
+    <!-- PS License Registrations Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            PS License Registrations
+          </h3>
+          <p class="mt-1 text-gray-600 text-sm">
+            Manage user-submitted PS license registration records
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button (click)="downloadPsLicenseExcel()" 
+                  class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Export Excel
+          </button>
+          <button (click)="togglePsLicense()" 
+                  class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            View Records
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showPsLicense" class="mt-4">
+        <div *ngIf="loadingPsLicense" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="psLicenseErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ psLicenseErrorMsg }}
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
+          <input
+            [(ngModel)]="searchTermPsLicense"
+            (input)="applyPsLicenseFilters()"
+            type="text"
+            placeholder="Search by Company Name..."
+            class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <select
+            [(ngModel)]="sortOrderPsLicense"
+            (change)="applyPsLicenseFilters()"
+            class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table *ngIf="filteredPsLicense.length && !loadingPsLicense" class="table-auto w-full text-sm text-gray-700">
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Company Name</th>
+                <th class="py-3 px-4 border-b">Office Address</th>
+                <th class="py-3 px-4 border-b">Factory Address</th>
+                <th class="py-3 px-4 border-b">TIN</th>
+                <th class="py-3 px-4 border-b">Company President</th>
+                <th class="py-3 px-4 border-b">QMR</th>
+                <th class="py-3 px-4 border-b">Product Type</th>
+                <th class="py-3 px-4 border-b">Brand Names</th>
+                <th class="py-3 px-4 border-b">Application Status</th>
+                <th class="py-3 px-4 border-b">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of filteredPsLicense" class="border-b hover:bg-gray-100">
+                <td class="py-2 px-4">{{ record.company_name }}</td>
+                <td class="py-2 px-4">{{ record.office_address }}</td>
+                <td class="py-2 px-4">{{ record.factory_address }}</td>
+                <td class="py-2 px-4">{{ record.tin }}</td>
+                <td class="py-2 px-4">{{ record.company_president }}</td>
+                <td class="py-2 px-4">{{ record.quality_management_rep }}</td>
+                <td class="py-2 px-4">{{ record.product_type }}</td>
+                <td class="py-2 px-4">{{ record.brand_names }}</td>
+                <td class="py-2 px-4">{{ record.applicationStatus }}</td>
+                <td class="py-2 px-4">
+                  <div class="dropdown dropdown-start">
+                    <div tabindex="0" role="button" class="btn m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
+                      {{ record.applicationStatus }}
+                    </div>
+                    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-white text-gray-800 rounded-box z-50">
+                      <li><a (click)="updatePsLicenseStatus(record, 'Application received')">Application received</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'Pending')">Pending</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'For approval')">For approval</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'Approved')">Approved</a></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!filteredPsLicense.length && !loadingPsLicense" class="p-4 text-center text-gray-500">
+            No matching records found.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -407,6 +521,7 @@
       </div>
     </div>
 
+    <!-- Approved Users Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -490,6 +605,7 @@
     </div>
   </main>
 
+  <!-- Enhanced Welcome Overlay -->
   <div *ngIf="showWelcomeOverlay" 
        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
     <div class="bg-white rounded-xl shadow-xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 hover:scale-100">
@@ -511,6 +627,7 @@
     </div>
   </div>
 
+  <!-- Enhanced Logout Modal -->
   <div *ngIf="showLogoutModal" 
        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
     <div class="bg-white rounded-xl shadow-xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 hover:scale-100">

@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PocketBaseService } from '../../services/pocketbase.service';
 import { FormsModule } from '@angular/forms';
-import { Dialog, DialogRef, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
+import { Dialog, DialogModule } from '@angular/cdk/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 import * as XLSX from 'xlsx';
 import { LoadingModalComponent } from '../../loading-modal/loading-modal.component';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, DialogModule, MatMenuModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss']
 })
@@ -44,6 +45,14 @@ export class AdminDashboardComponent implements OnInit {
   showApprovedUsers: boolean = false;
   loadingApproved: boolean = false;
   approvedErrorMsg: string = '';
+
+  psLicenseRecords: any[] = [];
+  filteredPsLicense: any[] = [];
+  showPsLicense: boolean = false;
+  loadingPsLicense: boolean = false;
+  psLicenseErrorMsg: string = '';
+  searchTermPsLicense: string = '';
+  sortOrderPsLicense: 'newest' | 'oldest' = 'newest';
 
   constructor(
     public pb: PocketBaseService,
@@ -344,6 +353,89 @@ export class AdminDashboardComponent implements OnInit {
       .catch(err => {
         console.error('Error updating retailer status or logging admin action:', err);
       });
+  }
+
+  togglePsLicense(): void {
+    if (!this.showPsLicense) {
+      this.loadPsLicenseRecords();
+    }
+    this.showPsLicense = !this.showPsLicense;
+  }
+
+  async loadPsLicenseRecords(): Promise<void> {
+    try {
+      this.loadingPsLicense = true;
+      this.psLicenseErrorMsg = '';
+      const data = await this.pb.getAllPsLicenseRecords();
+      // Set default status if not defined
+      this.psLicenseRecords = data.map(record => ({
+        ...record,
+        applicationStatus: record.applicationStatus || 'Application received'
+      }));
+      this.applyPsLicenseFilters();
+      if (!data.length) {
+        this.psLicenseErrorMsg = 'No records found in ps_license_regis.';
+      }
+    } catch (error) {
+      this.psLicenseErrorMsg = 'Failed to load PS License records.';
+      console.error('Error fetching PS License records:', error);
+    } finally {
+      this.loadingPsLicense = false;
+    }
+  }
+
+  applyPsLicenseFilters(): void {
+    let filtered = [...this.psLicenseRecords];
+    if (this.searchTermPsLicense.trim()) {
+      const term = this.searchTermPsLicense.toLowerCase();
+      filtered = filtered.filter((r) =>
+        r.company_name?.toLowerCase().includes(term)
+      );
+    }
+    if (this.sortOrderPsLicense === 'newest') {
+      filtered.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+    } else {
+      filtered.sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime());
+    }
+    this.filteredPsLicense = filtered;
+  }
+
+  updatePsLicenseStatus(record: any, newStatus: string): void {
+    const oldStatus = record.applicationStatus || 'Application received';
+    record.applicationStatus = newStatus;
+    this.pb.updatePsLicenseRecordStatus(record.id, newStatus)
+      .then(updated => {
+        console.log('PS License record updated:', updated);
+        const adminData = this.pb.getUserData();
+        const logData = {
+          adminId: adminData?.id,
+          adminName: adminData?.['firstName'],
+          colName: 'ps_license_regis',
+          recordId: record.id,
+          oldStatus: oldStatus,
+          newStatus: newStatus,
+          timestamp: new Date().toISOString()
+        };
+        return this.pb.createAdminLog(logData);
+      })
+      .then(log => {
+        console.log('Admin log created:', log);
+      })
+      .catch(err => {
+        console.error('Error updating PS License status or logging admin action:', err);
+        // Revert the status on error
+        record.applicationStatus = oldStatus;
+      });
+  }
+
+  downloadPsLicenseExcel(): void {
+    const dataToExport = this.filteredPsLicense.length
+      ? this.filteredPsLicense
+      : this.psLicenseRecords;
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'PsLicenseRegis');
+    XLSX.writeFile(workbook, 'ps_license_regis.xlsx');
   }
 
   getStatusButtonClass(status: string): string {

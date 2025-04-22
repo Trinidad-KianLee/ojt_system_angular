@@ -86,6 +86,10 @@ export class PocketBaseService {
       .create(data);
   }
 
+  async createPsLicense(data: any): Promise<any> {
+    return this.pb.collection('ps_license_regis').create(data);
+  }
+
   logout() {
     this.pb.authStore.clear();
   }
@@ -146,6 +150,15 @@ export class PocketBaseService {
     });
   }
 
+  async getAllPsLicenseRecords(): Promise<any[]> {
+    if (!this.isAdmin()) {
+      throw new Error('Access denied. Admin only method.');
+    }
+    return this.pb.collection('ps_license_regis').getFullList({
+      expand: 'owner',
+    });
+  }
+
   getAttachmentUrl(record: any, fileKey: string): string {
     if (!record?.id || !record[fileKey]) {
       return '';
@@ -174,6 +187,12 @@ export class PocketBaseService {
 
   async updateRetailerRecordStatus(recordId: string, newStatus: string): Promise<any> {
     return this.pb.collection('retailer_regis').update(recordId, {
+      applicationStatus: newStatus
+    });
+  }
+
+  async updatePsLicenseRecordStatus(recordId: string, newStatus: string): Promise<any> {
+    return this.pb.collection('ps_license_regis').update(recordId, {
       applicationStatus: newStatus
     });
   }
