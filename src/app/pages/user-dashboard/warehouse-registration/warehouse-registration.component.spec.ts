@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WarehouseRegistrationComponent } from './warehouse-registrationcomponent';
+import { WarehouseRegistrationComponent } from './warehouse-registration.component';
 
 describe('WarehouseRegistrationComponent', () => {
   let component: WarehouseRegistrationComponent;
