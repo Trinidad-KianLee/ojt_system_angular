@@ -124,12 +124,39 @@ export class PocketBaseService {
     return this.pb.collection('age_gating').create(data);
   }
 
+  async createSocCcrRegistration(data: FormData): Promise<any> {
+    // Add user ID as owner if not already in data
+    if (!data.get('owner') && this.isLoggedIn()) {
+      const userData = this.getUserData();
+      if (userData) {
+        data.append('owner', userData.id);
+      }
+    }
+    
+    // Ensure application status is set
+    if (!data.get('applicationStatus')) {
+      data.append('applicationStatus', 'pending');
+    }
+    
+    return this.pb.collection('soc_ccr').create(data);
+  }
+
   async getUserAgeGatingRegistrations(): Promise<any[]> {
     if (!this.isLoggedIn()) {
       throw new Error('User must be logged in.');
     }
     const userData = this.getUserData();
     return this.pb.collection('age_gating').getFullList({
+      filter: `owner="${userData?.id}"`,
+    });
+  }
+
+  async getUserSocCcrRegistrations(): Promise<any[]> {
+    if (!this.isLoggedIn()) {
+      throw new Error('User must be logged in.');
+    }
+    const userData = this.getUserData();
+    return this.pb.collection('soc_ccr').getFullList({
       filter: `owner="${userData?.id}"`,
     });
   }
@@ -143,8 +170,23 @@ export class PocketBaseService {
     });
   }
 
+  async getAllSocCcrRecords(): Promise<any[]> {
+    if (!this.isAdmin()) {
+      throw new Error('Access denied. Admin only method.');
+    }
+    return this.pb.collection('soc_ccr').getFullList({
+      expand: 'owner',
+    });
+  }
+
   async updateAgeGatingRecordStatus(recordId: string, newStatus: string): Promise<any> {
     return this.pb.collection('age_gating').update(recordId, {
+      applicationStatus: newStatus
+    });
+  }
+
+  async updateSocCcrRecordStatus(recordId: string, newStatus: string): Promise<any> {
+    return this.pb.collection('soc_ccr').update(recordId, {
       applicationStatus: newStatus
     });
   }

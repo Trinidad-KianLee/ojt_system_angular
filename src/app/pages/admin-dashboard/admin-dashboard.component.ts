@@ -50,6 +50,16 @@ export class AdminDashboardComponent implements OnInit {
   searchTermWarehouse: string = '';
   sortOrderWarehouse: 'newest' | 'oldest' = 'newest';
 
+  socCcrRecords: any[] = [];
+  filteredSocCcr: any[] = [];
+  showSocCcr: boolean = false;
+  showSocCcrDetailsModal: boolean = false;
+  selectedSocCcr: any = null;
+  loadingSocCcr: boolean = false;
+  socCcrErrorMsg: string = '';
+  searchTermSocCcr: string = '';
+  sortOrderSocCcr: 'newest' | 'oldest' = 'newest';
+
   pendingUsers: any[] = [];
   showPendingUsers: boolean = false;
   loadingPending: boolean = false;
@@ -263,6 +273,99 @@ export class AdminDashboardComponent implements OnInit {
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'WarehouseRegis');
     XLSX.writeFile(workbook, 'warehouse_regis.xlsx');
+  }
+
+  toggleSocCcr(): void {
+    if (!this.showSocCcr) {
+      this.loadSocCcrRecords();
+    }
+    this.showSocCcr = !this.showSocCcr;
+  }
+
+  async loadSocCcrRecords(): Promise<void> {
+    try {
+      this.loadingSocCcr = true;
+      this.socCcrErrorMsg = '';
+      const data = await this.pb.getAllSocCcrRecords();
+      this.socCcrRecords = data;
+      this.applySocCcrFilters();
+      if (!data.length) {
+        this.socCcrErrorMsg = 'No records found in soc_ccr.';
+      }
+    } catch (error) {
+      this.socCcrErrorMsg = 'Failed to load SOC/CCR records.';
+      console.error('Error fetching SOC/CCR records:', error);
+    } finally {
+      this.loadingSocCcr = false;
+    }
+  }
+
+  applySocCcrFilters(): void {
+    let filtered = [...this.socCcrRecords];
+    if (this.searchTermSocCcr.trim()) {
+      const term = this.searchTermSocCcr.toLowerCase();
+      filtered = filtered.filter((r) =>
+        r.companyName?.toLowerCase().includes(term)
+      );
+    }
+    if (this.sortOrderSocCcr === 'newest') {
+      filtered.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+    } else {
+      filtered.sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime());
+    }
+    this.filteredSocCcr = filtered;
+  }
+
+  downloadSocCcrExcel(): void {
+    const dataToExport = this.filteredSocCcr.length
+      ? this.filteredSocCcr
+      : this.socCcrRecords;
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'SocCcr');
+    XLSX.writeFile(workbook, 'soc_ccr.xlsx');
+  }
+
+  showSocCcrDetails(record: any): void {
+    this.selectedSocCcr = record;
+    this.showSocCcrDetailsModal = true;
+  }
+
+  closeSocCcrDetails(): void {
+    this.showSocCcrDetailsModal = false;
+    this.selectedSocCcr = null;
+  }
+
+  updateSocCcrStatus(record: any, newStatus: string): void {
+    const oldStatus = record.applicationStatus;
+    record.applicationStatus = newStatus;
+    this.pb.updateSocCcrRecordStatus(record.id, newStatus)
+      .then(updated => {
+        console.log('SOC/CCR record updated:', updated);
+        const adminData = this.pb.getUserData();
+        const logData = {
+          adminId: adminData?.id,
+          adminName: adminData?.['firstName'],
+          colName: 'soc_ccr',
+          recordId: record.id,
+          oldStatus: oldStatus,
+          newStatus: newStatus,
+          timestamp: new Date().toISOString()
+        };
+        return this.pb.createAdminLog(logData);
+      })
+      .then(log => {
+        console.log('Admin log created:', log);
+      })
+      .catch(err => {
+        console.error('Error updating SOC/CCR status or logging admin action:', err);
+        // Revert the status on error
+        record.applicationStatus = oldStatus;
+      });
+  }
+
+  getSocCcrFileUrl(record: any, fileKey: string): string {
+    return this.pb.getAttachmentUrl(record, fileKey);
   }
 
   togglePendingUsers(): void {

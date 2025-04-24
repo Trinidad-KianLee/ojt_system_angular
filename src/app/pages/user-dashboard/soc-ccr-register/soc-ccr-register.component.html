@@ -1,0 +1,607 @@
+<div class="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header section -->
+    <div class="bg-white shadow-sm rounded-lg p-6 mb-8 border-l-4 border-blue-600">
+      <div class="flex flex-col md:flex-row items-center gap-4">
+        <img src="assets/dti_banner.png" alt="DTI Banner" class="h-16 object-contain" />
+        <h1 class="text-xl md:text-2xl font-bold text-gray-900 text-center md:text-left">
+          STATEMENT OF CLEARANCE (SOC) / CERTIFICATE OF COMPLIANCE AND REGISTRATION (CCR)
+        </h1>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Application Details Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">APPLICATION DETAILS</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <!-- Applicant Information -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="nameOfApplicantFirm" class="block text-sm font-medium text-gray-700 mb-1">
+                Name of Applicant Firm <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="nameOfApplicantFirm"
+                formControlName="nameOfApplicantFirm"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('nameOfApplicantFirm')?.touched && form.get('nameOfApplicantFirm')?.invalid"
+              >
+                Applicant Firm name is required
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="contactPerson" class="block text-sm font-medium text-gray-700 mb-1">
+                  Contact Person <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="contactPerson"
+                  formControlName="contactPerson"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+                <div
+                  class="mt-1 text-sm text-red-600"
+                  *ngIf="form.get('contactPerson')?.touched && form.get('contactPerson')?.invalid"
+                >
+                  Contact Person is required
+                </div>
+              </div>
+
+              <div>
+                <label for="position" class="block text-sm font-medium text-gray-700 mb-1">
+                  Position <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="position"
+                  formControlName="position"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+                <div
+                  class="mt-1 text-sm text-red-600"
+                  *ngIf="form.get('position')?.touched && form.get('position')?.invalid"
+                >
+                  Position is required
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 md:col-span-2">
+              <label for="officeAddress" class="block text-sm font-medium text-gray-700 mb-1">
+                Office Address <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="officeAddress"
+                formControlName="officeAddress"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('officeAddress')?.touched && form.get('officeAddress')?.invalid"
+              >
+                Office Address is required
+              </div>
+            </div>
+
+            <div>
+              <label for="telephoneNumber" class="block text-sm font-medium text-gray-700 mb-1">
+                Telephone Number <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="telephoneNumber"
+                formControlName="telephoneNumber"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('telephoneNumber')?.touched && form.get('telephoneNumber')?.invalid"
+              >
+                Telephone Number is required
+              </div>
+            </div>
+
+            <div>
+              <label for="emaillAdress" class="block text-sm font-medium text-gray-700 mb-1">
+                E-mail Address <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="emaillAdress"
+                formControlName="emaillAdress"
+                type="email"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('emaillAdress')?.touched && form.get('emaillAdress')?.invalid"
+              >
+                Valid Email Address is required
+              </div>
+            </div>
+
+            <!-- Product Information -->
+            <div class="col-span-1 md:col-span-2">
+              <label for="product" class="block text-sm font-medium text-gray-700 mb-1">
+                Product <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="product"
+                formControlName="product"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('product')?.touched && form.get('product')?.invalid"
+              >
+                Product is required
+              </div>
+            </div>
+
+            <div>
+              <label for="serialNum" class="block text-sm font-medium text-gray-700 mb-1">
+                Serial Numbers
+              </label>
+              <input
+                id="serialNum"
+                formControlName="serialNum"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="batchNum" class="block text-sm font-medium text-gray-700 mb-1">
+                Batch Numbers
+              </label>
+              <input
+                id="batchNum"
+                formControlName="batchNum"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="countryOfOrigin" class="block text-sm font-medium text-gray-700 mb-1">
+                Country of Origin <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="countryOfOrigin"
+                formControlName="countryOfOrigin"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('countryOfOrigin')?.touched && form.get('countryOfOrigin')?.invalid"
+              >
+                Country of Origin is required
+              </div>
+            </div>
+
+            <div>
+              <label for="ahtn" class="block text-sm font-medium text-gray-700 mb-1">
+                AHTN
+              </label>
+              <input
+                id="ahtn"
+                formControlName="ahtn"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="warehouseAddress" class="block text-sm font-medium text-gray-700 mb-1">
+                Warehouse Address <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="warehouseAddress"
+                formControlName="warehouseAddress"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('warehouseAddress')?.touched && form.get('warehouseAddress')?.invalid"
+              >
+                Warehouse Address is required
+              </div>
+            </div>
+
+            <div>
+              <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">
+                Quantity <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="quantity"
+                formControlName="quantity"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('quantity')?.touched && form.get('quantity')?.invalid"
+              >
+                Quantity is required
+              </div>
+            </div>
+
+            <div class="col-span-1 md:col-span-2">
+              <label for="brandName" class="block text-sm font-medium text-gray-700 mb-1">
+                Brand Name <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="brandName"
+                formControlName="brandName"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('brandName')?.touched && form.get('brandName')?.invalid"
+              >
+                Brand Name is required
+              </div>
+            </div>
+
+            <!-- Product Specifications -->
+            <div>
+              <label for="type" class="block text-sm font-medium text-gray-700 mb-1">
+                Type
+              </label>
+              <input
+                id="type"
+                formControlName="type"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="capacity" class="block text-sm font-medium text-gray-700 mb-1">
+                Capacity
+              </label>
+              <input
+                id="capacity"
+                formControlName="capacity"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="grade" class="block text-sm font-medium text-gray-700 mb-1">
+                Grade
+              </label>
+              <input
+                id="grade"
+                formControlName="grade"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="model" class="block text-sm font-medium text-gray-700 mb-1">
+                Model/s
+              </label>
+              <input
+                id="model"
+                formControlName="model"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <!-- Import Value Information -->
+            <div>
+              <label for="currency" class="block text-sm font-medium text-gray-700 mb-1">
+                Currency
+              </label>
+              <select
+                id="currency"
+                formControlName="currency"
+                class="form-select block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              >
+                <option value="PHP">PHP</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="JPY">JPY</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="valueOfImport" class="block text-sm font-medium text-gray-700 mb-1">
+                Value of Import
+              </label>
+              <input
+                id="valueOfImport"
+                formControlName="valueOfImport"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="invoiceNumber" class="block text-sm font-medium text-gray-700 mb-1">
+                Invoice Number
+              </label>
+              <input
+                id="invoiceNumber"
+                formControlName="invoiceNumber"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+          </div>
+
+          <!-- Exporter and Manufacturer Information -->
+          <div class="pt-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="nameOfExporter" class="block text-sm font-medium text-gray-700 mb-1">
+                  Name of Exporter <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="nameOfExporter"
+                  formControlName="nameOfExporter"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+                <div
+                  class="mt-1 text-sm text-red-600"
+                  *ngIf="form.get('nameOfExporter')?.touched && form.get('nameOfExporter')?.invalid"
+                >
+                  Name of Exporter is required
+                </div>
+              </div>
+
+              <div class="col-span-1 md:col-span-2">
+                <label for="addressOfExporter" class="block text-sm font-medium text-gray-700 mb-1">
+                  Address of Exporter <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="addressOfExporter"
+                  formControlName="addressOfExporter"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+                <div
+                  class="mt-1 text-sm text-red-600"
+                  *ngIf="form.get('addressOfExporter')?.touched && form.get('addressOfExporter')?.invalid"
+                >
+                  Address of Exporter is required
+                </div>
+              </div>
+
+              <div>
+                <label for="nameOfManufacturer" class="block text-sm font-medium text-gray-700 mb-1">
+                  Name of Manufacturer <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="nameOfManufacturer"
+                  formControlName="nameOfManufacturer"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+                <div
+                  class="mt-1 text-sm text-red-600"
+                  *ngIf="form.get('nameOfManufacturer')?.touched && form.get('nameOfManufacturer')?.invalid"
+                >
+                  Name of Manufacturer is required
+                </div>
+              </div>
+
+              <div class="col-span-1 md:col-span-2">
+                <label for="addressOfManufacturer" class="block text-sm font-medium text-gray-700 mb-1">
+                  Address of Manufacturer <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="addressOfManufacturer"
+                  formControlName="addressOfManufacturer"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+                <div
+                  class="mt-1 text-sm text-red-600"
+                  *ngIf="form.get('addressOfManufacturer')?.touched && form.get('addressOfManufacturer')?.invalid"
+                >
+                  Address of Manufacturer is required
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certification and Import Information -->
+          <div class="pt-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="isoCertificationNumber" class="block text-sm font-medium text-gray-700 mb-1">
+                  ISO Certification Number
+                </label>
+                <input
+                  id="isoCertificationNumber"
+                  formControlName="isoCertificationNumber"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+              </div>
+
+              <div>
+                <label for="nameOfCertificationBody" class="block text-sm font-medium text-gray-700 mb-1">
+                  Name of Certification Body
+                </label>
+                <input
+                  id="nameOfCertificationBody"
+                  formControlName="nameOfCertificationBody"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+              </div>
+
+              <div>
+                <label for="validityDate" class="block text-sm font-medium text-gray-700 mb-1">
+                  Validity Date
+                </label>
+                <input
+                  id="validityDate"
+                  formControlName="validityDate"
+                  type="date"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+              </div>
+
+              <div>
+                <label for="importEntryNumber" class="block text-sm font-medium text-gray-700 mb-1">
+                  Import Entry Number
+                </label>
+                <input
+                  id="importEntryNumber"
+                  formControlName="importEntryNumber"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+              </div>
+
+              <div>
+                <label for="portOfDischarge" class="block text-sm font-medium text-gray-700 mb-1">
+                  Port of Discharge
+                </label>
+                <input
+                  id="portOfDischarge"
+                  formControlName="portOfDischarge"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+              </div>
+
+              <div>
+                <label for="voyage" class="block text-sm font-medium text-gray-700 mb-1">
+                  Voyage
+                </label>
+                <input
+                  id="voyage"
+                  formControlName="voyage"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+              </div>
+
+              <div>
+                <label for="vessel" class="block text-sm font-medium text-gray-700 mb-1">
+                  Vessel
+                </label>
+                <input
+                  id="vessel"
+                  formControlName="vessel"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+              </div>
+
+              <div>
+                <label for="airwayBill" class="block text-sm font-medium text-gray-700 mb-1">
+                  Airway Bill / Bill of Lading
+                </label>
+                <input
+                  id="airwayBill"
+                  formControlName="airwayBill"
+                  type="text"
+                  class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Attachments Section -->
+          <div class="pt-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Upload Supporting Documents <span class="text-red-500">*</span>
+              <span class="block text-xs text-gray-500 mt-1">
+                (Please upload business registration, company ID, or other relevant documents)
+              </span>
+            </label>
+            <div class="flex items-center justify-center w-full">
+              <label class="flex flex-col w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-150 ease-in-out">
+                <div class="flex flex-col items-center justify-center pt-7">
+                  <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                  </svg>
+                  <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+                    Attach your files
+                  </p>
+                </div>
+                <input type="file" (change)="onFileSelected($event)" class="opacity-0" />
+              </label>
+            </div>
+            <div class="mt-3" *ngIf="uploadedFiles.length > 0">
+              <p class="font-medium mb-1 text-sm text-gray-700">Selected files:</p>
+              <ul class="list-disc list-inside text-sm text-gray-700">
+                <li *ngFor="let file of uploadedFiles" class="mt-1">
+                  {{ file.name }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button Section -->
+      <div class="flex justify-end pt-6">
+        <button
+          type="button" 
+          class="mr-4 inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="isSubmitting"
+          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out"
+        >
+          <span *ngIf="isSubmitting" class="mr-2">
+            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </span>
+          {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Success Modal with blurred background -->
+  <div *ngIf="showSuccessModal" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30 p-4">
+    <div class="bg-white text-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md transform transition-all duration-300 ease-in-out scale-100">
+      <div class="flex items-center mb-6 text-green-600">
+        <svg class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <h2 class="text-2xl font-bold">Successful Registration!</h2>
+      </div>
+      <p class="mb-8 text-gray-700 text-lg">
+        Your SOC/CCR application has been successfully submitted. You can track the status of your application in your account dashboard.
+      </p>
+      <div class="flex justify-end">
+        <button 
+          class="px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out" 
+          (click)="closeSuccessModal()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

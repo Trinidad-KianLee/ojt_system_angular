@@ -30,6 +30,7 @@ import { VapingAreaComponent } from './pages/vaping-area/vaping-area.component';
 import { PromoEventsComponent } from './pages/user-dashboard/promo-events/promo-events.component';
 import { PslicenseLandingComponent } from './pages/user-dashboard/pslicense-landing/pslicense-landing.component';
 import { SocCcrLandingComponent } from './pages/user-dashboard/soc-ccr-landing/soc-ccr-landing.component';
+import { SocCcrRegisterComponent } from './pages/user-dashboard/soc-ccr-register/soc-ccr-register.component';
 
 
 export const routes: Routes = [
@@ -62,6 +63,7 @@ export const routes: Routes = [
   { path: 'warehouse-reg', component: WarehouseRegComponent},
   { path: 'user-registration', component: WarehouseRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'ps-license-registration', component: PsLicenseRegistrationComponent, canActivate: [AuthGuard] },
+  { path: 'soc-ccr-registration', component: SocCcrRegisterComponent, canActivate: [AuthGuard] },
 
   {
     path: 'admin-dashboard',
