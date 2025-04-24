@@ -1,0 +1,406 @@
+<div class="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header section -->
+    <div class="bg-white shadow-sm rounded-lg p-6 mb-8 border-l-4 border-blue-600">
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 text-center md:text-left">Age Gating Registration</h1>
+      <p class="text-gray-600 text-sm text-center md:text-left">Complete the form below to register for age gating verification</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Application Information Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">A. Application Information</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-3">Type of Application</label>
+              <div class="flex items-center space-x-6">
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    value="New application"
+                    formControlName="applicationType"
+                    class="form-radio h-4 w-4 text-blue-600"
+                  />
+                  <span class="ml-2 text-sm text-gray-700">New</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    value="Renewal"
+                    formControlName="applicationType"
+                    class="form-radio h-4 w-4 text-blue-600"
+                  />
+                  <span class="ml-2 text-sm text-gray-700">Renewal</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label for="dateOfIssue" class="block text-sm font-medium text-gray-700 mb-1">
+                Date of Application <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="dateOfIssue"
+                formControlName="dateOfIssue"
+                type="date"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('dateOfIssue')?.touched && form.get('dateOfIssue')?.invalid"
+              >
+                Date of Application is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Company Details Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">B. Company Details</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="nameOfCompany" class="block text-sm font-medium text-gray-700 mb-1">
+                Name of Company <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="nameOfCompany"
+                formControlName="nameOfCompany"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('nameOfCompany')?.touched && form.get('nameOfCompany')?.invalid"
+              >
+                Name of Company is required
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-3">Company Type</label>
+              <div class="flex items-center space-x-6">
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    value="Local"
+                    formControlName="companyType"
+                    class="form-radio h-4 w-4 text-blue-600"
+                  />
+                  <span class="ml-2 text-sm text-gray-700">Local</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    value="Foreign"
+                    formControlName="companyType"
+                    class="form-radio h-4 w-4 text-blue-600"
+                  />
+                  <span class="ml-2 text-sm text-gray-700">Foreign</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label for="companyAdd" class="block text-sm font-medium text-gray-700 mb-1">
+                Main Business Address <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="companyAdd"
+                formControlName="companyAdd"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('companyAdd')?.touched && form.get('companyAdd')?.invalid"
+              >
+                Business Address is required
+              </div>
+            </div>
+
+            <div>
+              <label for="companyLocalAddress" class="block text-sm font-medium text-gray-700 mb-1">
+                Philippine Office Address
+              </label>
+              <input
+                id="companyLocalAddress"
+                formControlName="companyLocalAddress"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="website" class="block text-sm font-medium text-gray-700 mb-1">
+                Website
+              </label>
+              <input
+                id="website"
+                formControlName="website"
+                type="url"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('website')?.touched && form.get('website')?.invalid"
+              >
+                Please enter a valid URL
+              </div>
+            </div>
+
+            <div>
+              <label for="tin" class="block text-sm font-medium text-gray-700 mb-1">
+                TIN Number <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="tin"
+                formControlName="tin"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('tin')?.touched && form.get('tin')?.invalid"
+              >
+                TIN Number is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Information Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">C. Contact Information</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="telNumber" class="block text-sm font-medium text-gray-700 mb-1">
+                Telephone Number <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="telNumber"
+                formControlName="telNumber"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('telNumber')?.touched && form.get('telNumber')?.invalid"
+              >
+                Telephone Number is required
+              </div>
+            </div>
+
+            <div>
+              <label for="faxNumber" class="block text-sm font-medium text-gray-700 mb-1">
+                Fax Number
+              </label>
+              <input
+                id="faxNumber"
+                formControlName="faxNumber"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                Email Address <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="email"
+                formControlName="email"
+                type="email"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+              >
+                Valid Email Address is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Company Representative Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">D. Company Representatives</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="nameOfCompanyPresident" class="block text-sm font-medium text-gray-700 mb-1">
+                Name of Company President/CEO <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="nameOfCompanyPresident"
+                formControlName="nameOfCompanyPresident"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('nameOfCompanyPresident')?.touched && form.get('nameOfCompanyPresident')?.invalid"
+              >
+                Name of Company President/CEO is required
+              </div>
+            </div>
+
+            <div>
+              <label for="nameOfAuthorized" class="block text-sm font-medium text-gray-700 mb-1">
+                Name of Authorized Representative <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="nameOfAuthorized"
+                formControlName="nameOfAuthorized"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('nameOfAuthorized')?.touched && form.get('nameOfAuthorized')?.invalid"
+              >
+                Name of Authorized Representative is required
+              </div>
+            </div>
+
+            <div>
+              <label for="representativeContact" class="block text-sm font-medium text-gray-700 mb-1">
+                Representative Contact Number <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="representativeContact"
+                formControlName="representativeContact"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('representativeContact')?.touched && form.get('representativeContact')?.invalid"
+              >
+                Representative Contact Number is required
+              </div>
+            </div>
+
+            <div>
+              <label for="representativeFaxNum" class="block text-sm font-medium text-gray-700 mb-1">
+                Representative Fax Number
+              </label>
+              <input
+                id="representativeFaxNum"
+                formControlName="representativeFaxNum"
+                type="text"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label for="representativeEmail" class="block text-sm font-medium text-gray-700 mb-1">
+                Representative Email Address <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="representativeEmail"
+                formControlName="representativeEmail"
+                type="email"
+                class="form-input block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+              />
+              <div
+                class="mt-1 text-sm text-red-600"
+                *ngIf="form.get('representativeEmail')?.touched && form.get('representativeEmail')?.invalid"
+              >
+                Valid Representative Email Address is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attachments Section -->
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-blue-600 px-6 py-4">
+          <h2 class="text-lg font-semibold text-white">E. Attachments</h2>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Upload Supporting Documents <span class="text-red-500">*</span>
+            <span class="block text-xs text-gray-500 mt-1">
+              (Please upload business registration, company ID, or other relevant documents)
+            </span>
+          </label>
+          <div class="flex items-center justify-center w-full">
+            <label class="flex flex-col w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-150 ease-in-out">
+              <div class="flex flex-col items-center justify-center pt-7">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+                  Attach your files
+                </p>
+              </div>
+              <input type="file" (change)="onFileSelected($event)" class="opacity-0" />
+            </label>
+          </div>
+          <div class="mt-3" *ngIf="uploadedFile">
+            <p class="font-medium mb-1 text-sm text-gray-700">Selected file:</p>
+            <p class="text-sm text-gray-700">{{ uploadedFile.name }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button Section -->
+      <div class="flex justify-end pt-6">
+        <button
+          type="button" 
+          class="mr-4 inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="form.invalid || isSubmitting"
+          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out"
+        >
+          {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Success Modal -->
+  <div *ngIf="showSuccessModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+    <div class="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md animate-fade-in-up">
+      <div class="flex items-center mb-4 text-green-600">
+        <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <h2 class="text-xl font-bold">Successful Registration!</h2>
+      </div>
+      <p class="mb-6 text-gray-700">
+        Your age gating registration has been successfully submitted!
+      </p>
+      <div class="flex justify-end">
+        <button class="px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ease-in-out" (click)="closeSuccessModal()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,7 @@
   }
 </style>
 
+<!-- Main container with gradient background -->
 <div class="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-blue-50">
 
   <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-gray-200 shadow-sm">
@@ -104,45 +105,34 @@
           <table *ngIf="filteredVapeRegis.length && !loadingVape" class="table-auto w-full text-sm text-gray-700">
             <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
               <tr>
-                <th class="py-3 px-4 border-b">Coverage</th>
-                <th class="py-3 px-4 border-b">Promo Period</th>
-                <th class="py-3 px-4 border-b">Promo Schemes</th>
+                <th class="py-3 px-4 border-b hidden sm:table-cell">Coverage</th>
+                <th class="py-3 px-4 border-b hidden md:table-cell">Promo Period</th>
+                <th class="py-3 px-4 border-b hidden lg:table-cell">Promo Schemes</th>
                 <th class="py-3 px-4 border-b">Sponsor Name</th>
-                <th class="py-3 px-4 border-b">Sponsor Contact No.</th>
-                <th class="py-3 px-4 border-b">Sponsor Designation</th>
-                <th class="py-3 px-4 border-b">Agency Ref No</th>
-                <th class="py-3 px-4 border-b">Agency Designation</th>
-                <th class="py-3 px-4 border-b">Agency Authorized Rep</th>
-                <th class="py-3 px-4 border-b">Agency Contact No</th>
-                <th class="py-3 px-4 border-b">Amendment Reason</th>
-                <th class="py-3 px-4 border-b">Attachments</th>
-                <th class="py-3 px-4 border-b">Owner Email</th>
+                <th class="py-3 px-4 border-b hidden md:table-cell">Contact No.</th>
+                <th class="py-3 px-4 border-b hidden xl:table-cell">Designation</th>
+                <th class="py-3 px-4 border-b hidden xl:table-cell">Attachments</th>
                 <th class="py-3 px-4 border-b">Status</th>
+                <th class="py-3 px-4 border-b">Details</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let record of filteredVapeRegis; let i = index" class="border-b hover:bg-gray-100">
-                <td class="py-2 px-4">{{ record.coverage }}</td>
-                <td class="py-2 px-4">{{ record.promoPeriod }}</td>
-                <td class="py-2 px-4">{{ record.promoSchemes }}</td>
+                <td class="py-2 px-4 hidden sm:table-cell">{{ record.coverage }}</td>
+                <td class="py-2 px-4 hidden md:table-cell">{{ record.promoPeriod }}</td>
+                <td class="py-2 px-4 hidden lg:table-cell">{{ record.promoSchemes }}</td>
                 <td class="py-2 px-4">{{ record.sponsorName }}</td>
-                <td class="py-2 px-4">{{ record.sponsorContactNo }}</td>
-                <td class="py-2 px-4">{{ record.sponsorDesignation }}</td>
-                <td class="py-2 px-4">{{ record.agencyRefNo }}</td>
-                <td class="py-2 px-4">{{ record.agencyDesignation }}</td>
-                <td class="py-2 px-4">{{ record.agencyAuthorizedRep }}</td>
-                <td class="py-2 px-4">{{ record.agencyContactNo }}</td>
-                <td class="py-2 px-4">{{ record.amendmentReason }}</td>
-                <td class="py-2 px-4">
-                  <a *ngIf="record.attachments" [href]="pb.getAttachmentUrl(record, 'attachments')" target="_blank" class="text-blue-600 hover:underline">
+                <td class="py-2 px-4 hidden md:table-cell">{{ record.sponsorContactNo }}</td>
+                <td class="py-2 px-4 hidden xl:table-cell">{{ record.sponsorDesignation }}</td>
+                <td class="py-2 px-4 hidden xl:table-cell">
+                  <a *ngIf="record.attachments" [href]="getVapeFileUrl(record, 'attachments')" target="_blank" class="text-blue-600 hover:underline">
                     View File
                   </a>
                   <span *ngIf="!record.attachments" class="text-gray-500">N/A</span>
                 </td>
-                <td class="py-2 px-4">{{ record.expand?.owner?.email || 'No owner data' }}</td>
                 <td class="py-2 px-4">
                   <div class="dropdown dropdown-start">
-                    <div tabindex="0" role="button" class="btn m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
                       {{ record.applicationStatus || 'Select status' }}
                     </div>
                     <ul
@@ -157,6 +147,11 @@
                   </ul>                  
                   </div>
                 </td>
+                <td class="py-2 px-4">
+                  <button (click)="showVapeDetails(record)" class="btn btn-sm btn-primary">
+                    Details
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -167,6 +162,376 @@
       </div>
     </div>
 
+    <!-- Vape Details Modal -->
+    <div *ngIf="showVapeDetailsModal" 
+         class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
+      <div class="bg-white rounded-xl shadow-xl p-6 max-w-4xl w-full mx-4 h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold text-gray-900">Vape Registration Details</h2>
+          <button (click)="closeVapeDetails()" class="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Promo Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Promo Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Promo Title</p>
+                <p class="font-medium">{{ selectedVape?.promoTitle || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Promo Schemes</p>
+                <p class="font-medium">{{ selectedVape?.promoSchemes || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Coverage</p>
+                <p class="font-medium">{{ selectedVape?.coverage || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Promo Period</p>
+                <p class="font-medium">{{ selectedVape?.promoPeriod || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Application Type</p>
+                <p class="font-medium">{{ selectedVape?.typeOfApplication || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Sponsor Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Sponsor Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Sponsor Name</p>
+                <p class="font-medium">{{ selectedVape?.sponsorName || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Reference Number</p>
+                <p class="font-medium">{{ selectedVape?.sponsorRefNo || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Address</p>
+                <p class="font-medium">{{ selectedVape?.sponsorAddress || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Contact Number</p>
+                <p class="font-medium">{{ selectedVape?.sponsorContactNo || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Authorized Representative</p>
+                <p class="font-medium">{{ selectedVape?.sponsorAuthorizedRep || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Designation</p>
+                <p class="font-medium">{{ selectedVape?.sponsorDesignation || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Agency Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Agency Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Agency Name</p>
+                <p class="font-medium">{{ selectedVape?.agencyName || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Reference Number</p>
+                <p class="font-medium">{{ selectedVape?.agencyRefNo || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Address</p>
+                <p class="font-medium">{{ selectedVape?.agencyAddress || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Authorized Representative</p>
+                <p class="font-medium">{{ selectedVape?.agencyAuthorizedRep || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Designation</p>
+                <p class="font-medium">{{ selectedVape?.agencyDesignation || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Contact Number</p>
+                <p class="font-medium">{{ selectedVape?.agencyContactNo || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Additional Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Additional Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Permit</p>
+                <p class="font-medium">{{ selectedVape?.permit || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Application Date</p>
+                <p class="font-medium">{{ selectedVape?.applicationDate ? (selectedVape.applicationDate | date:'mediumDate') : 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Amendment Reason</p>
+                <p class="font-medium">{{ selectedVape?.amendmentReason || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Attachments</p>
+                <a *ngIf="selectedVape?.attachments" [href]="getVapeFileUrl(selectedVape, 'attachments')" target="_blank" class="text-blue-600 hover:underline">
+                  View File
+                </a>
+                <p *ngIf="!selectedVape?.attachments" class="font-medium">No file uploaded</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Application Status</p>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getStatusPillClass(selectedVape?.applicationStatus)">
+                  {{ selectedVape?.applicationStatus || 'Pending' }}
+                </span>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Date Submitted</p>
+                <p class="font-medium">{{ selectedVape?.created ? (selectedVape.created | date:'medium') : 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 flex justify-end">
+          <button (click)="closeVapeDetails()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOC/CCR Registrations Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            SOC/CCR Registrations
+          </h3>
+          <p class="mt-1 text-gray-600 text-sm">
+            Manage SOC/CCR registration records and approvals
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button (click)="downloadSocCcrExcel()" 
+                  class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Export Excel
+          </button>
+          <button (click)="toggleSocCcr()" 
+                  class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            View Records
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showSocCcr" class="mt-4">
+        <div *ngIf="loadingSocCcr" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="socCcrErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ socCcrErrorMsg }}
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
+          <input
+            [(ngModel)]="searchTermSocCcr"
+            (input)="applySocCcrFilters()"
+            type="text"
+            placeholder="Search by Company Name..."
+            class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <select
+            [(ngModel)]="sortOrderSocCcr"
+            (change)="applySocCcrFilters()"
+            class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table *ngIf="filteredSocCcr.length && !loadingSocCcr" class="table-auto w-full text-sm text-gray-700">
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Company Name</th>
+                <th class="py-3 px-4 border-b">Application Type</th>
+                <th class="py-3 px-4 border-b">Contact Person</th>
+                <th class="py-3 px-4 border-b">Contact Number</th>
+                <th class="py-3 px-4 border-b">Email</th>
+                <th class="py-3 px-4 border-b">Created</th>
+                <th class="py-3 px-4 border-b">Status</th>
+                <th class="py-3 px-4 border-b">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of filteredSocCcr; let i = index" class="border-b hover:bg-gray-100">
+                <td class="py-2 px-4">{{ record.companyName }}</td>
+                <td class="py-2 px-4">{{ record.applicationType }}</td>
+                <td class="py-2 px-4">{{ record.contactPerson }}</td>
+                <td class="py-2 px-4">{{ record.contactNumber }}</td>
+                <td class="py-2 px-4">{{ record.contactEmail }}</td>
+                <td class="py-2 px-4">{{ record.created | date:'short' }}</td>
+                <td class="py-2 px-4">
+                  <div class="dropdown dropdown-start">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
+                      {{ record.applicationStatus || 'Select status' }}
+                    </div>
+                    <ul
+                      tabindex="0"
+                      class="dropdown-content menu p-2 shadow bg-white text-gray-800 rounded-box z-50"
+                    >
+                      <li><a (click)="updateSocCcrStatus(record, 'Application received')">Application received</a></li>
+                      <li><a (click)="updateSocCcrStatus(record, 'Pending')">Pending</a></li>
+                      <li><a (click)="updateSocCcrStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
+                      <li><a (click)="updateSocCcrStatus(record, 'For approval')">For approval</a></li>
+                      <li><a (click)="updateSocCcrStatus(record, 'Approved')">Approved</a></li>
+                    </ul>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <button (click)="showSocCcrDetails(record)" class="btn btn-sm btn-primary">
+                    Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!filteredSocCcr.length && !loadingSocCcr" class="p-4 text-center text-gray-500">
+            No matching records found.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOC/CCR Details Modal -->
+    <div *ngIf="showSocCcrDetailsModal" 
+         class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
+      <div class="bg-white rounded-xl shadow-xl p-6 max-w-4xl w-full mx-4 h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold text-gray-900">SOC/CCR Registration Details</h2>
+          <button (click)="closeSocCcrDetails()" class="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Company Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Company Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Company Name</p>
+                <p class="font-medium">{{ selectedSocCcr?.companyName || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Document Type</p>
+                <p class="font-medium">{{ selectedSocCcr?.documentType || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Address</p>
+                <p class="font-medium">{{ selectedSocCcr?.address || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Product Type</p>
+                <p class="font-medium">{{ selectedSocCcr?.productType || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Contact Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Contact Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Contact Person</p>
+                <p class="font-medium">{{ selectedSocCcr?.contactPerson || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Contact Number</p>
+                <p class="font-medium">{{ selectedSocCcr?.contactNumber || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Email</p>
+                <p class="font-medium">{{ selectedSocCcr?.contactEmail || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Position</p>
+                <p class="font-medium">{{ selectedSocCcr?.contactPosition || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Document Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Document Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Purpose of Request</p>
+                <p class="font-medium">{{ selectedSocCcr?.purpose || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Attached Document</p>
+                <a *ngIf="selectedSocCcr?.document" [href]="getSocCcrFileUrl(selectedSocCcr, 'document')" target="_blank" class="text-blue-600 hover:underline">
+                  View Document
+                </a>
+                <p *ngIf="!selectedSocCcr?.document" class="font-medium">No document uploaded</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Status Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Status Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Application Status</p>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getStatusPillClass(selectedSocCcr?.applicationStatus)">
+                  {{ selectedSocCcr?.applicationStatus || 'Pending' }}
+                </span>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Date Submitted</p>
+                <p class="font-medium">{{ selectedSocCcr?.created ? (selectedSocCcr.created | date:'medium') : 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Last Updated</p>
+                <p class="font-medium">{{ selectedSocCcr?.updated ? (selectedSocCcr.updated | date:'medium') : 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 flex justify-end">
+          <button (click)="closeSocCcrDetails()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Retailer Registrations Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -227,6 +592,7 @@
                 <th class="py-3 px-4 border-b">Products Offered</th>
                 <th class="py-3 px-4 border-b">Created</th>
                 <th class="py-3 px-4 border-b">Status</th>
+                <th class="py-3 px-4 border-b">Details</th>
               </tr>
             </thead>
             <tbody>
@@ -268,13 +634,12 @@
                     !record.nicotine_pouch
                   ) {
                     <div>N/A</div>
-                  }     
-                               
+                  }                     
                 </td>
                 <td class="py-2 px-4">{{ record.created | date:'short' }}</td>
                 <td class="py-2 px-4">
                   <div class="dropdown dropdown-start">
-                    <div tabindex="0" role="button" class="btn m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
                       {{ record.applicationStatus || 'Select status' }}
                     </div>
                     <ul
@@ -289,6 +654,11 @@
                   </ul>                  
                   </div>
                 </td>
+                <td class="py-2 px-4">
+                  <button (click)="showRetailerDetails(record)" class="btn btn-sm btn-primary">
+                    Details
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -299,6 +669,995 @@
       </div>
     </div>
 
+    <!-- Retailer Details Modal -->
+    <div *ngIf="showRetailerDetailsModal" 
+         class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
+      <div class="bg-white rounded-xl shadow-xl p-6 max-w-4xl w-full mx-4 h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold text-gray-900">Retailer Registration Details</h2>
+          <button (click)="closeRetailerDetails()" class="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Business Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Business Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Business Name</p>
+                <p class="font-medium">{{ selectedRetailer?.business_name || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Store Name</p>
+                <p class="font-medium">{{ selectedRetailer?.store_name || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Business Owner</p>
+                <p class="font-medium">{{ selectedRetailer?.business_owner || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Warehouse Owner Sex</p>
+                <p class="font-medium">{{ selectedRetailer?.warehouse_owner_sex || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Social Classification</p>
+                <p class="font-medium">{{ selectedRetailer?.social_classification || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Asset Size</p>
+                <p class="font-medium">{{ selectedRetailer?.asset_size || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Contact Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Contact Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Telephone/Mobile</p>
+                <p class="font-medium">{{ selectedRetailer?.telephone_mobile || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Email Address</p>
+                <p class="font-medium">{{ selectedRetailer?.email_address || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Website/Social Media</p>
+                <p class="font-medium">{{ selectedRetailer?.website_social_media || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Store Address -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Store Address</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Floor/Unit Number</p>
+                <p class="font-medium">{{ selectedRetailer?.floor_unit_no || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Building Number/Name</p>
+                <p class="font-medium">{{ selectedRetailer?.building_no_name || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Street</p>
+                <p class="font-medium">{{ selectedRetailer?.street || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Barangay</p>
+                <p class="font-medium">{{ selectedRetailer?.barangay || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">City/Municipality</p>
+                <p class="font-medium">{{ selectedRetailer?.city_municipality || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Province</p>
+                <p class="font-medium">{{ selectedRetailer?.province || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Region</p>
+                <p class="font-medium">{{ selectedRetailer?.region || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Zip Code</p>
+                <p class="font-medium">{{ selectedRetailer?.zip_code || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Store Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Store Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Store Type</p>
+                <p class="font-medium">{{ selectedRetailer?.store_type || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Digital Platforms</p>
+                <p class="font-medium">{{ selectedRetailer?.digital_platforms || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Store URL</p>
+                <p class="font-medium">{{ selectedRetailer?.store_url || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Products Offered</p>
+                <div>
+                  <p class="font-medium" *ngIf="selectedRetailer?.vapor_product_system">Vapor Product System</p>
+                  <p class="font-medium" *ngIf="selectedRetailer?.vapor_product_device">Vapor Product Device</p>
+                  <p class="font-medium" *ngIf="selectedRetailer?.refills_e_liquid">Refills/E-Liquids</p>
+                  <p class="font-medium" *ngIf="selectedRetailer?.htp_system">Heated Tobacco Product System</p>
+                  <p class="font-medium" *ngIf="selectedRetailer?.htp_device">Heated Tobacco Product Device</p>
+                  <p class="font-medium" *ngIf="selectedRetailer?.htp_consumables">Heated Tobacco Product Consumables</p>
+                  <p class="font-medium" *ngIf="selectedRetailer?.nicotine_pouch">Nicotine Pouch</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Supplier Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Supplier Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Brands List</p>
+                <p class="font-medium">{{ selectedRetailer?.brands_list || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Supplier Names</p>
+                <p class="font-medium">{{ selectedRetailer?.supplier_names || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Warehouse Address</p>
+                <p class="font-medium">{{ selectedRetailer?.warehouse_address || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Application Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Application Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Application Status</p>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getStatusPillClass(selectedRetailer?.applicationStatus)">
+                  {{ selectedRetailer?.applicationStatus || 'Pending' }}
+                </span>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Date Submitted</p>
+                <p class="font-medium">{{ selectedRetailer?.created ? (selectedRetailer.created | date:'medium') : 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Last Updated</p>
+                <p class="font-medium">{{ selectedRetailer?.updated ? (selectedRetailer.updated | date:'medium') : 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="mt-6 flex justify-end">
+          <button (click)="closeRetailerDetails()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PS License Registrations Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            PS License Registrations
+          </h3>
+          <p class="mt-1 text-gray-600 text-sm">
+            Manage user-submitted PS license registration records
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button (click)="downloadPsLicenseExcel()" 
+                  class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Export Excel
+          </button>
+          <button (click)="togglePsLicense()" 
+                  class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            View Records
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showPsLicense" class="mt-4">
+        <div *ngIf="loadingPsLicense" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="psLicenseErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ psLicenseErrorMsg }}
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
+          <input
+            [(ngModel)]="searchTermPsLicense"
+            (input)="applyPsLicenseFilters()"
+            type="text"
+            placeholder="Search by Company Name..."
+            class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <select
+            [(ngModel)]="sortOrderPsLicense"
+            (change)="applyPsLicenseFilters()"
+            class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table *ngIf="filteredPsLicense.length && !loadingPsLicense" class="table-auto w-full text-sm text-gray-700">
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Company Name</th>
+                <th class="py-3 px-4 border-b">Office Address</th>
+                <th class="py-3 px-4 border-b">Factory Address</th>
+                <th class="py-3 px-4 border-b">TIN</th>
+                <th class="py-3 px-4 border-b">Company President</th>
+                <th class="py-3 px-4 border-b">QMR</th>
+                <th class="py-3 px-4 border-b">Product Type</th>
+                <th class="py-3 px-4 border-b">Brand Names</th>
+                <th class="py-3 px-4 border-b">Application Status</th>
+                <th class="py-3 px-4 border-b">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of filteredPsLicense" class="border-b hover:bg-gray-100">
+                <td class="py-2 px-4">{{ record.company_name }}</td>
+                <td class="py-2 px-4">{{ record.office_address }}</td>
+                <td class="py-2 px-4">{{ record.factory_address }}</td>
+                <td class="py-2 px-4">{{ record.tin }}</td>
+                <td class="py-2 px-4">{{ record.company_president }}</td>
+                <td class="py-2 px-4">{{ record.quality_management_rep }}</td>
+                <td class="py-2 px-4">{{ record.product_type }}</td>
+                <td class="py-2 px-4">{{ record.brand_names }}</td>
+                <td class="py-2 px-4">{{ record.applicationStatus }}</td>
+                <td class="py-2 px-4 flex space-x-2">
+                  <div class="dropdown dropdown-start">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
+                      {{ record.applicationStatus }}
+                    </div>
+                    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-white text-gray-800 rounded-box z-50">
+                      <li><a (click)="updatePsLicenseStatus(record, 'Application received')">Application received</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'Pending')">Pending</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'For approval')">For approval</a></li>
+                      <li><a (click)="updatePsLicenseStatus(record, 'Approved')">Approved</a></li>
+                    </ul>
+                  </div>
+                  <button (click)="showPsLicenseDetails(record)" class="btn btn-sm btn-primary">
+                    Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!filteredPsLicense.length && !loadingPsLicense" class="p-4 text-center text-gray-500">
+            No matching records found.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PS License Details Modal -->
+    <div *ngIf="showPsLicenseDetailsModal" 
+         class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
+      <div class="bg-white rounded-xl shadow-xl p-6 max-w-4xl w-full mx-4 h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold text-gray-900">PS License Application Details</h2>
+          <button (click)="closePsLicenseDetails()" class="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Company Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Company Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Company Name</p>
+                <p class="font-medium">{{ selectedPsLicense?.company_name || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Office Address</p>
+                <p class="font-medium">{{ selectedPsLicense?.office_address || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Factory Address</p>
+                <p class="font-medium">{{ selectedPsLicense?.factory_address || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">TIN</p>
+                <p class="font-medium">{{ selectedPsLicense?.tin || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">TIN Issue Date</p>
+                <p class="font-medium">{{ selectedPsLicense?.tin_issue_date || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Company Personnel -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Company Personnel</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Company President</p>
+                <p class="font-medium">{{ selectedPsLicense?.company_president || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Quality Management Representative</p>
+                <p class="font-medium">{{ selectedPsLicense?.quality_management_rep || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">QMR Contact</p>
+                <p class="font-medium">{{ selectedPsLicense?.qmr_contact || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Product Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Product Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Product Type</p>
+                <p class="font-medium">{{ selectedPsLicense?.product_type || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Product Description</p>
+                <p class="font-medium">{{ selectedPsLicense?.product_description || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Brand Names</p>
+                <p class="font-medium">{{ selectedPsLicense?.brand_names || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quality Standards -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Quality Standards</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">QMS Standard</p>
+                <p class="font-medium">{{ selectedPsLicense?.qms_standard || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Specific Product Standards</p>
+                <p class="font-medium">{{ selectedPsLicense?.specific_product_standards || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Holds Quality Certificate</p>
+                <p class="font-medium">{{ selectedPsLicense?.holds_quality_certificate ? 'Yes' : 'No' }}</p>
+              </div>
+              <div *ngIf="selectedPsLicense?.quality_certificates">
+                <p class="text-sm text-gray-500">Quality Certificates</p>
+                <div class="bg-gray-100 p-2 rounded">
+                  <pre class="text-xs overflow-auto max-h-32">{{ selectedPsLicense?.quality_certificates }}</pre>
+                </div>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Seeking Approval</p>
+                <p class="font-medium">{{ selectedPsLicense?.seeking_approval ? 'Yes' : 'No' }}</p>
+              </div>
+              <div *ngIf="selectedPsLicense?.seeking_approval_details">
+                <p class="text-sm text-gray-500">Approval Details</p>
+                <div class="bg-gray-100 p-2 rounded">
+                  <pre class="text-xs overflow-auto max-h-32">{{ selectedPsLicense?.seeking_approval_details }}</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Production Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Production Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Rated Capacity</p>
+                <p class="font-medium">{{ selectedPsLicense?.rated_capacity || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Actual Capacity</p>
+                <p class="font-medium">{{ selectedPsLicense?.actual_capacity || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Production PH Percentage</p>
+                <p class="font-medium">{{ selectedPsLicense?.production_ph_percentage || 'N/A' }}%</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Total Employees</p>
+                <p class="font-medium">{{ selectedPsLicense?.total_employees || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Employees Per Premise</p>
+                <p class="font-medium">{{ selectedPsLicense?.employees_per_premise || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Employees Per Shift</p>
+                <p class="font-medium">{{ selectedPsLicense?.employees_per_shift || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Employees During Assessment</p>
+                <p class="font-medium">{{ selectedPsLicense?.employees_during_assessment || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Financial & Production Volumes -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Financial & Production Volumes</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Assets in Million PHP</p>
+                <p class="font-medium">{{ selectedPsLicense?.assets_in_million || 'N/A' }}</p>
+              </div>
+              <div *ngIf="selectedPsLicense?.production_volumes">
+                <p class="text-sm text-gray-500">Production Volumes</p>
+                <div class="bg-gray-100 p-2 rounded">
+                  <pre class="text-xs overflow-auto max-h-32">{{ selectedPsLicense?.production_volumes }}</pre>
+                </div>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Application Status</p>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getStatusPillClass(selectedPsLicense?.applicationStatus)">
+                  {{ selectedPsLicense?.applicationStatus || 'Pending' }}
+                </span>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Date Submitted</p>
+                <p class="font-medium">{{ selectedPsLicense?.created ? (selectedPsLicense.created | date:'medium') : 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 flex justify-end">
+          <button (click)="closePsLicenseDetails()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Warehouse Registrations Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+            </svg>
+            Warehouse Registrations
+          </h3>
+          <p class="mt-1 text-gray-600 text-sm">
+            Manage warehouse registration records and approvals
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button (click)="downloadWarehouseExcel()" 
+                  class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Export Excel
+          </button>
+          <button (click)="toggleWarehouseRegis()" 
+                  class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            View Records
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showWarehouseRegis" class="mt-4">
+        <div *ngIf="loadingWarehouse" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="warehouseErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ warehouseErrorMsg }}
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table *ngIf="filteredWarehouseRegis.length && !loadingWarehouse" class="table-auto w-full text-sm text-gray-700">
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Business Name</th>
+                <th class="py-3 px-4 border-b hidden md:table-cell">Business Owner</th>
+                <th class="py-3 px-4 border-b hidden lg:table-cell">Warehouse Address</th>
+                <th class="py-3 px-4 border-b hidden md:table-cell">Email</th>
+                <th class="py-3 px-4 border-b hidden sm:table-cell">Contact Number</th>
+                <th class="py-3 px-4 border-b hidden lg:table-cell">Products Stored</th>
+                <th class="py-3 px-4 border-b hidden xl:table-cell">Brands/Suppliers</th>
+                <th class="py-3 px-4 border-b hidden md:table-cell">Proof File</th>
+                <th class="py-3 px-4 border-b hidden sm:table-cell">Created</th>
+                <th class="py-3 px-4 border-b">Status</th>
+                <th class="py-3 px-4 border-b">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of filteredWarehouseRegis; let i = index" class="border-b hover:bg-gray-100">
+                <td class="py-2 px-4">{{ record.nameOfBusiness || record.businessOwnerName }}</td>
+                <td class="py-2 px-4 hidden md:table-cell">{{ record.businessOwnerName }}</td>
+                <td class="py-2 px-4 hidden lg:table-cell">
+                  {{ record.warehouseBldgNameNo }} {{ record.warehouseStreet }}, 
+                  {{ record.warehouseBarangay }}, {{ record.warehouseCity }}, 
+                  {{ record.warehouseState }}
+                </td>
+                <td class="py-2 px-4 hidden md:table-cell">{{ record.warehouseEmailAddress }}</td>
+                <td class="py-2 px-4 hidden sm:table-cell">{{ record.warehouseMobileNumber || record.warehouseTelephoneNumber }}</td>
+                <td class="py-2 px-4 hidden lg:table-cell">{{ record.productsStoredInWarehouse }}</td>
+                <td class="py-2 px-4 hidden xl:table-cell">
+                  <div>Brands: {{ record.listOrBrandOfProducts }}</div>
+                  <div>Suppliers: {{ record.nameOfSuppliers }}</div>
+                </td>
+                <td class="py-2 px-4 hidden md:table-cell">
+                  <a *ngIf="record.proofFile" [href]="getWarehouseFileUrl(record, 'proofFile')" target="_blank" class="text-blue-600 hover:underline">
+                    View File
+                  </a>
+                  <span *ngIf="!record.proofFile" class="text-gray-500">N/A</span>
+                </td>
+                <td class="py-2 px-4 hidden sm:table-cell">{{ record.created | date:'short' }}</td>
+                <td class="py-2 px-4">
+                  <div class="dropdown dropdown-start">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
+                      {{ record.applicationStatus || 'Select status' }}
+                    </div>
+                    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-white text-gray-800 rounded-box z-50">
+                      <li><a (click)="updateWarehouseStatus(record, 'Application received')">Application received</a></li>
+                      <li><a (click)="updateWarehouseStatus(record, 'Pending')">Pending</a></li>
+                      <li><a (click)="updateWarehouseStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
+                      <li><a (click)="updateWarehouseStatus(record, 'For approval')">For approval</a></li>
+                      <li><a (click)="updateWarehouseStatus(record, 'Approved')">Approved</a></li>
+                    </ul>
+                  </div>
+                </td>
+                <td class="py-2 px-4">
+                  <button (click)="showWarehouseDetails(record)" class="btn btn-sm btn-primary">
+                    Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!filteredWarehouseRegis.length && !loadingWarehouse" class="p-4 text-center text-gray-500">
+            No matching records found.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Warehouse Details Modal -->
+    <div *ngIf="showWarehouseDetailsModal" 
+         class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
+      <div class="bg-white rounded-xl shadow-xl p-6 max-w-4xl w-full mx-4 h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold text-gray-900">Warehouse Registration Details</h2>
+          <button (click)="closeWarehouseDetails()" class="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Business Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Business Name</p>
+                <p class="font-medium">{{ selectedWarehouse?.nameOfBusiness || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Business Owner Name</p>
+                <p class="font-medium">{{ selectedWarehouse?.businessOwnerName || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Social Classification</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseOwnerSocialClassification || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">TIN</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseOwnerTIN || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Warehouse Address -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Warehouse Address</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Building Name/Number</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseBldgNameNo || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Street</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseStreet || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Barangay</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseBarangay || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">City</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseCity || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">State/Province</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseState || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Contact Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Contact Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Email Address</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseEmailAddress || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Telephone Number</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseTelephoneNumber || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Mobile Number</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseMobileNumber || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Website/Social Media</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseWebsiteOrSocialPage || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Warehouse Owner Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Warehouse Owner Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Owner Name</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseOwnerName || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Email Address</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseOwnerEmailAddress || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Telephone Number</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseOwnerTelephoneNumber || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Mobile Number</p>
+                <p class="font-medium">{{ selectedWarehouse?.warehouseOwnerMobileNumber || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Product Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Product Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Products Stored</p>
+                <p class="font-medium">{{ selectedWarehouse?.productsStoredInWarehouse || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">List/Brand of Products</p>
+                <p class="font-medium">{{ selectedWarehouse?.listOrBrandOfProducts || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Name of Suppliers</p>
+                <p class="font-medium">{{ selectedWarehouse?.nameOfSuppliers || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Supporting Documents -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Supporting Documents</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Proof File</p>
+                <a *ngIf="selectedWarehouse?.proofFile" [href]="getWarehouseFileUrl(selectedWarehouse, 'proofFile')" target="_blank" class="text-blue-600 hover:underline">
+                  View File
+                </a>
+                <p *ngIf="!selectedWarehouse?.proofFile" class="font-medium">No file uploaded</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Application Status</p>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getStatusPillClass(selectedWarehouse?.applicationStatus)">
+                  {{ selectedWarehouse?.applicationStatus || 'Pending' }}
+                </span>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Date Submitted</p>
+                <p class="font-medium">{{ selectedWarehouse?.created ? (selectedWarehouse.created | date:'medium') : 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 flex justify-end">
+          <button (click)="closeWarehouseDetails()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Age Gating Forms Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            Age Gating Forms
+          </h3>
+          <p class="mt-1 text-gray-600 text-sm">
+            Manage user-submitted age gating registration forms
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button (click)="downloadAgeGatingExcel()" 
+                  class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Export Excel
+          </button>
+          <button (click)="toggleAgeGating()" 
+                  class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            View Records
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showAgeGating" class="mt-4">
+        <div *ngIf="loadingAgeGating" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="ageGatingErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ ageGatingErrorMsg }}
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0 mb-4">
+          <input
+            [(ngModel)]="searchTermAgeGating"
+            (input)="applyAgeGatingFilters()"
+            type="text"
+            placeholder="Search by Name..."
+            class="border border-gray-300 p-2 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <select
+            [(ngModel)]="sortOrderAgeGating"
+            (change)="applyAgeGatingFilters()"
+            class="border border-gray-300 p-2 rounded w-full md:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto rounded shadow">
+          <table *ngIf="filteredAgeGating.length && !loadingAgeGating" class="table-auto w-full text-sm text-gray-700">
+            <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
+              <tr>
+                <th class="py-3 px-4 border-b">Name</th>
+                <th class="py-3 px-4 border-b">Contact Person</th>
+                <th class="py-3 px-4 border-b">Email</th>
+                <th class="py-3 px-4 border-b">Contact Number</th>
+                <th class="py-3 px-4 border-b">Website/URL</th>
+                <th class="py-3 px-4 border-b">Verification Method</th>
+                <th class="py-3 px-4 border-b">Application Status</th>
+                <th class="py-3 px-4 border-b">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of filteredAgeGating" class="border-b hover:bg-gray-100">
+                <td class="py-2 px-4">{{ record.nameOfCompany }}</td>
+                <td class="py-2 px-4">{{ record.contactPerson }}</td>
+                <td class="py-2 px-4">{{ record.email }}</td>
+                <td class="py-2 px-4">{{ record.contactNumber }}</td>
+                <td class="py-2 px-4">{{ record.websiteUrl }}</td>
+                <td class="py-2 px-4">{{ record.verificationMethod }}</td>
+                <td class="py-2 px-4">{{ record.applicationStatus }}</td>
+                <td class="py-2 px-4 flex space-x-2">
+                  <div class="dropdown dropdown-start">
+                    <div tabindex="0" role="button" class="btn btn-sm m-1" [ngClass]="getStatusButtonClass(record.applicationStatus)">
+                      {{ record.applicationStatus || 'Select status' }}
+                    </div>
+                    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-white text-gray-800 rounded-box z-50">
+                      <li><a (click)="updateAgeGatingStatus(record, 'Application received')">Application received</a></li>
+                      <li><a (click)="updateAgeGatingStatus(record, 'Pending')">Pending</a></li>
+                      <li><a (click)="updateAgeGatingStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
+                      <li><a (click)="updateAgeGatingStatus(record, 'For approval')">For approval</a></li>
+                      <li><a (click)="updateAgeGatingStatus(record, 'Approved')">Approved</a></li>
+                    </ul>
+                  </div>
+                  <button (click)="showAgeGatingDetails(record)" class="btn btn-sm btn-primary">
+                    Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!filteredAgeGating.length && !loadingAgeGating" class="p-4 text-center text-gray-500">
+            No matching records found.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Age Gating Details Modal -->
+    <div *ngIf="showAgeGatingDetailsModal" 
+         class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
+      <div class="bg-white rounded-xl shadow-xl p-6 max-w-4xl w-full mx-4 h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold text-gray-900">Age Gating Registration Details</h2>
+          <button (click)="closeAgeGatingDetails()" class="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Company Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Company Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Company Name</p>
+                <p class="font-medium">{{ selectedAgeGating?.nameOfCompany || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Office Address</p>
+                <p class="font-medium">{{ selectedAgeGating?.address || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Contact Person</p>
+                <p class="font-medium">{{ selectedAgeGating?.contactPerson || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Contact Title/Position</p>
+                <p class="font-medium">{{ selectedAgeGating?.contactTitle || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Contact Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Contact Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Email</p>
+                <p class="font-medium">{{ selectedAgeGating?.email || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Contact Number</p>
+                <p class="font-medium">{{ selectedAgeGating?.contactNumber || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Website URL</p>
+                <p class="font-medium">{{ selectedAgeGating?.websiteUrl || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Verification Method -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Verification Method</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Verification Method</p>
+                <p class="font-medium">{{ selectedAgeGating?.verificationMethod || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Verification Details</p>
+                <p class="font-medium">{{ selectedAgeGating?.verificationDetails || 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Implementation Date</p>
+                <p class="font-medium">{{ selectedAgeGating?.implementationDate || 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Supporting Documents -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Supporting Documents</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">System Documentation</p>
+                <a *ngIf="selectedAgeGating?.systemDocs" [href]="getAgeGatingFileUrl(selectedAgeGating, 'systemDocs')" target="_blank" class="text-blue-600 hover:underline">
+                  View File
+                </a>
+                <p *ngIf="!selectedAgeGating?.systemDocs" class="font-medium">No file uploaded</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Screenshot Examples</p>
+                <a *ngIf="selectedAgeGating?.screenshots" [href]="getAgeGatingFileUrl(selectedAgeGating, 'screenshots')" target="_blank" class="text-blue-600 hover:underline">
+                  View File
+                </a>
+                <p *ngIf="!selectedAgeGating?.screenshots" class="font-medium">No file uploaded</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Application Information -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg mb-3 text-blue-600">Application Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Application Status</p>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getStatusPillClass(selectedAgeGating?.applicationStatus)">
+                  {{ selectedAgeGating?.applicationStatus || 'Pending' }}
+                </span>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Date Submitted</p>
+                <p class="font-medium">{{ selectedAgeGating?.created ? (selectedAgeGating.created | date:'medium') : 'N/A' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Last Updated</p>
+                <p class="font-medium">{{ selectedAgeGating?.updated ? (selectedAgeGating.updated | date:'medium') : 'N/A' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 flex justify-end">
+          <button (click)="closeAgeGatingDetails()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Users Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -407,6 +1766,7 @@
       </div>
     </div>
 
+    <!-- Approved Users Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -490,6 +1850,7 @@
     </div>
   </main>
 
+  <!-- Enhanced Welcome Overlay -->
   <div *ngIf="showWelcomeOverlay" 
        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
     <div class="bg-white rounded-xl shadow-xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 hover:scale-100">
@@ -511,6 +1872,7 @@
     </div>
   </div>
 
+  <!-- Enhanced Logout Modal -->
   <div *ngIf="showLogoutModal" 
        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
     <div class="bg-white rounded-xl shadow-xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 hover:scale-100">

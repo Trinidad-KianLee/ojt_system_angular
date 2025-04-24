@@ -1,0 +1,28 @@
+/* Fade in up animation for modals */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* Form control focus states */
+.form-input:focus, .form-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  border-color: #3b82f6;
+}
+
+/* Disabled button styles */
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
