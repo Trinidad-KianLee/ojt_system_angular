@@ -374,7 +374,7 @@
             <thead class="bg-blue-50 text-gray-700 uppercase text-xs tracking-wider">
               <tr>
                 <th class="py-3 px-4 border-b">Company Name</th>
-                <th class="py-3 px-4 border-b">Document Type</th>
+                <th class="py-3 px-4 border-b">Application Type</th>
                 <th class="py-3 px-4 border-b">Contact Person</th>
                 <th class="py-3 px-4 border-b">Contact Number</th>
                 <th class="py-3 px-4 border-b">Email</th>
@@ -386,7 +386,7 @@
             <tbody>
               <tr *ngFor="let record of filteredSocCcr; let i = index" class="border-b hover:bg-gray-100">
                 <td class="py-2 px-4">{{ record.companyName }}</td>
-                <td class="py-2 px-4">{{ record.documentType }}</td>
+                <td class="py-2 px-4">{{ record.applicationType }}</td>
                 <td class="py-2 px-4">{{ record.contactPerson }}</td>
                 <td class="py-2 px-4">{{ record.contactNumber }}</td>
                 <td class="py-2 px-4">{{ record.contactEmail }}</td>
@@ -397,15 +397,15 @@
                       {{ record.applicationStatus || 'Select status' }}
                     </div>
                     <ul
-                    tabindex="0"
-                    class="dropdown-content menu p-2 shadow bg-white text-gray-800 rounded-box z-50"
-                  >
-                    <li><a (click)="updateSocCcrStatus(record, 'Application received')">Application received</a></li>
-                    <li><a (click)="updateSocCcrStatus(record, 'Pending')">Pending</a></li>
-                    <li><a (click)="updateSocCcrStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
-                    <li><a (click)="updateSocCcrStatus(record, 'For approval')">For approval</a></li>
-                    <li><a (click)="updateSocCcrStatus(record, 'Approved')">Approved</a></li>
-                  </ul>                  
+                      tabindex="0"
+                      class="dropdown-content menu p-2 shadow bg-white text-gray-800 rounded-box z-50"
+                    >
+                      <li><a (click)="updateSocCcrStatus(record, 'Application received')">Application received</a></li>
+                      <li><a (click)="updateSocCcrStatus(record, 'Pending')">Pending</a></li>
+                      <li><a (click)="updateSocCcrStatus(record, 'Ongoing evaluation')">Ongoing evaluation</a></li>
+                      <li><a (click)="updateSocCcrStatus(record, 'For approval')">For approval</a></li>
+                      <li><a (click)="updateSocCcrStatus(record, 'Approved')">Approved</a></li>
+                    </ul>
                   </div>
                 </td>
                 <td class="py-2 px-4">
@@ -843,6 +843,7 @@
             </div>
           </div>
         </div>
+
         
         <div class="mt-6 flex justify-end">
           <button (click)="closeRetailerDetails()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors">
