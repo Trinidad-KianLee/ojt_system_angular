@@ -31,10 +31,11 @@ import { PromoEventsComponent } from './pages/user-dashboard/promo-events/promo-
 import { PslicenseLandingComponent } from './pages/user-dashboard/pslicense-landing/pslicense-landing.component';
 import { SocCcrLandingComponent } from './pages/user-dashboard/soc-ccr-landing/soc-ccr-landing.component';
 import { SocCcrRegisterComponent } from './pages/user-dashboard/soc-ccr-register/soc-ccr-register.component';
+import { FinalLandingPageComponent } from './pages/user-dashboard/final-landing-page/final-landing-page.component';
 
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'new-landingpage', pathMatch: 'full' },
+  { path: '', redirectTo: 'final-landing-page', pathMatch: 'full' },
 
   { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard] },
   { path: 'terms-conditions', component: TermsConditionsComponent },
@@ -54,6 +55,7 @@ export const routes: Routes = [
   { path: 'promo-events', component: PromoEventsComponent},
   { path: 'pslicense-landing', component: PslicenseLandingComponent},
   { path: 'soc-ccr-landing', component: SocCcrLandingComponent},
+  { path: 'final-landing-page', component: FinalLandingPageComponent},
 
   { path: 'age-gating', component: AgeGatingComponent},
   { path: 'age-gating-registration', component: AgeGatingRegistrationComponent, canActivate: [AuthGuard] },
