@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 shadow-sm h-16 px-4">
+<div class="navbar bg-[#263081] shadow-sm h-16 px-4">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -7,40 +7,37 @@
         </svg>
       </div>
     </div>
-    <button routerLink="/new-landingpage" class="btn btn-ghost text-lg">Home</button>
-  </div>
-
-  <div class="navbar-end">
-    <img src="assets/DTI-logo.png" class="h-10 w-auto" alt="DTI Logo" />
+    <button routerLink="/final-landing-page" class="btn btn-ghost text-base text-white">Home</button>
   </div>
 </div>
 
 <div class="w-screen min-h-[calc(100vh-4rem)] relative overflow-hidden">
-  <div class="absolute inset-0 bg-[#263081B3] text-white p-4 z-10 flex flex-col items-center justify-center">
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mt-10 md:mt-20">
-      Welcome back!
-    </h1>
-    <p class="text-center mt-4 text-gray-100 text-sm sm:text-base max-w-md">
-      Do you want to take part of creating a better world? Join us in the exiting world of standardization and
-      conformity assessmemt.
-    <form (ngSubmit)="onLogin()" class="flex flex-col gap-4 p-6 rounded-xl shadow-lg w-full max-w-md">
+  <div class="absolute inset-0 bg-[#FFFFFF80] text-white p-4 z-10 flex flex-col items-center justify-center">
+
+    <form (ngSubmit)="onLogin()" class="flex flex-col gap-4 px-6 rounded-xl bg-white shadow-lg w-full max-w-md">
+      <div class="">
+        <img src="assets/dti-footer.png" class="h-30 w-auto ml-23 " alt="DTI Logo" />
+      </div>
+      <p class="text-center text-[#263081] text-sm">
+        Do you want to take part of creating a better world? Join us in the exiting world of standardization and
+        conformity assessmemt.</p>
       <label class="form-control w-full">
-        <input type="email" placeholder="Email"
-          class="input input-bordered w-full rounded-full text-black p-4 text-base" [(ngModel)]="formData.email"
+        <input type="email" placeholder="Username"
+          class="input input-bordered w-full rounded-full text-black p-4 text-base h-12" [(ngModel)]="formData.email"
           name="email" required />
       </label>
 
       <label class="form-control w-full">
         <input type="password" placeholder="Password"
-          class="input input-bordered w-full rounded-full text-black p-4 text-base" [(ngModel)]="formData.password"
+          class="input input-bordered w-full rounded-full text-black p-4 text-base h-12" [(ngModel)]="formData.password"
           name="password" required />
       </label>
 
-      <button class="bg-[#263081] text-white hover:bg-[#1b2360] rounded-full p-3 text-base" type="submit">
+      <button class="bg-[#263081] text-white hover:bg-[#1b2360] rounded-full p-3 text-base h-12" type="submit">
         Login
       </button>
 
-      <p class="text-center mt-6 text-gray-100 hover:text-blue-200 hover:underline text-sm">
+      <p class="text-center mt-4 mb-6 text-gray-500 hover:text-[#263081] hover:underline text-sm">
         <a routerLink="/landing-registration">Create a new account</a>
       </p>
     </form>

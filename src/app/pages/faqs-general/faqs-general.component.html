@@ -1,47 +1,113 @@
-<div class="navbar bg-base-100 shadow-sm">
-    <div class="navbar-start">
-        <div class="dropdown">
-            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
-                </svg>
-            </div>
-        </div>
-        <button routerLink="/new-landingpage" class="btn btn-ghost text-l">Home</button>
-        <button routerLink="/faqs-general" class="btn btn-ghost text-l">FAQs</button>
-        <button routerLink="/age-gating" class="btn btn-ghost text-l ">Age gating</button>
-        <button routerLink="/landing-page-retailer" class="btn btn-ghost text-l ">Retailer</button>
-        <button routerLink="/warehouse-reg" class="btn btn-ghost text-l">Warehouse</button>
-        <button routerLink="/promo-events" class="btn btn-ghost text-l ">Promotional
-            Events</button>
-        <button routerLink="/pslicense-landing" class="btn btn-ghost">PS License</button>
-        <button routerLink="/soc-ccr-landing" class="btn btn-ghost text-l">SOC/CCR</button>
-        <button routerLink="/vaping-area" class="btn btn-ghost">Designated Vaping
-            Area</button>
+<style>
+    .navbar {
+        position: relative;
+        z-index: 10;
+    }
+
+    .bg-white {
+        position: relative;
+        z-index: 1;
+    }
+</style>
+
+<div class="navbar bg-base-100 shadow-lg ">
+    <div class="flex-1">
+        <a class="text-2xl">GOVPH</a>
+        <ul class="menu menu-horizontal px-1 text-base">
+            <li><a routerLink="/final-landing-page" class="ml-4"> Home </a></li>
+            <li>
+                <details>
+                    <summary class="ml-4">Transparency Seal</summary>
+                    <ul class="p-2">
+                        <li><a>Citizens Charter</a></li>
+                        <li><a>PhilGEPS Procurement</a></li>
+                        <li><a>BAC Resources</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li><a routerLink="/sitemap" class="ml-4">Sitemap</a></li>
+            <li><a routerLink="/faqs-general" class="ml-4 bg-[#263081] text-white">FAQs</a></li>
+            <li><a routerLink="/vaping-area" class="ml-4">Contact</a></li>
+        </ul>
     </div>
-    <div class="navbar-end w-80 h-10 ml-100">
-        <a><img src="assets/DTI-logo.png"></a>
+    <div class="flex gap-2">
+        <input type="text" placeholder="Search" class="input input-bordered w-30" />
+        <div class="circle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                    d="M256 48c114.953 0 208 93.029 208 208c0 114.953-93.029 208-208 208c-114.953 0-208-93.029-208-208c0-114.953 93.029-208 208-208m0-40C119.033 8 8 119.033 8 256s111.033 248 248 248s248-111.033 248-248S392.967 8 256 8m0 56C149.961 64 64 149.961 64 256s85.961 192 192 192s192-85.961 192-192S362.039 64 256 64m0 44c19.882 0 36 16.118 36 36s-16.118 36-36 36s-36-16.118-36-36s16.118-36 36-36m117.741 98.023c-28.712 6.779-55.511 12.748-82.14 15.807c.851 101.023 12.306 123.052 25.037 155.621c3.617 9.26-.957 19.698-10.217 23.315s-19.699-.957-23.316-10.217c-8.705-22.308-17.086-40.636-22.261-78.549h-9.686c-5.167 37.851-13.534 56.208-22.262 78.549c-3.615 9.255-14.05 13.836-23.315 10.217c-9.26-3.617-13.834-14.056-10.217-23.315c12.713-32.541 24.185-54.541 25.037-155.621c-26.629-3.058-53.428-9.027-82.141-15.807c-8.6-2.031-13.926-10.648-11.895-19.249s10.647-13.926 19.249-11.895c96.686 22.829 124.283 22.783 220.775 0c8.599-2.03 17.218 3.294 19.249 11.895c2.029 8.601-3.297 17.219-11.897 19.249" />
+            </svg>
+        </div>
     </div>
 </div>
 
-<!-- <div class="w-full h-[calc(50vh-2rem)] relative overflow-hidden">
-  
-    <div class="absolute inset-0 bg-[#263081B3] text-white p-4 z-10">
-      <h1 class="text-6xl font-bold text-white opacity-100 text-center mt-20">Frequently Asked Questions</h1>
-      <h2 class="text-3xl font-semibold text-white opacity-100 text-center mt-2"></h2>
-  
+<div class="navbar bg-white h-30 flex">
+    <div class="ml-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 512 512" class="mt-4">
+            <path fill="#0D2393"
+                d="M256 48c114.953 0 208 93.029 208 208c0 114.953-93.029 208-208 208c-114.953 0-208-93.029-208-208c0-114.953 93.029-208 208-208m0-40C119.033 8 8 119.033 8 256s111.033 248 248 248s248-111.033 248-248S392.967 8 256 8m0 56C149.961 64 64 149.961 64 256s85.961 192 192 192s192-85.961 192-192S362.039 64 256 64m0 44c19.882 0 36 16.118 36 36s-16.118 36-36 36s-36-16.118-36-36s16.118-36 36-36m117.741 98.023c-28.712 6.779-55.511 12.748-82.14 15.807c.851 101.023 12.306 123.052 25.037 155.621c3.617 9.26-.957 19.698-10.217 23.315s-19.699-.957-23.316-10.217c-8.705-22.308-17.086-40.636-22.261-78.549h-9.686c-5.167 37.851-13.534 56.208-22.262 78.549c-3.615 9.255-14.05 13.836-23.315 10.217c-9.26-3.617-13.834-14.056-10.217-23.315c12.713-32.541 24.185-54.541 25.037-155.621c-26.629-3.058-53.428-9.027-82.141-15.807c-8.6-2.031-13.926-10.648-11.895-19.249s10.647-13.926 19.249-11.895c96.686 22.829 124.283 22.783 220.775 0c8.599-2.03 17.218 3.294 19.249 11.895c2.029 8.601-3.297 17.219-11.897 19.249" />
+        </svg>
     </div>
-  
-  
-    <img src="https://dimensions-magazin.de/wp-content/uploads/2024/09/Header-Gute-Frage.jpg"
-      alt="makati-building" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none" />
-  </div> -->
+    <a><img src="assets/DTI-logo.png" class="h-25 ml-2"></a>
+    <div class="flex gap-2 ml-145">
+        <a><img src="assets/TS_Logo.png" class="h-15"></a>
+        <a><img src="assets/FOI_Logo.png" class="h-15 ml-2 mr-2"></a>
+        <a><img src="assets/DTI_DPO_Seal2025.png" class="h-15"></a>
+    </div>
+</div>
+
+<div class="bg-[#263081] navbar shadow-lg text-white ">
+    <div class="flex-1">
+        <ul class="menu menu-horizontal px-1 text-base">
+            <li><a class="ml-4"> Home </a></li>
+            <li>
+                <details>
+                    <summary class="ml-4">About Us</summary>
+                    <!-- <ul class="p-2">
+                        <li><a>Citizens Charter</a></li>
+                        <li><a>PhilGEPS Procurement</a></li>
+                        <li><a>BAC Resources</a></li>
+                    </ul> -->
+                </details>
+            </li>
+            <li>
+                <details>
+                    <summary class="ml-4">OSMV Standards</summary>
+                    <!-- <ul class="p-2">
+                        <li><a>Citizens Charter</a></li>
+                        <li><a>PhilGEPS Procurement</a></li>
+                        <li><a>BAC Resources</a></li>
+                    </ul> -->
+                </details>
+            </li>
+            <li>
+                <details>
+                    <summary class="ml-4">Product Certifications</summary>
+                    <!-- <ul class="p-2">
+                        <li><a>Citizens Charter</a></li>
+                        <li><a>PhilGEPS Procurement</a></li>
+                        <li><a>BAC Resources</a></li>
+                    </ul> -->
+                </details>
+            </li>
+            <li>
+                <details>
+                    <summary class="ml-4">Product Testing</summary>
+                    <!-- <ul class="p-2">
+                        <li><a>Citizens Charter</a></li>
+                        <li><a>PhilGEPS Procurement</a></li>
+                        <li><a>BAC Resources</a></li>
+                    </ul> -->
+                </details>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div class="bg-[#263081] text-white p-10 shadow-lg h-280">
 
     <div class="w-full pl-10">
-        <h1 class="text-4xl font-bold mt-8 mb-6 text-center">FREQUENTLY ASKED QUESTIONS (FAQSs)</h1>
+        <h1 class="text-4xl font-bold mt-8 mb-6 text-center">FREQUENTLY ASKED QUESTIONS (FAQs)</h1>
 
 
         <div class="card bg-base-100 w-50 h-40 shadow-sm ml-40 mt-10 ">

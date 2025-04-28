@@ -32,6 +32,7 @@ import { PslicenseLandingComponent } from './pages/user-dashboard/pslicense-land
 import { SocCcrLandingComponent } from './pages/user-dashboard/soc-ccr-landing/soc-ccr-landing.component';
 import { SocCcrRegisterComponent } from './pages/user-dashboard/soc-ccr-register/soc-ccr-register.component';
 import { FinalLandingPageComponent } from './pages/user-dashboard/final-landing-page/final-landing-page.component';
+import { SitemapComponent } from './pages/user-dashboard/sitemap/sitemap.component';
 
 
 export const routes: Routes = [
@@ -56,6 +57,7 @@ export const routes: Routes = [
   { path: 'pslicense-landing', component: PslicenseLandingComponent},
   { path: 'soc-ccr-landing', component: SocCcrLandingComponent},
   { path: 'final-landing-page', component: FinalLandingPageComponent},
+  { path: 'sitemap', component: SitemapComponent},
 
   { path: 'age-gating', component: AgeGatingComponent},
   { path: 'age-gating-registration', component: AgeGatingRegistrationComponent, canActivate: [AuthGuard] },
