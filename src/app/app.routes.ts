@@ -33,6 +33,7 @@ import { SocCcrLandingComponent } from './pages/user-dashboard/soc-ccr-landing/s
 import { SocCcrRegisterComponent } from './pages/user-dashboard/soc-ccr-register/soc-ccr-register.component';
 import { FinalLandingPageComponent } from './pages/user-dashboard/final-landing-page/final-landing-page.component';
 import { SitemapComponent } from './pages/user-dashboard/sitemap/sitemap.component';
+import { ComplaintComponent } from './pages/user-dashboard/complaint/complaint.component';
 
 
 export const routes: Routes = [
@@ -58,6 +59,7 @@ export const routes: Routes = [
   { path: 'soc-ccr-landing', component: SocCcrLandingComponent},
   { path: 'final-landing-page', component: FinalLandingPageComponent},
   { path: 'sitemap', component: SitemapComponent},
+  { path: 'complaint', component: ComplaintComponent},
 
   { path: 'age-gating', component: AgeGatingComponent},
   { path: 'age-gating-registration', component: AgeGatingRegistrationComponent, canActivate: [AuthGuard] },
