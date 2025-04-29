@@ -1211,14 +1211,14 @@
             </thead>
             <tbody>
               <tr *ngFor="let record of filteredWarehouseRegis; let i = index" class="border-b hover:bg-gray-100">
-                <td class="py-2 px-4">{{ record.nameOfBusiness || record.businessOwnerName }}</td>
-                <td class="py-2 px-4 hidden md:table-cell">{{ record.businessOwnerName }}</td>
+                <td class="py-2 px-4">{{ record.nameOfBusiness || record.nameOfBusinessOwner }}</td>
+                <td class="py-2 px-4 hidden md:table-cell">{{ record.nameOfBusinessOwner}}</td>
                 <td class="py-2 px-4 hidden lg:table-cell">
                   {{ record.warehouseBldgNameNo }} {{ record.warehouseStreet }}, 
                   {{ record.warehouseBarangay }}, {{ record.warehouseCity }}, 
                   {{ record.warehouseState }}
                 </td>
-                <td class="py-2 px-4 hidden md:table-cell">{{ record.warehouseEmailAddress }}</td>
+                <td class="py-2 px-4 hidden md:table-cell">{{ record.warehouseOwnerEmailAddress }}</td>
                 <td class="py-2 px-4 hidden sm:table-cell">{{ record.warehouseMobileNumber || record.warehouseTelephoneNumber }}</td>
                 <td class="py-2 px-4 hidden lg:table-cell">{{ record.productsStoredInWarehouse }}</td>
                 <td class="py-2 px-4 hidden xl:table-cell">

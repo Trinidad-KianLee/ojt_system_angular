@@ -23,21 +23,21 @@ export class AgeGatingRegistrationComponent implements OnInit {
     // Initialize the form with validation
     this.form = this.fb.group({
       applicationType: ['New application', Validators.required],
-      nameOfCompany: ['', Validators.required],
+      nameOfCompany: ['Dummy Company Inc.', Validators.required],
       companyType: ['Local', Validators.required],
-      companyAdd: ['', Validators.required],
-      companyLocalAddress: [''],
-      website: ['', Validators.pattern('https?://.+')],
-      telNumber: ['', Validators.required],
-      faxNumber: [''],
-      email: ['', [Validators.required, Validators.email]],
-      tin: ['', Validators.required],
-      dateOfIssue: ['', Validators.required],
-      nameOfCompanyPresident: ['', Validators.required],
-      nameOfAuthorized: ['', Validators.required],
-      representativeContact: ['', Validators.required],
-      representativeFaxNum: [''],
-      representativeEmail: ['', [Validators.required, Validators.email]]
+      companyAdd: ['123 Main St, Anytown, USA', Validators.required],
+      companyLocalAddress: ['Suite 456, Anytown, USA'],
+      website: ['https://dummycompany.com', Validators.pattern('https?://.+')],
+      telNumber: ['555-1234', Validators.required],
+      faxNumber: ['555-5678'],
+      email: ['contact@dummycompany.com', [Validators.required, Validators.email]],
+      tin: ['123-456-789', Validators.required],
+      dateOfIssue: ['', Validators.required], // Will be set in ngOnInit
+      nameOfCompanyPresident: ['John Doe', Validators.required],
+      nameOfAuthorized: ['Jane Smith', Validators.required],
+      representativeContact: ['555-9876', Validators.required],
+      representativeFaxNum: ['555-4321'],
+      representativeEmail: ['jane.smith@dummycompany.com', [Validators.required, Validators.email]]
     });
   }
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import PocketBase from 'pocketbase';
+import { environment } from '../../environments/environment.development';
 
 interface PBUser {
   id: string;
@@ -15,7 +16,7 @@ export class PocketBaseService {
   private pb: PocketBase;
 
   constructor() {
-    this.pb = new PocketBase('http://127.0.0.1:8090');
+    this.pb = new PocketBase(environment.pocketbaseUrl);
   }
 
   async registerUser(data: any) {

@@ -20,46 +20,49 @@ export class WarehouseRegistrationComponent implements OnInit {
     private fb: FormBuilder,
     private pocketBaseService: PocketBaseService
   ) {
+    // Initialize the form with validations and dummy data
     this.form = this.fb.group({
-      business_name: ['', Validators.required],
-      floor_unit_no: ['', Validators.required],
-      building_no_name: ['', Validators.required],
-      street: ['', Validators.required],
-      barangay: ['', Validators.required],
-      city_municipality: ['', Validators.required],
-      province: ['', Validators.required],
-      region: ['', Validators.required],
-      zip_code: ['', Validators.required],
+      business_name: ['ABC Vape Supplies Co.', Validators.required],
+      floor_unit_no: ['Unit 501', Validators.required],
+      building_no_name: ['Pacific Tower', Validators.required],
+      street: ['123 Main Avenue', Validators.required],
+      barangay: ['San Lorenzo', Validators.required],
+      city_municipality: ['Makati City', Validators.required],
+      province: ['Metro Manila', Validators.required],
+      region: ['NCR', Validators.required],
+      zip_code: ['1200', Validators.required],
 
-      business_owner: ['', Validators.required],
-      owner_sex: ['', Validators.required],
-      owner_social_classification: [''],
-      owner_telephone: ['', Validators.required],
-      owner_email: ['', [Validators.required, Validators.email]],
-      owner_mobile: ['', Validators.required],
-      owner_website: [''],
-      owner_address: ['', Validators.required],
+      business_owner: ['Juan Dela Cruz', Validators.required],
+      owner_sex: ['Male', Validators.required],
+      owner_social_classification: ['MSME'],
+      owner_telephone: ['02-8123-4567', Validators.required],
+      owner_email: ['juan@example.com', [Validators.required, Validators.email]],
+      owner_mobile: ['09123456789', Validators.required],
+      owner_website: ['www.abcvape.com'],
+      owner_address: ['123 Business District, Makati City', Validators.required],
 
-      warehouse_owner: ['', Validators.required],
-      warehouse_owner_sex: ['', Validators.required],
-      warehouse_owner_social_classification: [''],
-      warehouse_owner_telephone: ['', Validators.required],
-      warehouse_owner_email: ['', [Validators.required, Validators.email]],
-      warehouse_owner_mobile: ['', Validators.required],
-      warehouse_owner_website: [''],
-      warehouse_owner_address: ['', Validators.required],
-      vapor_product_system: [false],
-      vapor_product_device: [false],
-      vapor_product_refills: [false],
+      warehouse_owner: ['Maria Santos', Validators.required],
+      warehouse_owner_sex: ['Female', Validators.required],
+      warehouse_owner_social_classification: ['MSME'],
+      warehouse_owner_telephone: ['02-8987-6543', Validators.required],
+      warehouse_owner_email: ['maria@example.com', [Validators.required, Validators.email]],
+      warehouse_owner_mobile: ['09876543210', Validators.required],
+      warehouse_owner_website: ['www.warehousesolutions.com'],
+      warehouse_owner_address: ['456 Industrial Zone, Quezon City', Validators.required],
+      
+      vapor_product_system: [true],
+      vapor_product_device: [true],
+      vapor_product_refills: [true],
       htp_system: [false],
       htp_device: [false],
       htp_consumables: [false],
-      nicotine_pouch: [false],
-      brands_list: ['', Validators.required],
-      supplier_names: ['', Validators.required],
+      nicotine_pouch: [true],
+      
+      brands_list: ['VapeTech, CloudMaster, NicStream', Validators.required],
+      supplier_names: ['Global Vape Industries, Eastern Electronics', Validators.required],
       
       // Financial Information
-      asset_size: ['', Validators.required],
+      asset_size: ['10,000,000', Validators.required],
     });
   }
   
@@ -73,12 +76,21 @@ export class WarehouseRegistrationComponent implements OnInit {
     return control ? control.invalid && (control.dirty || control.touched) : false;
   }
 
-  // File upload handling
+  // File upload handling - Modified to handle multiple files
   onFileSelected(event: any): void {
     const files = event.target.files;
     if (files) {
-      for (let i = 0; i < files.length; i++) {
+      // Limit to 5 files total
+      const remainingSlots = 5 - this.uploadedFiles.length;
+      const filesToAdd = Math.min(files.length, remainingSlots);
+      
+      for (let i = 0; i < filesToAdd; i++) {
         this.uploadedFiles.push(files[i]);
+      }
+      
+      if (files.length > remainingSlots) {
+        console.warn(`Only added ${remainingSlots} files. Maximum of 5 files allowed.`);
+        // You could add a user notification here
       }
     }
   }
@@ -88,14 +100,27 @@ export class WarehouseRegistrationComponent implements OnInit {
     this.uploadedFiles.splice(index, 1);
   }
 
-  // Form submission
+  // Validate if at least one file is uploaded
+  validateFiles(): boolean {
+    return this.uploadedFiles.length > 0;
+  }
+
+  // Form submission - Updated with improved validation and file handling
   async onSubmit(): Promise<void> {
+    // Mark all form controls as touched to trigger validation
+    Object.keys(this.form.controls).forEach(key => {
+      const control = this.form.get(key);
+      control?.markAsTouched();
+    });
+    
     if (this.form.invalid) {
-      // Mark all controls as touched to trigger validation messages
-      Object.keys(this.form.controls).forEach(key => {
-        const control = this.form.get(key);
-        control?.markAsTouched();
-      });
+      console.error('Form validation failed');
+      return;
+    }
+    
+    if (!this.validateFiles()) {
+      console.error('Please upload at least one required document');
+      // You could add a user notification here
       return;
     }
     
@@ -113,7 +138,7 @@ export class WarehouseRegistrationComponent implements OnInit {
         }
       });
       
-      // Add files to FormData as proofFile
+      // Add files to FormData correctly - using 'proofFile' array
       if (this.uploadedFiles.length > 0) {
         for (let i = 0; i < this.uploadedFiles.length; i++) {
           formData.append('proofFile', this.uploadedFiles[i]);
@@ -157,6 +182,8 @@ export class WarehouseRegistrationComponent implements OnInit {
       formData.append('businessOwnerEmailAddress', this.form.value.owner_email);
       formData.append('businessOwnerMobileNumber', this.form.value.owner_mobile);
       formData.append('businessOwnerWebsiteSocialMediaPage', this.form.value.owner_website || 'N/A');
+      formData.append('businessOwnerAddress', this.form.value.owner_address);
+      
       formData.append('nameOfWarehouseOwner', this.form.value.warehouse_owner);
       formData.append('warehouseOwnerSex', this.form.value.warehouse_owner_sex);
       formData.append('warehouseOwnerSocialClassification', this.form.value.warehouse_owner_social_classification || 'None');
@@ -164,9 +191,12 @@ export class WarehouseRegistrationComponent implements OnInit {
       formData.append('warehouseOwnerEmailAddress', this.form.value.warehouse_owner_email);
       formData.append('warehouseOwnerMobileNumber', this.form.value.warehouse_owner_mobile);
       formData.append('warehouseOwnerWebsiteSocialMediaPage', this.form.value.warehouse_owner_website || 'N/A');
+      formData.append('warehouseOwnerAddress', this.form.value.warehouse_owner_address);
+      
       formData.append('productsStoredInWarehouse', products.join(', ') || 'None specified');
       formData.append('listOfBrands', this.form.value.brands_list);
       formData.append('nameOfSuppliers', this.form.value.supplier_names);
+      formData.append('assetSize', this.form.value.asset_size);
       
       // Add application status
       formData.append('applicationStatus', 'pending');
@@ -175,12 +205,15 @@ export class WarehouseRegistrationComponent implements OnInit {
       const userData = this.pocketBaseService.getUserData();
       if (userData) {
         formData.append('owner', userData.id);
+      } else {
+        throw new Error('User not logged in');
       }
       
-      console.log('Submitting warehouse registration with data:', Object.fromEntries(formData.entries()));
+      console.log('Submitting warehouse registration with data:', 
+        Object.fromEntries(formData.entries()));
       
-      // Submit to PocketBase
-      await this.pocketBaseService.createRecord('warehouse_regis', formData);
+      // Use the dedicated method in PocketBaseService for warehouse registration
+      await this.pocketBaseService.createWarehouseRegistration(formData);
       
       this.submitting = false;
       this.showSuccessModal = true;
@@ -188,6 +221,7 @@ export class WarehouseRegistrationComponent implements OnInit {
       console.error('Error submitting warehouse registration:', error);
       this.submitting = false;
       // Handle error (could show error message to user here)
+      alert('Failed to submit form. Please try again later.');
     }
   }
   
