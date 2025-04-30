@@ -69,14 +69,17 @@
             <div class="flex flex-col sm:flex-row items-center gap-2 mt-4 sm:mt-0">
                 <div class="flex items-center gap-2 w-full sm:w-auto">
                     <input type="text" placeholder="Search" class="input input-bordered w-full sm:w-40" />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"
-                        class="text-blue-900">
-                        <path fill="currentColor"
-                            d="M256 48c114.953 0 208 93.029 208 208c0 114.953-93.029 208-208 208c-114.953 0-208-93.029-208-208c0-114.953 93.029-208 208-208m0-40C119.033 8 8 119.033 8 256s111.033 248 248 248s248-111.033 248-248S392.967 8 256 8" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+                        <g fill="none" stroke="#263081" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="1.5">
+                            <path
+                                d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10M7 9l5 1m5-1l-5 1m0 0v3m0 0l-2 5m2-5l2 5" />
+                            <path fill="#263081" d="M12 7a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1" />
+                        </g>
                     </svg>
                 </div>
                 <button routerLink="/new-login"
-                    class="btn bg-[#263081] font-medium text-white px-4 h-10 rounded-lg">Login</button>
+                    class="btn bg-[#263081] font-medium text-white px-4 h-10 rounded-lg ml-4">Login</button>
             </div>
         </div>
     </nav>
@@ -95,9 +98,9 @@
     <div class="bg-white flex flex-wrap items-center justify-between px-4 py-4 gap-4">
         <!-- Left side: GOVPH logo and SVG -->
         <div class="flex items-center gap-4">
-            <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path fill="#0D2393"
-                    d="M256 48c114.953 0 208 93.029 208 208c0 114.953-93.029 208-208 208c-114.953 0-208-93.029-208-208c0-114.953 93.029-208 208-208" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+                <path fill="#263081"
+                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12m10.5-4.75a.75.75 0 0 0-1.5 0v.5a.75.75 0 0 0 1.5 0zM8.143 8.764a.75.75 0 0 0-.286 1.472l3.393.66v1.567l-1.544 3.752a.75.75 0 0 0 1.388.57L12 14.582l.906 2.203a.75.75 0 0 0 1.387-.57l-1.543-3.752v-1.567l3.393-.66a.75.75 0 1 0-.286-1.472L12 9.514z" />
             </svg>
             <img src="assets/DTI-logo.png" alt="DTI Logo" class="h-14 sm:h-16 md:h-20" />
         </div>
@@ -229,35 +232,49 @@
 
     <!-- Registration Cards -->
     <div class="flex flex-wrap justify-center gap-6 mt-10 px-4">
-        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[18%] h-60 text-center p-4 rounded text-white">
+        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[20%] h-60 text-center p-4 rounded text-white">
             <h2 class="text-xl mt-6">[Logo]</h2>
             <a routerLink="/ps-license-registration">
                 <p class="mt-4 text-base hover:underline">PS License <br> Registration</p>
             </a>
             <p class="mt-4 text-sm">[brief description]</p>
         </div>
-        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[18%] h-60 text-center p-4 rounded text-white">
+        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[20%] h-60 text-center p-4 rounded text-white">
             <h2 class="text-xl mt-6">[Logo]</h2>
             <a routerLink="/retailer-regis">
                 <p class="mt-4 text-base hover:underline">Retailer/Distributor</p>
             </a>
             <p class="mt-4 text-sm">[brief description]</p>
         </div>
-        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[18%] h-60 text-center p-4 rounded text-white">
+        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[20%] h-60 text-center p-4 rounded text-white">
             <h2 class="text-xl mt-6">[Logo]</h2>
             <a routerLink="/warehouse-reg">
                 <p class="mt-4 text-base hover:underline">Warehouse</p>
             </a>
             <p class="mt-4 text-sm">[brief description]</p>
         </div>
-        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[18%] h-60 text-center p-4 rounded text-white">
+        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[20%] h-60 text-center p-4 rounded text-white">
             <h2 class="text-xl mt-6">[Logo]</h2>
             <a routerLink="/age-gating-registration">
                 <p class="mt-4 text-base hover:underline">Age gating</p>
             </a>
             <p class="mt-4 text-sm">[brief description]</p>
         </div>
-        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[18%] h-60 text-center p-4 rounded text-white">
+        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[20%] h-60 text-center p-4 rounded text-white">
+            <h2 class="text-xl mt-6">[Logo]</h2>
+            <a routerLink="/soc-ccr-register">
+                <p class="mt-4 text-base hover:underline">SOC/CCR</p>
+            </a>
+            <p class="mt-4 text-sm">[brief description]</p>
+        </div>
+        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[20%] h-60 text-center p-4 rounded text-white">
+            <h2 class="text-xl mt-6">[Logo]</h2>
+            <a routerLink="/vape-regis">
+                <p class="mt-4 text-base hover:underline">Promotional Events</p>
+            </a>
+            <p class="mt-4 text-sm">[brief description]</p>
+        </div>
+        <div class="bg-[#263081] w-full sm:w-[45%] md:w-[30%] lg:w-[20%] h-60 text-center p-4 rounded text-white">
             <h2 class="text-xl mt-6">[Logo]</h2>
             <a routerLink="/complaint">
                 <p class="mt-4 text-base hover:underline">Report a Complaint</p>
@@ -267,35 +284,104 @@
     </div>
 
     <!-- News Feed -->
-    <div class="mt-10 px-10">
-        <h1 class="text-[#263081] text-xl font-medium mb-6">News Feed</h1>
+    <div class="mt-15 px-10">
+        <h1 class="text-[#263081] text-2xl font-medium mb-6">News Feed</h1>
 
-        <div class="flex flex-col lg:flex-row gap-4 mb-10 ml-4">
+        <div class="flex flex-col lg:flex-row gap-4 mb-10 ml-4 mt-8">
             <img src="https://www.china-briefing.com/news/wp-content/uploads/2021/12/China-Vape-Industry.jpg"
                 class="w-full lg:w-70 h-auto lg:h-50 object-cover rounded" />
             <div>
-                <h2 class="text-xl font-medium text-[#0D2E9E]">DTI orders PMFTC to cease...</h2>
+                <h2 class="text-xl font-medium text-[#0D2E9E]">DTI orders PMFTC to cease advertising violative
+                    promotional materials following formal charges</h2>
                 <p class="text-sm text-gray-700 mt-2">Makati City, Philippines—The Department of Trade and Industry
-                    (DTI)
-                    Office for the Special Mandate on Vaporized Nicotine and Non-Nicotine Products (OSMV) has filed a
-                    formal
-                    charge...</p>
+                    (DTI) Office for the Special Mandate on Vaporized Nicotine and Non-Nicotine Products (OSMV) has
+                    filed a formal charge and issued a Preliminary Order and/or Preventive Measure Order (POPMO) against
+                    PMFTC Inc. on 23 April 2025. The company was found in violation of ...</p>
             </div>
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-4 mb-10 ml-4">
+        <div class="flex flex-col lg:flex-row gap-4 mb-20 ml-4">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLi3_N8xN_SbRN9UKUtdC78kalrjFHPIJ_-A&s"
                 class="w-full lg:w-80 h-auto object-cover rounded" />
             <div>
-                <h2 class="text-xl font-medium text-[#0D2E9E]">DTI reiterates ban on SHFT...</h2>
+                <h2 class="text-xl font-medium text-[#0D2E9E]">DTI reiterates ban on SHFT product distribution pending
+                    case resolution</h2>
                 <p class="text-sm text-gray-700 mt-2">Makati City, Philippines—The Department of Trade and Industry
-                    (DTI) Office
-                    for the Special Mandate reminds the public that the distribution of SHFT’s products—whether for sale
-                    or free—
-                    is prohibited...</p>
+                    (DTI) Office for the Special Mandate on Vaporized Nicotine and Non-Nicotine Products, their Devices,
+                    and Novel Tobacco Products (OSMV) reminds the public that the distribution of SHFT’s
+                    products—whether for sale or for free—is strictly prohibited, in line with the issued Preliminary
+                    Order...</p>
             </div>
         </div>
     </div>
+    <footer class="relative bg-[#263081] text-white p-10 ">
+        <!-- <img src="assets/dti-footer.png" class="absolute w-2/3 px-20 opacity-20 z-0" /> -->
+
+        <div class="relative z-10 flex flex-wrap justify-between">
+            <div class="w-1/3 space-y-4">
+                <h6 class="text-lg font-bold">MAIN OFFICE ADDRESS</h6>
+                <p class="text-sm">
+                    Finest Bldg.<br />
+                    389 Sen. Gil J. Puyat Ave.,<br />
+                    1200 Makati City, Philippines
+                </p>
+
+                <h6 class="text-lg font-bold mt-4">OFFICE HOURS</h6>
+                <p class="text-sm">
+                    Monday - Friday<br />
+                    8:00 am - 5:00 pm<br />
+                    (except holidays)
+                </p>
+
+                <h6 class="text-lg font-bold mt-4">CUSTOMER CONTACT CENTER</h6>
+                <p class="text-sm">
+                    Monday - Sunday<br />
+                    8:00 am - 5:00 pm<br />
+                    (except holidays)<br />
+                    Telephone: 1-791 (584)<br />
+                    Mobile: (0917) 834-3300<br />
+                    Trunkline: (632) 7791-3100
+                </p>
+            </div>
+
+            <div class="w-1/3 space-y-4">
+                <h6 class="text-lg font-bold">QUICK LINKS</h6>
+                <ul class="text-sm space-y-1">
+                    <li><a href="#" class="hover:underline">Terms and Conditions</a></li>
+                    <li><a href="#" class="hover:underline">Website Privacy Policy</a></li>
+                    <li><a href="#" class="hover:underline">Downloads</a></li>
+                    <li><a href="#" class="hover:underline">Career Opportunities</a></li>
+                    <li><a href="#" class="hover:underline">Freedom of Information</a></li>
+                    <li><a href="#" class="hover:underline">Data Privacy (DTI)</a></li>
+                    <li><a href="#" class="hover:underline">Archives</a></li>
+                    <li><a href="#" class="hover:underline">Links</a></li>
+                    <li><a href="#" class="hover:underline">E-Services</a></li>
+                    <li>
+                        <a href="#" class="hover:underline">List of DTI Online Services</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:underline">Philippine National Trade Repository</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="w-1/3 text-center">
+                <h6 class="text-lg font-bold">FOLLOW US</h6>
+                <div class="flex justify-center space-x-4 mt-2 flex-wrap">
+                    <a href="#" class="py-10 px-5"><img src="assets/www-icon.png" class="w-8 h-7"
+                            alt="Website" />dti.gov.ph</a>
+                    <a href="#" class="py-10 px-5"><img src="assets/x-icon.png" class="w-8 h-7"
+                            alt="Twitter" />DTIPhilippines</a>
+                    <a href="#" class="py-10"><img src="assets/youtube-icon.png" class="w-8 h-7"
+                            alt="YouTube" />DTIPhilippines</a>
+                    <a href="#" class="py-5 px-5"><img src="assets/fb-icon.png" class="w-8 h-7"
+                            alt="Facebook" />DTI.Philippines</a>
+                    <a href="#" class="py-5"><img src="assets/instagram-icon.png" class="w-8 h-7"
+                            alt="Instagram" />DTIPhilippines</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 
