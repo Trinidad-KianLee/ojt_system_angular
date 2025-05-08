@@ -1,0 +1,163 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding: 15px 20px;
+}
+
+.card-body {
+  padding: 25px;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  border-color: #86b7fe;
+}
+
+.text-danger {
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.btn-success {
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.alert-info {
+  background-color: rgba(13, 202, 240, 0.1);
+  border-color: rgba(13, 202, 240, 0.2);
+  color: #055160;
+}
+
+/* Custom styles for the RA11900 section */
+.bg-warning {
+  background-color: #fd7e14 !important;
+}
+
+.bg-primary {
+  background-color: #0d6efd !important;
+}
+
+.bg-info {
+  background-color: #0dcaf0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-body {
+    padding: 20px 15px;
+  }
+}
+
+/* Animation for conditional sections */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+[formGroupName] {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Custom styles to complement Tailwind CSS */
+
+/* Blue header styles */
+.bg-\[\#25316D\] {
+  background-color: #25316D;
+}
+
+/* Form section styling */
+.form-section {
+  margin-bottom: 2rem;
+}
+
+/* Radio button styling to match design */
+input[type="radio"] {
+  cursor: pointer;
+}
+
+input[type="radio"]:checked {
+  background-color: #25316D;
+  border-color: #25316D;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+/* File upload styling */
+input[type="file"] {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+/* Input focus styling */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* Required field indicator */
+.text-red-500 {
+  color: #EF4444;
+}
+
+/* Button hover effects */
+button:hover {
+  transform: translateY(-1px);
+  transition: all 0.2s;
+}
+
+/* Error field styling */
+.ng-invalid.ng-touched:not(form):not(.no-validate) {
+  border-color: #EF4444;
+}
+
+/* Success field styling */
+.ng-valid.ng-dirty:not(form):not(.no-validate) {
+  border-color: #10B981;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .grid-cols-5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-cols-5, .grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}

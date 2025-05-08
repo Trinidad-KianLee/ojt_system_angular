@@ -34,6 +34,7 @@ import { SocCcrRegisterComponent } from './pages/user-dashboard/soc-ccr-register
 import { FinalLandingPageComponent } from './pages/user-dashboard/final-landing-page/final-landing-page.component';
 import { SitemapComponent } from './pages/user-dashboard/sitemap/sitemap.component';
 import { ComplaintComponent } from './pages/user-dashboard/complaint/complaint.component';
+import { CcsReportComponent } from './pages/user-dashboard/ccs-report/ccs-report.component';
 
 
 export const routes: Routes = [
@@ -70,6 +71,7 @@ export const routes: Routes = [
   { path: 'user-registration', component: WarehouseRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'ps-license-registration', component: PsLicenseRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'soc-ccr-registration', component: SocCcrRegisterComponent, canActivate: [AuthGuard] },
+  { path: 'ccs-report', component: CcsReportComponent, canActivate: [AuthGuard] },
 
   {
     path: 'admin-dashboard',

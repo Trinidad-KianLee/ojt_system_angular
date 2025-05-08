@@ -32,7 +32,7 @@ export class AgeGatingRegistrationComponent implements OnInit {
       faxNumber: ['555-5678'],
       email: ['contact@dummycompany.com', [Validators.required, Validators.email]],
       tin: ['123-456-789', Validators.required],
-      dateOfIssue: ['', Validators.required], // Will be set in ngOnInit
+      dateOfIssue: ['', Validators.required],
       nameOfCompanyPresident: ['John Doe', Validators.required],
       nameOfAuthorized: ['Jane Smith', Validators.required],
       representativeContact: ['555-9876', Validators.required],
@@ -42,7 +42,6 @@ export class AgeGatingRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Set default date to today
     const today = new Date();
     const formattedDate = today.toISOString().substring(0, 10);
     this.form.patchValue({

@@ -33,13 +33,12 @@ export class NewLoginComponent {
      try {
        await this.pbService.loginUser(this.formData.email, this.formData.password);
  
- 
        this.loginSuccess = true; 
        setTimeout(() => {
          if (this.pbService.isAdmin()) {
            this.router.navigate(['/admin-dashboard']);
          } else {
-           this.router.navigate(['/new-landingpage']);
+           this.router.navigate(['/final-landing-page']);
          }
        }, 1500);
  
