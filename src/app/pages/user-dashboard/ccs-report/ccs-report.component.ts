@@ -10,14 +10,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractContro
   styleUrl: './ccs-report.component.css'
 })
 export class CcsReportComponent implements OnInit {
-  // Initialize with empty FormGroup
   reportForm: FormGroup = new FormGroup({});
   selectedCategory: string = '';
-  selectedFormType: string = ''; // To track which form type is selected (repair, ra11900, other)
-  tempFormType: string = ''; // Temporarily store the form type during selection
+  selectedFormType: string = '';
+  tempFormType: string = '';
   selectedFiles: File[] = [];
   maxFiles = 5;
-  maxFileSize = 50 * 1024 * 1024; // 50MB in bytes
+  maxFileSize = 50 * 1024 * 1024;
   
   constructor(private fb: FormBuilder) {}
   
@@ -25,18 +24,15 @@ export class CcsReportComponent implements OnInit {
     this.initForm();
   }
   
-  // Method to select a form type (repair/refund/replacement, ra11900, other)
   selectFormType(type: string): void {
     this.tempFormType = type;
   }
   
-  // Method to confirm the selected form type and initialize the appropriate form
   confirmFormType(): void {
     this.selectedFormType = this.tempFormType;
     this.initForm();
   }
   
-  // Method to go back to form type selection
   changeFormType(): void {
     this.selectedFormType = '';
     this.tempFormType = '';
@@ -44,9 +40,7 @@ export class CcsReportComponent implements OnInit {
   }
   
   initForm(): void {
-    // Base form structure with common fields
     const formConfig = {
-      // Personal Details (common for all forms)
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
       middleInitial: [''],
@@ -55,7 +49,6 @@ export class CcsReportComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       contactNumber: ['', Validators.required],
       
-      // Shop Details (common for repair and ra11900)
       shopDetails: this.fb.group({
         shopName: [''],
         branch: [''],
@@ -65,13 +58,10 @@ export class CcsReportComponent implements OnInit {
         landmark: ['']
       }),
       
-      // Declaration
       declaration: [false, Validators.requiredTrue]
     };
     
-    // Add specific fields based on the form type
     if (this.selectedFormType === 'repair') {
-      // Add repair/refund/replacement specific fields
       Object.assign(formConfig, {
         reportType: ['', Validators.required],
         repairDetails: this.fb.group({
@@ -84,7 +74,6 @@ export class CcsReportComponent implements OnInit {
       });
     } 
     else if (this.selectedFormType === 'ra11900') {
-      // Add RA11900 violation specific fields
       Object.assign(formConfig, {
         ra11900Details: this.fb.group({
           violationType: ['', Validators.required],
@@ -98,12 +87,11 @@ export class CcsReportComponent implements OnInit {
           witnessContact: [''],
           evidenceAttached: [false],
           evidenceDescription: [''],
-          violationMessage: ['Hi DTI OSMV,'] // Adding this field for the message to OSMV
+          violationMessage: ['Hi DTI OSMV,']
         })
       });
     } 
     else if (this.selectedFormType === 'other') {
-      // Add 'Others' specific fields
       Object.assign(formConfig, {
         otherDetails: this.fb.group({
           subject: ['', Validators.required],
@@ -114,44 +102,42 @@ export class CcsReportComponent implements OnInit {
       });
     }
     
-    // Create the form with the appropriate configuration
     this.reportForm = this.fb.group(formConfig);
     
-    // Add conditional validation for the repair form type
     if (this.selectedFormType === 'repair') {
-      // Listen for reportType changes to update shop details validation
       this.reportForm.get('reportType')?.valueChanges.subscribe((value) => {
         this.updateShopDetailsValidators(value);
       });
     }
     
-    // Add conditional validation for the ra11900 form type
     if (this.selectedFormType === 'ra11900') {
-      // Listen for violationType changes to handle "other" violation type
-      this.reportForm.get('ra11900Details.violationType')?.valueChanges.subscribe((value) => {
-        const otherViolationControl = this.reportForm.get('ra11900Details.otherViolation');
-        
-        if (value === 'other_violation') {
-          otherViolationControl?.setValidators(Validators.required);
-        } else {
-          otherViolationControl?.clearValidators();
-        }
-        
-        otherViolationControl?.updateValueAndValidity();
-      });
+      this.reportForm.get('ra11900Details.violationType')?.valueChanges
+        .subscribe((value) => {
+          const otherViolationControl = this.reportForm
+            .get('ra11900Details.otherViolation');
+          
+          if (value === 'other_violation') {
+            otherViolationControl?.setValidators(Validators.required);
+          } else {
+            otherViolationControl?.clearValidators();
+          }
+          
+          otherViolationControl?.updateValueAndValidity();
+        });
       
-      // Listen for evidenceAttached changes
-      this.reportForm.get('ra11900Details.evidenceAttached')?.valueChanges.subscribe((value) => {
-        const evidenceDescControl = this.reportForm.get('ra11900Details.evidenceDescription');
-        
-        if (value === true) {
-          evidenceDescControl?.setValidators(Validators.required);
-        } else {
-          evidenceDescControl?.clearValidators();
-        }
-        
-        evidenceDescControl?.updateValueAndValidity();
-      });
+      this.reportForm.get('ra11900Details.evidenceAttached')?.valueChanges
+        .subscribe((value) => {
+          const evidenceDescControl = this.reportForm
+            .get('ra11900Details.evidenceDescription');
+          
+          if (value === true) {
+            evidenceDescControl?.setValidators(Validators.required);
+          } else {
+            evidenceDescControl?.clearValidators();
+          }
+          
+          evidenceDescControl?.updateValueAndValidity();
+        });
     }
   }
   
@@ -180,13 +166,11 @@ export class CcsReportComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     
     if (input.files) {
-      // Check if adding these files exceeds the maximum allowed
       if (this.selectedFiles.length + input.files.length > this.maxFiles) {
         alert(`You can upload a maximum of ${this.maxFiles} files.`);
         return;
       }
       
-      // Check each file for size constraints
       for (let i = 0; i < input.files.length; i++) {
         const file = input.files[i];
         
@@ -211,20 +195,17 @@ export class CcsReportComponent implements OnInit {
       console.log('Form data:', this.reportForm.value);
       console.log('Files:', this.selectedFiles);
       
-      // For static functionality, just show an alert
       alert('Form submitted successfully!');
       this.selectedFormType = '';
       this.tempFormType = '';
       this.reportForm.reset();
       this.selectedFiles = [];
     } else {
-      // Mark all fields as touched to trigger validation messages
       this.markFormGroupTouched(this.reportForm);
       alert('Please fill in all required fields correctly.');
     }
   }
   
-  // Helper method to mark all controls in a form group as touched
   markFormGroupTouched(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(key => {
       const control = formGroup.get(key);
