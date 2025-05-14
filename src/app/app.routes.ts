@@ -35,7 +35,7 @@ import { FinalLandingPageComponent } from './pages/user-dashboard/final-landing-
 import { SitemapComponent } from './pages/user-dashboard/sitemap/sitemap.component';
 import { ComplaintComponent } from './pages/user-dashboard/complaint/complaint.component';
 import { CcsReportComponent } from './pages/user-dashboard/ccs-report/ccs-report.component';
-
+import { CcsDashboardComponent } from './pages/ccs-dashboard/ccs-dashboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'final-landing-page', pathMatch: 'full' },
@@ -72,6 +72,7 @@ export const routes: Routes = [
   { path: 'ps-license-registration', component: PsLicenseRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'soc-ccr-registration', component: SocCcrRegisterComponent, canActivate: [AuthGuard] },
   { path: 'ccs-report', component: CcsReportComponent, canActivate: [AuthGuard] },
+  { path: 'ccs-dashboard', component: CcsDashboardComponent, canActivate: [AuthGuard] },
 
   {
     path: 'admin-dashboard',

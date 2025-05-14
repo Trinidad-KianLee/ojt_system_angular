@@ -37,6 +37,8 @@ export class NewLoginComponent {
        setTimeout(() => {
          if (this.pbService.isAdmin()) {
            this.router.navigate(['/admin-dashboard']);
+         } else if (this.pbService.getUserRole() === 'ccs') {
+           this.router.navigate(['/ccs-dashboard']);
          } else {
            this.router.navigate(['/final-landing-page']);
          }
