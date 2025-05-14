@@ -127,17 +127,10 @@
               Manufacturer, Importer and Distributor
             </label>
           </div>
-          <div class="flex items-center">
-            <input type="radio" id="others-type" formControlName="reportType" 
-                value="others-type" 
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                  focus:ring-blue-500">
-            <label for="others-type" class="ml-2 text-gray-700">Others</label>
-          </div>
         </div>
       </div>
 
-      <div class="mb-8">
+      <div class="mb-8" *ngIf="reportForm.value.reportType === 'physical-retailer'">
         <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
           <h2 class="text-xl font-semibold">II. Product Details</h2>
         </div>
@@ -196,43 +189,7 @@
           </div>
           
           <div class="mt-4">
-            <label class="block mb-2 text-gray-700">
-              Preferred Solution<span class="text-red-500">*</span>
-            </label>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="flex items-center">
-                <input type="radio" id="repair-solution" formControlName="preferredSolution" 
-                    value="repair" 
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                      focus:ring-blue-500">
-                <label for="repair-solution" class="ml-2 text-gray-700">Repair</label>
-              </div>
-              <div class="flex items-center">
-                <input type="radio" id="refund-solution" formControlName="preferredSolution" 
-                    value="refund" 
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                      focus:ring-blue-500">
-                <label for="refund-solution" class="ml-2 text-gray-700">Refund</label>
-              </div>
-              <div class="flex items-center">
-                <input type="radio" id="replacement-solution" 
-                    formControlName="preferredSolution" value="replacement" 
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                      focus:ring-blue-500">
-                <label for="replacement-solution" class="ml-2 text-gray-700">
-                  Replacement
-                </label>
-              </div>
-            </div>
-            <div *ngIf="reportForm.get('repairDetails.preferredSolution')?.invalid && 
-                reportForm.get('repairDetails.preferredSolution')?.touched" 
-                class="text-red-500 text-sm mt-1">
-              Please select your preferred solution
-            </div>
-          </div>
-          
-          <div class="mt-4">
-            <label class="block mb-2 text-gray-700">Evidence</label>
+            <label class="block mb-2 text-gray-700">Upload documents</label>
             <input type="file" multiple (change)="onFileSelected($event)"
               class="w-full p-3 bg-white border border-gray-300 rounded-md 
                   focus:ring-blue-500 focus:border-blue-500">
@@ -261,95 +218,91 @@
         </div>
       </div>
 
-      <div *ngIf="reportForm.get('reportType')?.value === 'physical-retailer' || 
-          reportForm.get('reportType')?.value === 'online-retailer'" class="mb-8">
+      <div class="mb-8" *ngIf="reportForm.value.reportType === 'online-retailer'">
+        <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
+          <h2 class="text-xl font-semibold">II. Concern</h2>
+        </div>
+
+        <div class="flex flex-wrap gap-6 mt-4">
+          <div class="flex items-center">
+            <input type="radio" id="repair" formControlName="concernType" value="repair" name="concernType"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+            <label for="repair" class="ml-2 text-gray-700">
+              Repair of a vape product
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="radio" id="replacement" formControlName="concernType" value="replacement" name="concernType"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+            <label for="replacement" class="ml-2 text-gray-700">
+              Replacement of a vape product
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="radio" id="refund" formControlName="concernType" value="refund" name="concernType"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+            <label for="refund" class="ml-2 text-gray-700">
+              Refund of a vape product
+            </label>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <label class="block mb-2 text-gray-700">Additional Details</label>
+          <textarea formControlName="concernDetails" 
+            class="w-full p-3 bg-white border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            rows="4" 
+            placeholder="Please provide any additional details about your concern"></textarea>
+          <div *ngIf="reportForm.get('concernDetails')?.invalid && reportForm.get('concernDetails')?.touched" 
+              class="text-red-500 text-sm mt-1">
+            Additional details are required
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-8">
         <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
           <h2 class="text-xl font-semibold">III. Shop Details</h2>
         </div>
         
-        <div formGroupName="shopDetails" 
-            class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-6 rounded-md">
-          <div class="col-span-1">
-            <label class="block mb-2 text-gray-700">
-              Shop Name<span class="text-red-500">*</span>
-            </label>
-            <input type="text" formControlName="shopName" 
-              class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                  focus:ring-blue-500 focus:border-blue-500">
-            <div *ngIf="reportForm.get('shopDetails.shopName')?.invalid && 
-                reportForm.get('shopDetails.shopName')?.touched" 
-                class="text-red-500 text-sm mt-1">
-              Shop name is required
-            </div>
-          </div>
           
           <div class="col-span-1">
             <label class="block mb-2 text-gray-700">
-              Branch (Optional)
-            </label>
-            <input type="text" formControlName="branch" 
-              class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                  focus:ring-blue-500 focus:border-blue-500">
-          </div>
-          
-          <div class="col-span-1">
-            <label class="block mb-2 text-gray-700">
-              Address<span class="text-red-500">*</span> 
-              <span class="text-gray-500">(House number, Street, Municipality)</span>
+              Shop name<span class="text-red-500">*</span> 
             </label>
             <input type="text" formControlName="address" 
               class="w-full p-3 bg-white border border-gray-300 rounded-md 
                   focus:ring-blue-500 focus:border-blue-500">
-            <div *ngIf="reportForm.get('shopDetails.address')?.invalid && 
-                reportForm.get('shopDetails.address')?.touched" 
-                class="text-red-500 text-sm mt-1">
-              Address is required
-            </div>
           </div>
           
           <div class="col-span-1">
             <label class="block mb-2 text-gray-700">
-              Barangay<span class="text-red-500">*</span>
+              Branch<span class="text-red-500">*</span>
             </label>
             <input type="text" formControlName="barangay" 
               class="w-full p-3 bg-white border border-gray-300 rounded-md 
                   focus:ring-blue-500 focus:border-blue-500">
-            <div *ngIf="reportForm.get('shopDetails.barangay')?.invalid && 
-                reportForm.get('shopDetails.barangay')?.touched" 
-                class="text-red-500 text-sm mt-1">
-              Barangay is required
-            </div>
           </div>
           
           <div class="col-span-1">
             <label class="block mb-2 text-gray-700">
-              City<span class="text-red-500">*</span>
+              Link<span class="text-red-500">*</span>
             </label>
             <input type="text" formControlName="city" 
               class="w-full p-3 bg-white border border-gray-300 rounded-md 
                   focus:ring-blue-500 focus:border-blue-500">
-            <div *ngIf="reportForm.get('shopDetails.city')?.invalid && 
-                reportForm.get('shopDetails.city')?.touched" 
-                class="text-red-500 text-sm mt-1">
-              City is required
-            </div>
           </div>
           
-          <div class="col-span-1">
-            <label class="block mb-2 text-gray-700">
-              Landmark<span class="text-red-500">*</span>
-            </label>
-            <input type="text" formControlName="landmark" 
+          <div class="col-span-2 mt-2">
+            <div class="flex items-start">
+              <label class="block mb-2 text-gray-700">Upload files</label>
+            </div>
+            <input type="file" multiple (change)="onFileSelected($event)"
               class="w-full p-3 bg-white border border-gray-300 rounded-md 
                   focus:ring-blue-500 focus:border-blue-500">
-            <div *ngIf="reportForm.get('shopDetails.landmark')?.invalid && 
-                reportForm.get('shopDetails.landmark')?.touched" 
-                class="text-red-500 text-sm mt-1">
-              Landmark is required
-            </div>
+            <p class="text-sm text-gray-500 mt-1">Maximum upload file size: 50 MB.</p>
           </div>
         </div>
-      </div>
     </ng-container>
     
     <ng-container *ngIf="selectedFormType === 'ra11900'">
@@ -659,10 +612,10 @@
     <ng-container *ngIf="selectedFormType === 'other'">
       <div class="mb-8">
         <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
-          <h2 class="text-xl font-semibold">I. Concern Details</h2>
+          <h2 class="text-xl font-semibold">Concern</h2>
         </div>
         
-        <div formGroupName="otherDetails" class="bg-gray-50 p-6 rounded-md">
+        <div class="bg-gray-50 p-6 rounded-md">
           <div class="mb-4">
             <label class="block mb-2 text-gray-700">
               Subject<span class="text-red-500">*</span>
@@ -671,8 +624,8 @@
               class="w-full p-3 bg-white border border-gray-300 rounded-md 
                   focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter the subject of your concern">
-            <div *ngIf="reportForm.get('otherDetails.subject')?.invalid && 
-                reportForm.get('otherDetails.subject')?.touched" 
+            <div *ngIf="reportForm.get('subject')?.invalid && 
+                reportForm.get('subject')?.touched" 
                 class="text-red-500 text-sm mt-1">
               Subject is required
             </div>
@@ -693,8 +646,8 @@
               <option value="complaint">General Complaint</option>
               <option value="other">Other</option>
             </select>
-            <div *ngIf="reportForm.get('otherDetails.category')?.invalid && 
-                reportForm.get('otherDetails.category')?.touched" 
+            <div *ngIf="reportForm.get('category')?.invalid && 
+                reportForm.get('category')?.touched" 
                 class="text-red-500 text-sm mt-1">
               Category is required
             </div>
@@ -709,46 +662,13 @@
                   focus:ring-blue-500 focus:border-blue-500"
               rows="6" placeholder="Please provide detailed information about your concern">
             </textarea>
-            <div *ngIf="reportForm.get('otherDetails.description')?.invalid && 
-                reportForm.get('otherDetails.description')?.touched" 
+            <div *ngIf="reportForm.get('description')?.invalid && 
+                reportForm.get('description')?.touched" 
                 class="text-red-500 text-sm mt-1">
               Description is required
             </div>
           </div>
           
-          <div class="mb-4">
-            <label class="block mb-2 text-gray-700">
-              How would you prefer to be contacted?<span class="text-red-500">*</span>
-            </label>
-            <div class="flex flex-wrap gap-6">
-              <div class="flex items-center">
-                <input type="radio" id="contact-email" formControlName="preferredContact" 
-                    value="email" 
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                      focus:ring-blue-500">
-                <label for="contact-email" class="ml-2 text-gray-700">Email</label>
-              </div>
-              <div class="flex items-center">
-                <input type="radio" id="contact-phone" formControlName="preferredContact" 
-                    value="phone" 
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                      focus:ring-blue-500">
-                <label for="contact-phone" class="ml-2 text-gray-700">Phone</label>
-              </div>
-              <div class="flex items-center">
-                <input type="radio" id="contact-both" formControlName="preferredContact" 
-                    value="both" 
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                      focus:ring-blue-500">
-                <label for="contact-both" class="ml-2 text-gray-700">Both</label>
-              </div>
-            </div>
-            <div *ngIf="reportForm.get('otherDetails.preferredContact')?.invalid && 
-                reportForm.get('otherDetails.preferredContact')?.touched" 
-                class="text-red-500 text-sm mt-1">
-              Please select your preferred contact method
-            </div>
-          </div>
           
           <div class="mt-4">
             <label class="block mb-2 text-gray-700">Attachments (Optional)</label>
@@ -784,7 +704,7 @@
     <div class="mb-8">
       <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
         <h2 class="text-xl font-semibold">
-          {{ selectedFormType === 'other' ? 'II' : 'III' }}. Personal Details
+          {{ selectedFormType === 'other' ? 'II' : 'IV' }}. Personal Details
         </h2>
       </div>
       
@@ -901,10 +821,11 @@
       </div>
     </div>
     
-    <div class="flex justify-center">
-      <button type="submit" class="px-12 py-3 bg-[#25316D] text-white rounded-md 
-          hover:bg-blue-900 font-medium">
-        Submit
+    <div class="flex justify-center mb-8">
+      <button type="submit" 
+        class="px-12 py-3 bg-[#25316D] text-white rounded-md hover:bg-blue-900 font-medium"
+        [disabled]="!reportForm.valid">
+        Submit Report
       </button>
     </div>
   </form>
