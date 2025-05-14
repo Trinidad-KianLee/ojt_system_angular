@@ -66,7 +66,7 @@ export const routes: Routes = [
   { path: 'age-gating-registration', component: AgeGatingRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'warehouse-registration', component: WarehouseRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'retailer-regis', component: RetailerRegisComponent, canActivate: [AuthGuard] },
-  { path: 'vape-regis', component: VapeRegisComponent, canActivate: [AuthGuard] },
+  { path: 'vape-regis', component: VapeRegisComponent },
   { path: 'warehouse-reg', component: WarehouseRegComponent},
   { path: 'user-registration', component: WarehouseRegistrationComponent, canActivate: [AuthGuard] },
   { path: 'ps-license-registration', component: PsLicenseRegistrationComponent, canActivate: [AuthGuard] },
