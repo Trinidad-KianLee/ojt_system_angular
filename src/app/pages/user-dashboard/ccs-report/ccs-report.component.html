@@ -386,137 +386,10 @@
               <div *ngIf="reportForm.get('ra11900Details.violationDate')?.invalid && 
                   reportForm.get('ra11900Details.violationDate')?.touched" 
                   class="text-red-500 text-sm mt-1">
-                Date of violation is required
+                Date 
               </div>
             </div>
-            
-            <div class="col-span-1">
-              <label class="block mb-2 text-gray-700">
-                Time of Violation (Approximate)
-              </label>
-              <input type="time" formControlName="violationTime" 
-                class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                    focus:ring-blue-500 focus:border-blue-500">
-            </div>
-          </div>
-          
-          <div class="mt-4">
-            <label class="block mb-2 text-gray-700">
-              Violation Location<span class="text-red-500">*</span>
-            </label>
-            <textarea formControlName="violationLocation" 
-              class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                  focus:ring-blue-500 focus:border-blue-500"
-              rows="2" placeholder="Enter full address where violation occurred"></textarea>
-            <div *ngIf="reportForm.get('ra11900Details.violationLocation')?.invalid && 
-                reportForm.get('ra11900Details.violationLocation')?.touched" 
-                class="text-red-500 text-sm mt-1">
-              Location is required
-            </div>
-          </div>
-          
-          <div class="mt-4">
-            <label class="block mb-2 text-gray-700">
-              Name of Business/Establishment (if applicable)
-            </label>
-            <input type="text" formControlName="establishmentName" 
-              class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                  focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter name of the establishment">
-          </div>
-          
-          <div class="mt-4">
-            <label class="block mb-2 text-gray-700">
-              Detailed Description of Violation<span class="text-red-500">*</span>
-            </label>
-            <textarea formControlName="violationDescription" 
-              class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                  focus:ring-blue-500 focus:border-blue-500"
-              rows="4" placeholder="Please provide as much detail as possible about the 
-              violation"></textarea>
-            <div *ngIf="reportForm.get('ra11900Details.violationDescription')?.invalid && 
-                reportForm.get('ra11900Details.violationDescription')?.touched" 
-                class="text-red-500 text-sm mt-1">
-              Description is required
-            </div>
-          </div>
-          
-          <div class="mt-6">
-            <h3 class="font-semibold text-gray-700 mb-3">Witness Information (Optional)</h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="col-span-1">
-                <label class="block mb-2 text-gray-700">
-                  Witness Name
-                </label>
-                <input type="text" formControlName="witnessName" 
-                  class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                      focus:ring-blue-500 focus:border-blue-500">
-              </div>
-              
-              <div class="col-span-1">
-                <label class="block mb-2 text-gray-700">
-                  Witness Contact
-                </label>
-                <input type="text" formControlName="witnessContact" 
-                  class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                      focus:ring-blue-500 focus:border-blue-500">
-              </div>
-            </div>
-          </div>
-          
-          <div class="mt-6">
-            <h3 class="font-semibold text-gray-700 mb-3">Evidence</h3>
-            
-            <div class="flex items-center mb-4">
-              <input type="checkbox" id="evidenceAttached" formControlName="evidenceAttached" 
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                    focus:ring-blue-500">
-              <label for="evidenceAttached" class="ml-2 text-gray-700">
-                I have evidence to support this claim
-              </label>
-            </div>
-            
-            <div *ngIf="reportForm.get('ra11900Details.evidenceAttached')?.value">
-              <div class="mb-4">
-                <input type="file" multiple (change)="onFileSelected($event)"
-                  class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                      focus:ring-blue-500 focus:border-blue-500">
-                <p class="text-sm text-gray-500 mt-1">
-                  Upload photos, videos, receipts, or documents as evidence. 
-                  (Maximum 5 files, 50MB each)
-                </p>
-              </div>
-              
-              <div class="mb-4">
-                <label class="block mb-2 text-gray-700">
-                  Evidence Description
-                </label>
-                <textarea formControlName="evidenceDescription" 
-                  class="w-full p-3 bg-white border border-gray-300 rounded-md 
-                      focus:ring-blue-500 focus:border-blue-500"
-                  rows="2" placeholder="Briefly describe what the evidence shows"></textarea>
-              </div>
-              
-              <div *ngIf="selectedFiles.length > 0" class="mt-2">
-                <h4 class="font-medium text-gray-700">Selected Files:</h4>
-                <ul class="mt-2 space-y-1">
-                  <li *ngFor="let file of selectedFiles; let i = index" 
-                      class="flex justify-between items-center p-2 bg-gray-100 rounded">
-                    <span class="truncate max-w-xs">{{ file.name }}</span>
-                    <button type="button" (click)="removeFile(i)" 
-                        class="text-red-500 hover:text-red-700" aria-label="Remove file">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
-                          viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                            d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          </div>   
         </div>
       </div>
 
@@ -598,7 +471,7 @@
           
           <div class="col-span-2 mt-2">
             <div class="flex items-start">
-              <label class="block mb-2 text-gray-700">Evidence Files</label>
+              <label class="block mb-2 text-gray-700">Supporting documents</label>
             </div>
             <input type="file" multiple (change)="onFileSelected($event)"
               class="w-full p-3 bg-white border border-gray-300 rounded-md 
