@@ -1,0 +1,264 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Header -->
+  <header class="bg-white border-b border-gray-200">
+    <div class="container mx-auto px-6 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-8">
+          <h1 class="text-xl font-bold text-gray-800">CCS Dashboard</h1>
+        </div>
+        <nav class="flex items-center space-x-6">
+          <button routerLink="/ccs-dashboard" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</button>
+          <ng-container *ngIf="pb.isLoggedIn(); else notLoggedIn">
+            <button (click)="openLogoutModal()" 
+                    class="px-4 py-2 text-gray-700 hover:text-blue-600 transition-all duration-300 font-medium rounded-lg hover:bg-blue-50">
+              Logout
+            </button>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <a routerLink="/login" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Login</a>
+          </ng-template>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto px-6 py-8 space-y-8">
+    <!-- Welcome Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
+      <div class="flex items-start space-x-4">
+        <div class="p-3 bg-blue-50 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">Welcome back, {{ firstName }}!</h2>
+          <p class="mt-2 text-gray-600">
+            View and manage customer complaints from your dashboard below.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CCS Reports Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 transition-all duration-300 hover:shadow-md">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            Customer Complaints
+          </h3>
+          <p class="mt-1 text-gray-600 text-sm">
+            View and manage customer complaints and reports
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button (click)="downloadCcsReportsExcel()" 
+                  class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Export Excel
+          </button>
+          <button (click)="toggleCcsReports()" 
+                  class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            View Reports
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="showCcsReports" class="mt-4">
+        <div *ngIf="loadingCcsReports" class="text-blue-600 font-semibold mb-2">
+          Loading...
+        </div>
+        <div *ngIf="ccsReportsErrorMsg" class="text-red-600 font-semibold mb-2">
+          {{ ccsReportsErrorMsg }}
+        </div>
+
+        <!-- Search and Sort Controls -->
+        <div class="flex justify-between items-center mb-4">
+          <div class="flex gap-4 items-center">
+            <input type="text" 
+                   [(ngModel)]="searchTermCcsReports"
+                   (input)="applyCcsReportsFilters()"
+                   placeholder="Search reports..."
+                   class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            
+            <select [(ngModel)]="sortOrderCcsReports"
+                    (change)="applyCcsReportsFilters()"
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Reports Table -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="table-header">Report ID</th>
+                <th class="table-header">Name</th>
+                <th class="table-header">Report Type</th>
+                <th class="table-header">Date Submitted</th>
+                <th class="table-header">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let report of filteredCcsReports" class="table-row">
+                <td class="table-cell">{{ report.id }}</td>
+                <td class="table-cell">{{ report.firstName }} {{ report.lastName }}</td>
+                <td class="table-cell">{{ report.reportType }}</td>
+                <td class="table-cell">{{ report.created | date:'medium' }}</td>
+                <td class="table-cell">
+                  <button (click)="showCcsReportDetails(report)" class="btn btn-primary">
+                    View Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!filteredCcsReports.length && !loadingCcsReports" class="p-4 text-center text-gray-500">
+            No reports found
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Report Details Modal -->
+  <div *ngIf="showCcsReportDetailsModal" 
+       class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
+    <div class="bg-white rounded-xl shadow-xl p-6 max-w-4xl w-full mx-4 h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Report Details</h2>
+        <button (click)="closeCcsReportDetails()" class="text-gray-500 hover:text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Reporter Information -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="font-semibold text-lg mb-3 text-blue-600">Reporter Information</h3>
+          <div class="space-y-3">
+            <div>
+              <p class="text-sm text-gray-500">Full Name</p>
+              <p class="font-medium">{{ selectedCcsReport?.firstName }} {{ selectedCcsReport?.middleInitial }} {{ selectedCcsReport?.lastName }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Email</p>
+              <p class="font-medium">{{ selectedCcsReport?.email }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Contact Number</p>
+              <p class="font-medium">{{ selectedCcsReport?.contactNumber }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report Details -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="font-semibold text-lg mb-3 text-blue-600">Report Details</h3>
+          <div class="space-y-3">
+            <div>
+              <p class="text-sm text-gray-500">Report Type</p>
+              <p class="font-medium">{{ selectedCcsReport?.reportType }}</p>
+            </div>
+            <div *ngIf="selectedCcsReport?.concernType">
+              <p class="text-sm text-gray-500">Concern Type</p>
+              <p class="font-medium">{{ selectedCcsReport?.concernType }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Date Submitted</p>
+              <p class="font-medium">{{ selectedCcsReport?.created | date:'medium' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Complaint Details -->
+        <div class="bg-gray-50 p-4 rounded-lg col-span-2">
+          <h3 class="font-semibold text-lg mb-3 text-blue-600">Complaint Details</h3>
+          <div class="space-y-3">
+            <div *ngIf="selectedCcsReport?.concernDetails">
+              <p class="text-sm text-gray-500">Concern Details</p>
+              <p class="font-medium whitespace-pre-line">{{ selectedCcsReport?.concernDetails }}</p>
+            </div>
+            <div *ngIf="selectedCcsReport?.violationType">
+              <p class="text-sm text-gray-500">Violation Type</p>
+              <p class="font-medium">{{ selectedCcsReport?.violationType }}</p>
+            </div>
+            <div *ngIf="selectedCcsReport?.violationMessage">
+              <p class="text-sm text-gray-500">Violation Description</p>
+              <p class="font-medium whitespace-pre-line">{{ selectedCcsReport?.violationMessage }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evidence & Attachments -->
+        <div *ngIf="selectedCcsReport?.evidenceFiles" class="bg-gray-50 p-4 rounded-lg col-span-2">
+          <h3 class="font-semibold text-lg mb-3 text-blue-600">Evidence & Attachments</h3>
+          <div class="space-y-3">
+            <div>
+              <p class="text-sm text-gray-500 mb-2">Attached Files:</p>
+              <div class="space-y-2">
+                <div *ngFor="let file of selectedCcsReport.evidenceFiles">
+                  <a [href]="getCcsReportFileUrl(selectedCcsReport, file)" 
+                     target="_blank" 
+                     class="text-blue-600 hover:underline flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                    </svg>
+                    {{ file }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end">
+        <button (click)="closeCcsReportDetails()" class="btn btn-secondary">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Confirmation Modal -->
+  <div *ngIf="showLogoutModal" 
+       class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
+    <div class="bg-white rounded-xl shadow-xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 hover:scale-100">
+      <div class="text-center">
+        <div class="inline-flex p-3 bg-red-100 rounded-full mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Confirm Logout</h2>
+        <p class="text-gray-600 mb-6">
+          Are you sure you want to log out of your account?
+        </p>
+        <div class="flex gap-4">
+          <button (click)="cancelLogout()" 
+                  class="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+            Cancel
+          </button>
+          <button (click)="confirmLogout()" 
+                  class="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

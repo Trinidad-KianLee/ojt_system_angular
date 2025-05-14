@@ -351,6 +351,51 @@ export class PocketBaseService {
     });
   }
 
+  async getAllCcsReports(): Promise<any[]> {
+    // Static data for testing
+    return [
+      {
+        id: 'CCS001',
+        firstName: 'John',
+        lastName: 'Doe',
+        reportType: 'Monthly Report',
+        created: new Date('2025-05-01').toISOString(),
+        status: 'Completed',
+        details: 'Sample report details for testing',
+        attachmentFile: 'sample.pdf'
+      },
+      {
+        id: 'CCS002',
+        firstName: 'Jane',
+        lastName: 'Smith',
+        reportType: 'Quarterly Review',
+        created: new Date('2025-05-10').toISOString(),
+        status: 'In Progress',
+        details: 'Quarterly review report for Q2 2025',
+        attachmentFile: 'quarterly.pdf'
+      },
+      {
+        id: 'CCS003',
+        firstName: 'Michael',
+        lastName: 'Brown',
+        reportType: 'Inspection Report',
+        created: new Date('2025-05-12').toISOString(),
+        status: 'Pending Review',
+        details: 'Site inspection findings and recommendations',
+        attachmentFile: 'inspection.pdf'
+      }
+    ];
+  }
+
+  getFileUrl(record: any, fileKey: string): string {
+    // For static testing, return a dummy URL
+    if (!record?.id || !record[fileKey]) {
+      return '';
+    }
+    // In real implementation, this would use PocketBase's file URL
+    return `https://example.com/files/${record.id}/${record[fileKey]}`;
+  }
+
   async adminOnlyMethod(): Promise<string> {
     if (!this.isAdmin()) {
       throw new Error('Access denied. Admin only method.');
