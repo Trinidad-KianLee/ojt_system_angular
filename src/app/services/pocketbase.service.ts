@@ -352,7 +352,6 @@ export class PocketBaseService {
   }
 
   async getAllCcsReports(): Promise<any[]> {
-    // Static data for testing
     return [
       {
         id: 'CCS001',

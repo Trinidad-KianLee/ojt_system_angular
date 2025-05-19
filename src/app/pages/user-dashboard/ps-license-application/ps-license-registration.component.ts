@@ -40,7 +40,7 @@ export class PsLicenseRegistrationComponent implements OnInit {
       factoryFaxNumber: ['555-0201'],
       factoryEmail: ['factory@techsolutions.com', [Validators.required, Validators.email]],
       tin: ['987-654-321-000', Validators.required],
-      dateOfIssue: [new Date().toISOString().split('T')[0], Validators.required], // Keep current date or set a specific one
+      dateOfIssue: [new Date().toISOString().split('T')[0], Validators.required],
       companyPresident: ['Alice Wonderland', Validators.required],
       qualityManagementRepresentative: ['Bob The Builder', Validators.required],
       qmrTelephoneNumber: ['555-0300', Validators.required],
@@ -53,21 +53,20 @@ export class PsLicenseRegistrationComponent implements OnInit {
       type: ['Electronic', Validators.required],
       ratedCapacity: ['500 units/day', Validators.required],
       actualCapacity: ['480 units/day', Validators.required],
-      actualCapacityPerShiftMonth: ['10560 units', Validators.required], // 480 units/day * 22 days/month
+      actualCapacityPerShiftMonth: ['10560 units', Validators.required], 
       percentageOfPRoduction: ['96%'],
       numOfEmployees: ['250', Validators.required],
       numOfEmployeesPerSite: ['250', Validators.required],
       numOfEmployeesPerShift: ['80', Validators.required],
       numOfEmployeeAssessment: ['15', Validators.required],
-      assets: ['25000000', Validators.required], // Example value in local currency
+      assets: ['25000000', Validators.required], 
       year: ['2024', Validators.required],
-      production: ['126720', Validators.required], // 10560 units/month * 12 months
-      value: ['12672000', Validators.required], // Example value in local currency (e.g., 100 per unit)
+      production: ['126720', Validators.required],
+      value: ['12672000', Validators.required], 
     });
   }
 
   ngOnInit(): void {
-    // Initialize with current date for date fields
     const currentDate = new Date().toISOString().split('T')[0];
     this.applicationForm.patchValue({
       dateOfIssue: currentDate
@@ -89,7 +88,6 @@ export class PsLicenseRegistrationComponent implements OnInit {
     try {
       const formData = this.applicationForm.value;
       
-      // Add owner field if user is logged in
       if (this.pbService.isLoggedIn()) {
         const userData = this.pbService.getUserData();
         if (userData) {
@@ -97,7 +95,6 @@ export class PsLicenseRegistrationComponent implements OnInit {
         }
       }
       
-      // Set application status to pending
       formData.applicationStatus = 'pending';
       
       await this.pbService.createPsLicense(formData);
@@ -107,10 +104,9 @@ export class PsLicenseRegistrationComponent implements OnInit {
       this.applicationForm.reset();
       this.submitted = false;
       
-      // Redirect after 2 seconds
       setTimeout(() => {
         this.showSuccessModal = false;
-        this.router.navigate(['/user-dashboard']);
+        this.router.navigate(['/final-landing-page']);
       }, 2000);
 
     } catch (error) {
@@ -123,6 +119,6 @@ export class PsLicenseRegistrationComponent implements OnInit {
 
   closeSuccessModal() {
     this.showSuccessModal = false;
-    this.router.navigate(['/user-dashboard']);
+    this.router.navigate(['/final-landing-page']);
   }
 }
