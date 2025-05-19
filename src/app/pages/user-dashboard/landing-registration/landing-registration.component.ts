@@ -1,6 +1,6 @@
-import { 
-  Component, 
-  OnInit 
+import {
+  Component,
+  OnInit
 } from '@angular/core';
 import {
   FormBuilder,
@@ -39,7 +39,7 @@ export class LandingRegistrationComponent implements OnInit {
     private fb: FormBuilder,
     private pocketbase: PocketBaseService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group(
@@ -60,7 +60,14 @@ export class LandingRegistrationComponent implements OnInit {
         // Step 2
         companyName: ['', Validators.required],
         companyAddress: ['', Validators.required],
-        companyEmail: [''], 
+        companyZipCode: ['', Validators.required],
+        companyCity: ['', Validators.required],
+        companyStreet: ['', Validators.required],
+        companyBarangay: ['', Validators.required],
+        companyProvince: ['', Validators.required],
+        companyRegion: ['', Validators.required],
+        companyEmail: [''],
+        contactLNumber: ['', Validators.required],
         contactNumber: ['', Validators.required],
         proofFile: [null],
 
@@ -119,7 +126,10 @@ export class LandingRegistrationComponent implements OnInit {
           'firstName', 'middleName', 'lastName', 'gender', 'socialClassification', 'dob'
         ];
       case 2:
-        return ['companyName','companyAddress','companyEmail','contactNumber','proofFile'];
+        return [
+          'companyName', 'companyAddress', 'contactLNumber', 'companyZipCode', 'companyRegion', 'companyProvince',
+          'companyCity', 'companyBarangay', 'companyStreet', 'companyEmail', 'contactNumber', 'proofFile'
+        ];
       case 3:
         return ['agreeToTerms'];
       default:
@@ -127,26 +137,30 @@ export class LandingRegistrationComponent implements OnInit {
     }
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      // Check file size (10MB limit)
-      if (file.size > 10 * 1024 * 1024) {
-        alert('File size must be less than 10MB');
-        return;
-      }
-      
-      // Check file type
-      const validTypes = ['.pdf', '.doc', '.docx'];
-      const fileExtension = file.name.toLowerCase().slice((file.name.lastIndexOf(".") - 1 >>> 0) + 2);
-      if (!validTypes.includes('.' + fileExtension)) {
-        alert('Only PDF, DOC, and DOCX files are allowed');
-        return;
-      }
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
 
-      this.form.patchValue({ proofFile: file });
+    const file = input.files[0];
+
+    // Check file size
+    if (file.size > 10 * 1024 * 1024) {
+      alert('File size must be less than 10MB');
+      return;
     }
+
+    // Check file extension
+    const validTypes = ['.pdf', '.doc', '.docx'];
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    if (!fileExtension || !validTypes.includes('.' + fileExtension)) {
+      alert('Only PDF, DOC, and DOCX files are allowed');
+      return;
+    }
+
+    this.form.patchValue({ proofFile: file });
+    this.form.get('proofFile')?.markAsTouched();
   }
+
 
   getFileName(): string {
     const file = this.form.get('proofFile')?.value;
