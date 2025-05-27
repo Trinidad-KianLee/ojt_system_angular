@@ -1,0 +1,412 @@
+<div class="max-w-5xl mx-auto py-8 px-4">
+  
+  <h1 class="text-2xl font-bold mb-8 text-center text-gray-800">
+    Customer Complaint Submission Form
+  </h1>
+
+  <div *ngIf="!selectedFormType" class="bg-gray-50 p-8 rounded-lg shadow-md mb-8">
+    <h2 class="text-xl font-semibold mb-6 text-center">
+      Please select the type of complaint
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-white p-6 rounded-md border-2 hover:shadow-md cursor-pointer 
+          transition-all"
+        [class.border-gray-200]="tempFormType !== 'repair'"
+        [class.border-blue-500]="tempFormType === 'repair'"
+        (click)="selectFormType('repair')">
+        <div class="flex items-center justify-center mb-4">
+          <div class="rounded-full bg-blue-100 p-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" 
+                viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-lg font-medium text-center">Repair, Refund or Replacement</h3>
+        <p class="text-gray-600 text-sm mt-2 text-center">
+          Select this if you have issues with a product and need repair, replacement or refund.
+        </p>
+      </div>
+      
+      <div class="bg-white p-6 rounded-md border-2 hover:shadow-md cursor-pointer 
+          transition-all"
+        [class.border-gray-200]="tempFormType !== 'ra11900'"
+        [class.border-blue-500]="tempFormType === 'ra11900'"
+        (click)="selectFormType('ra11900')">
+        <div class="flex items-center justify-center mb-4">
+          <div class="rounded-full bg-red-100 p-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" 
+                viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-lg font-medium text-center">RA11900 Violation</h3>
+        <p class="text-gray-600 text-sm mt-2 text-center">
+          Report a violation of the Republic Act 11900 (Vaporized Nicotine and 
+          Non-Nicotine Products Regulation Act).
+        </p>
+      </div>
+      
+      <div class="bg-white p-6 rounded-md border-2 hover:shadow-md cursor-pointer 
+          transition-all"
+        [class.border-gray-200]="tempFormType !== 'other'"
+        [class.border-blue-500]="tempFormType === 'other'"
+        (click)="selectFormType('other')">
+        <div class="flex items-center justify-center mb-4">
+          <div class="rounded-full bg-green-100 p-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none" 
+                viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-lg font-medium text-center">Other Concerns</h3>
+        <p class="text-gray-600 text-sm mt-2 text-center">
+          For any other concerns, inquiries or feedback about our products or services.
+        </p>
+      </div>
+    </div>
+    
+    <div class="flex justify-center mt-8" *ngIf="tempFormType">
+      <button (click)="confirmFormType()" 
+          class="px-8 py-3 bg-[#25316D] text-white rounded-md hover:bg-blue-900 font-medium">
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <form *ngIf="selectedFormType" [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+    
+    <div class="mb-4 flex">
+      <button type="button" (click)="changeFormType()" class="text-blue-600 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" 
+            viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Change form type
+      </button>
+    </div>
+    
+    <ng-container *ngIf="selectedFormType === 'repair'">
+      <div class="mb-8">
+        <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
+          <h2 class="text-xl font-semibold">I. Type of Report</h2>
+        </div>
+
+        <div class="flex flex-wrap gap-6 mt-4">
+          <div class="flex items-center">
+            <input type="radio" id="physical-retailer" formControlName="reportType" 
+                value="physical-retailer" 
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                  focus:ring-blue-500">
+            <label for="physical-retailer" class="ml-2 text-gray-700">
+              Physical Retailer
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="radio" id="online-retailer" formControlName="reportType" 
+                value="online-retailer" 
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                  focus:ring-blue-500">
+            <label for="online-retailer" class="ml-2 text-gray-700">
+              Online Retailer
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="radio" id="manufacturer" formControlName="reportType" 
+                value="manufacturer" 
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                  focus:ring-blue-500">
+            <label for="manufacturer" class="ml-2 text-gray-700">
+              Manufacturer, Importer and Distributor
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="radio" id="others-type" formControlName="reportType" 
+                value="others-type" 
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                  focus:ring-blue-500">
+            <label for="others-type" class="ml-2 text-gray-700">Others</label>
+          </div>
+        </div>
+      </div>
+
+      @if(reportForm.value.reportType === 'physical-retailer'){
+        <div class="mb-8">
+          <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
+            <h2 class="text-xl font-semibold">II. Concern</h2>
+          </div>
+
+          <div class="flex flex-wrap gap-6 mt-4">
+            <div class="flex items-center">
+              <input type="radio" id="repair" formControlName="concernType" value="repair" name="concernType"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+              <label for="repair" class="ml-2 text-gray-700">
+                Repair of a vape product
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input type="radio" id="replacement" formControlName="concernType" value="replacement" name="concernType"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+              <label for="replacement" class="ml-2 text-gray-700">
+                Replacement of a vape product
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input type="radio" id="refund" formControlName="concernType" value="refund" name="concernType"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+              <label for="refund" class="ml-2 text-gray-700">
+                Refund of a vape product
+              </label>
+            </div>
+          </div>
+          
+          <div class="mt-4">
+            <label class="block mb-2 text-gray-700">
+              Additional Details<span class="text-red-500">*</span>
+            </label>
+            <textarea formControlName="concernDetails" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              rows="4" 
+              placeholder="Please provide any additional details about your concern"></textarea>
+            <div *ngIf="reportForm.get('concernDetails')?.invalid && reportForm.get('concernDetails')?.touched" 
+                class="text-red-500 text-sm mt-1">
+              Additional details are required
+            </div>
+          </div>
+        </div>
+
+      
+      } @else if(reportForm.value.reportType === 'online-retailer') {
+         <div class="mb-8">
+        <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
+          <h2 class="text-xl font-semibold">I. Violation Details</h2>
+        </div>
+        
+        <div formGroupName="ra11900Details" class="bg-gray-50 p-6 rounded-md">
+          <div class="mb-4">
+            <label class="block mb-2 text-gray-700">
+              Type of Violation<span class="text-red-500">*</span>
+            </label>
+            <select formControlName="violationType" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500">
+              <option value="" disabled selected>Select violation type</option>
+              <option value="section_3a">Section 3a. Advertising</option>
+              <option value="section_3b">Section 3b. Celebrity</option>
+              <option value="section_3c">Section 3c. Child-resistant</option>
+              <option value="section_3d">Section 3d. Designated Vaping Area (DVA)</option>
+              <option value="section_3e">Section 3e. Distributor</option>
+              <option value="section_6">Section 6. Minimum Age Sales and Purchase</option>
+              <option value="section_7">Section 7. Proof-of-Age Verification</option>
+              <option value="section_8">
+                Section 8. Sales and Promotion within School Perimeters
+              </option>
+              <option value="section_10">Section 10. Point-of-Sale Signage</option>
+              <option value="section_11">Section 11. Display of Products</option>
+              <option value="section_20">
+                Section 20. Restriction on the Retail and Sale of Nicotine Shots
+              </option>
+              <option value="other_violation">Other Violation</option>
+            </select>
+            <div *ngIf="reportForm.get('ra11900Details.violationType')?.invalid && 
+                reportForm.get('ra11900Details.violationType')?.touched" 
+                class="text-red-500 text-sm mt-1">
+              Please select violation type
+            </div>
+          </div>
+          
+          <div *ngIf="reportForm.get('ra11900Details.violationType')?.value === 
+              'other_violation'" class="mb-4">
+            <label class="block mb-2 text-gray-700">
+              Specify Violation<span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="otherViolation" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Please specify the violation type">
+          </div>
+
+          <div class="mb-4 text-gray-500 italic">
+            <p *ngIf="reportForm.get('ra11900Details.violationType')?.value === 'section_6' || 
+                     reportForm.get('ra11900Details.violationType')?.value === 'section_7'">
+              (Section 6. Minimum Age Sales and Purchase, Section 7. Proof-of-Age 
+              Verification...)
+            </p>
+          </div>
+          
+          <div class="mb-6">
+            <div class="bg-gray-100 p-4 rounded-md">
+              <label class="block mb-2 font-medium text-gray-700">
+                Message to DTI OSMV:
+              </label>
+              <textarea formControlName="violationMessage" 
+                class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                    focus:ring-blue-500 focus:border-blue-500"
+                rows="4" placeholder="Your message"></textarea>
+            </div>
+          </div>
+          
+      <div class="mt-4">
+            <label class="block mb-2 text-gray-700">Attachments (Optional)</label>
+            <input type="file" multiple (change)="onFileSelected($event)"
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500">
+            <p class="text-sm text-gray-500 mt-1">
+              Upload any relevant files (Maximum 5 files, 50MB each)
+            </p>
+            
+            <div *ngIf="selectedFiles.length > 0" class="mt-2">
+              <h4 class="font-medium text-gray-700">Selected Files:</h4>
+              <ul class="mt-2 space-y-1">
+                <li *ngFor="let file of selectedFiles; let i = index" 
+                    class="flex justify-between items-center p-2 bg-gray-100 rounded">
+                  <span class="truncate max-w-xs">{{ file.name }}</span>
+                  <button type="button" (click)="removeFile(i)" 
+                      class="text-red-500 hover:text-red-700" aria-label="Remove file">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                        viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+
+      <div *ngIf="reportForm.get('reportType')?.value === 'physical-retailer' || 
+          reportForm.get('reportType')?.value === 'online-retailer'" class="mb-8">
+        <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
+          <h2 class="text-xl font-semibold">III. Shop Details</h2>
+        </div>
+        
+        <div formGroupName="shopDetails" 
+            class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-6 rounded-md">
+          <div class="col-span-1">
+            <label class="block mb-2 text-gray-700">
+              Shop Name<span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="shopName" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500">
+            <div *ngIf="reportForm.get('shopDetails.shopName')?.invalid && 
+                reportForm.get('shopDetails.shopName')?.touched" 
+                class="text-red-500 text-sm mt-1">
+              Shop name is required
+            </div>
+          </div>
+          
+          <div class="col-span-1">
+            <label class="block mb-2 text-gray-700">
+              Branch (Optional)
+            </label>
+            <input type="text" formControlName="branch" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500">
+          </div>
+          
+          <div class="col-span-1">
+            <label class="block mb-2 text-gray-700">
+              Address<span class="text-red-500">*</span> 
+              <span class="text-gray-500">(House number, Street, Municipality)</span>
+            </label>
+            <input type="text" formControlName="address" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500">
+            <div *ngIf="reportForm.get('shopDetails.address')?.invalid && 
+                reportForm.get('shopDetails.address')?.touched" 
+                class="text-red-500 text-sm mt-1">
+              Address is required
+            </div>
+          </div>
+          
+          <div class="col-span-1">
+            <label class="block mb-2 text-gray-700">
+              Barangay<span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="barangay" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500">
+            <div *ngIf="reportForm.get('shopDetails.barangay')?.invalid && 
+                reportForm.get('shopDetails.barangay')?.touched" 
+                class="text-red-500 text-sm mt-1">
+              Barangay is required
+            </div>
+          </div>
+          
+          <div class="col-span-1">
+            <label class="block mb-2 text-gray-700">
+              City<span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="city" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500">
+            <div *ngIf="reportForm.get('shopDetails.city')?.invalid && 
+                reportForm.get('shopDetails.city')?.touched" 
+                class="text-red-500 text-sm mt-1">
+              City is required
+            </div>
+          </div>
+          
+          <div class="col-span-1">
+            <label class="block mb-2 text-gray-700">
+              Landmark<span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="landmark" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500">
+            <div *ngIf="reportForm.get('shopDetails.landmark')?.invalid && 
+                reportForm.get('shopDetails.landmark')?.touched" 
+                class="text-red-500 text-sm mt-1">
+              Landmark is required
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="selectedFormType === 'ra11900'">
+      <div class="mb-8">
+        <div class="bg-[#25316D] text-white rounded-md p-4 mb-4">
+          <h2 class="text-xl font-semibold">I. Violation Details</h2>
+        </div>
+        
+        <div formGroupName="ra11900Details" class="bg-gray-50 p-6 rounded-md">
+          <div class="mb-4">
+            <label class="block mb-2 text-gray-700">
+              Type of Violation<span class="text-red-500">*</span>
+            </label>
+            <select formControlName="violationType" 
+              class="w-full p-3 bg-white border border-gray-300 rounded-md 
+                  focus:ring-blue-500 focus:border-blue-500">
+              <option value="" disabled selected>Select violation type</option>
+              <option value="section_3a">Section 3a. Advertising</option>
+              <option value="section_3b">Section 3b. Celebrity</option>
+              <option value="section_3c">Section 3c. Child-resistant</option>
+              <option value="section_3d">Section 3d. Designated Vaping Area (DVA)</option>
+              <option value="section_3e">Section 3e. Distributor</option>
+              <option value="section_6">Section 6. Minimum Age Sales and Purchase</option>
+              <option value="section_7">Section 7. Proof-of-Age Verification</option>
+              <option value="section_8">
+                Section 8. Sales and Promotion within School Perimeters
+              </option>
+              <option value="section_10">Section 10. Point-of-Sale Signage</option>
+              <option value="section_11">Section 11. Display of Products</option>
+              <option value="section_20">
+                Section 20. Restriction on the Retail and Sale of Nicotine Shots
+              </option>
+              <option value="other_violation">Other Violation</option>
+            </select>
+            <div *ngIf="reportForm.get('ra11900Details.violationType')?.invalid && 
+                reportForm.get('ra11900Details.violationType')?.touched"
